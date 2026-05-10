@@ -112,6 +112,46 @@ jobs:
         with:
           args: ${{ matrix.args }}
 
+      # Windows-only: package a portable single-exe build alongside the installer.
+      # Tauri produces the raw exe at src-tauri/target/release/<name>.exe — we just
+      # zip it with a short readme. The user runs the .exe directly, no install.
+      - name: Package portable Windows build
+        if: matrix.platform == 'windows-latest'
+        shell: bash
+        run: |
+          mkdir -p portable-payload
+          # Tauri's exe name follows productName casing (TaskForge)
+          if [ -f src-tauri/target/release/TaskForge.exe ]; then
+            cp src-tauri/target/release/TaskForge.exe portable-payload/TaskForge.exe
+          elif [ -f src-tauri/target/release/taskforge.exe ]; then
+            cp src-tauri/target/release/taskforge.exe portable-payload/TaskForge.exe
+          else
+            echo "Could not find built .exe in src-tauri/target/release/"
+            ls -la src-tauri/target/release/ || true
+            exit 1
+          fi
+
+          cat > portable-payload/README.txt <<'EOF'
+          TaskForge — wersja portable
+          ============================
+          Uruchamianie: kliknij dwa razy TaskForge.exe.
+          Nie wymaga instalacji.
+
+          Wymagania:
+            - Windows 10 (1809) lub nowszy
+            - Microsoft Edge WebView2 Runtime (preinstalowany w Windows 11
+              oraz w Windows 10 od 2021 r. — w razie braku pobierz z:
+              https://developer.microsoft.com/microsoft-edge/webview2/)
+
+          Dane lokalne (zadania, kategorie, ustawienia) są zapisywane przez
+          WebView2 w katalogu profilu użytkownika Windows. Przenosząc plik
+          .exe na inny komputer baza pozostanie na poprzednim — eksport/import
+          wykonaj z poziomu aplikacji (zakładka „Eksport / Import").
+          EOF
+
+          7z a -tzip TaskForge-portable-x64.zip ./portable-payload/*
+          ls -la TaskForge-portable-x64.zip
+
       # Upload the build artefacts so a maintainer can grab them from any push,
       # even before tagging a release. Skipped on tag pushes (assets are already on the Release).
       - name: Upload installers as workflow artifact
@@ -128,5 +168,17 @@ jobs:
             src-tauri/target/release/bundle/**/*.rpm
             src-tauri/target/aarch64-apple-darwin/release/bundle/**/*.dmg
             src-tauri/target/x86_64-apple-darwin/release/bundle/**/*.dmg
+            TaskForge-portable-x64.zip
           if-no-files-found: ignore
           retention-days: 14
+
+      # On tag push: append the portable zip to the existing draft Release.
+      - name: Upload portable zip to Release
+        if: matrix.platform == 'windows-latest' && startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          # tauri-action created/updated the release in this same job earlier; append our zip.
+          gh release upload "$TAG_NAME" TaskForge-portable-x64.zip --clobber
