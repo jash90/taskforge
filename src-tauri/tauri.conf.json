@@ -25,6 +25,17 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": []
+    "category": "Education",
+    "shortDescription": "Parametryzowane zadania edukacyjne",
+    "longDescription": "TaskForge — zarządzaj parametryzowanymi zadaniami edukacyjnymi z klasyfikacją podstawy programowej, kluczem odpowiedzi, generowaniem testów i eksportem do Word.",
+    "publisher": "jash90",
+    "copyright": "MIT © 2026 jash90",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ]
   }
 }
