@@ -159,8 +159,8 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
     <div>
       {/* Toolbar */}
       <div className="card mb-2">
-        <div className="form-row" style={{ marginBottom: 0 }}>
-          <div className="form-group mb-0 grow">
+        <div className="flex gap-1 wrap items-center">
+          <div className="form-group mb-0" style={{ flex: '1 1 240px', minWidth: 200 }}>
             <label htmlFor="task-search" className="sr-only">Szukaj zadań</label>
             <div className="search-input">
               <Search size={14} aria-hidden="true" />
@@ -172,14 +172,14 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
               />
             </div>
           </div>
-          <div className="form-group mb-0 desktop-only" style={{ flex: '0 1 200px' }}>
+          <div className="form-group mb-0 desktop-only" style={{ flex: '0 1 200px', minWidth: 160 }}>
             <label htmlFor="filter-subject" className="sr-only">Przedmiot</label>
             <select id="filter-subject" value={filterSubject} onChange={(e) => setFilterSubject(e.target.value)}>
               <option value="">Wszystkie przedmioty</option>
               {subjects.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
-          <div className="form-group mb-0 desktop-only" style={{ flex: '0 1 200px' }}>
+          <div className="form-group mb-0 desktop-only" style={{ flex: '0 1 200px', minWidth: 160 }}>
             <label htmlFor="filter-level" className="sr-only">Poziom</label>
             <select
               id="filter-level"
@@ -197,6 +197,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
             className={`btn ${filterCategoryIds.length > 0 ? 'btn-primary' : 'btn-secondary'} desktop-only`}
             onClick={() => setCategoryPickerOpen(true)}
             aria-haspopup="dialog"
+            style={{ flex: '0 0 auto' }}
           >
             <FolderTree size={14} aria-hidden="true" />
             Kategorie
@@ -210,11 +211,12 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
             type="button"
             className="btn btn-secondary mobile-only"
             onClick={() => setFilterSheet(true)}
+            style={{ flex: '0 0 auto' }}
           >
             <Filter size={14} aria-hidden="true" /> Filtry {filterCount > 0 && <span className="badge badge-primary">{filterCount}</span>}
           </button>
           {(filterCount > 0 || query) && (
-            <button type="button" className="btn btn-ghost btn-sm" onClick={clearFilters} style={{ alignSelf: 'center' }}>
+            <button type="button" className="btn btn-ghost btn-sm" onClick={clearFilters} style={{ flex: '0 0 auto' }}>
               <X size={12} aria-hidden="true" /> Wyczyść
             </button>
           )}

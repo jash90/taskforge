@@ -1,6 +1,7 @@
 import Dexie, { type EntityTable } from 'dexie';
 import type { Task, ProgramPoint, Test, Category } from '../types';
 import { seedProgramPoints } from './seedPoints';
+import { seedCategories } from './seedCategories';
 
 const db = new Dexie('TaskForgeDB') as Dexie & {
   tasks: EntityTable<Task, 'id'>;
@@ -36,10 +37,17 @@ db.version(4).stores({
 export default db;
 
 export const runSeed = async () => {
-  const count = await db.programPoints.count();
-  if (count > 0) return;
-  await db.programPoints.bulkAdd(seedProgramPoints);
-  console.log(`Seeded ${seedProgramPoints.length} program points`);
+  const ppCount = await db.programPoints.count();
+  if (ppCount === 0) {
+    await db.programPoints.bulkAdd(seedProgramPoints);
+    console.log(`Seeded ${seedProgramPoints.length} program points`);
+  }
+
+  const catCount = await db.categories.count();
+  if (catCount === 0 && seedCategories.length > 0) {
+    await db.categories.bulkAdd(seedCategories);
+    console.log(`Seeded ${seedCategories.length} categories`);
+  }
 };
 
 export { db };
