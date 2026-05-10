@@ -1,0 +1,100 @@
+{
+  "etap_edukacyjny": "Szkoła podstawowa",
+  "klasa": 7,
+  "przedmiot": "Fizyka",
+  "wymiar_godzin": "2 godziny tygodniowo",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na etap edukacyjny (kl. 7-8 łącznie). Poniższy rozkład na klasę 7 jest typową propozycją zgodną z programami nauczania największych wydawnictw.",
+  "wstep": "Fizyka jest nauką przyrodniczą. Dzięki niej uczeń poznaje fundamentalne i uniwersalne prawa opisujące materię i procesy w niej zachodzące. Pojęcia, prawa i teorie fizyki kształtują styl myślenia i działania opartego na metodzie naukowej.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji lub doświadczeń oraz wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych."
+  ],
+  "dzialy": [
+    {
+      "numer": "I",
+      "nazwa": "Wymagania przekrojowe",
+      "tresci": [
+        "wyodrębnia z tekstów, tabel, diagramów lub wykresów, rysunków schematycznych lub blokowych informacje kluczowe dla opisywanego zjawiska bądź problemu; ilustruje je w różnych postaciach",
+        "wyodrębnia zjawisko z kontekstu, nazywa je oraz wskazuje czynniki istotne i nieistotne dla jego przebiegu",
+        "przeprowadza wybrane obserwacje, pomiary i doświadczenia na podstawie ich opisów",
+        "opisuje przebieg doświadczenia lub pokazu; wyróżnia kluczowe kroki i sposób postępowania oraz wskazuje rolę użytych przyrządów",
+        "posługuje się pojęciem niepewności pomiarowej; zapisuje wynik pomiaru wraz z jego jednostką oraz z uwzględnieniem informacji o niepewności",
+        "przeprowadza obliczenia i zapisuje wynik zaokrąglony do zadanej liczby cyfr znaczących",
+        "przelicza wielokrotności i podwielokrotności (mikro-, mili-, centy-, hekto-, kilo-, mega)",
+        "rozpoznaje zależność rosnącą bądź malejącą na podstawie danych z tabeli lub na podstawie wykresu; rozpoznaje proporcjonalność prostą na podstawie wykresu",
+        "przestrzega zasad bezpieczeństwa podczas wykonywania obserwacji, pomiarów i doświadczeń"
+      ]
+    },
+    {
+      "numer": "II",
+      "nazwa": "Ruch i siły",
+      "tresci": [
+        "opisuje i wskazuje przykłady względności ruchu",
+        "wyróżnia pojęcia tor i droga",
+        "przelicza jednostki czasu (sekunda, minuta, godzina)",
+        "posługuje się pojęciem prędkości do opisu ruchu prostoliniowego; oblicza jej wartość i przelicza jej jednostki; stosuje do obliczeń związek prędkości z drogą i czasem, w którym została przebyta",
+        "nazywa ruchem jednostajnym ruch, w którym droga przebyta w jednostkowych przedziałach czasu jest stała",
+        "wyznacza wartość prędkości i drogę z wykresów zależności prędkości i drogi od czasu dla ruchu prostoliniowego odcinkami jednostajnego oraz rysuje te wykresy na podstawie podanych informacji",
+        "nazywa ruchem jednostajnie przyspieszonym ruch, w którym wartość prędkości rośnie w jednostkowych przedziałach czasu o tę samą wartość, a ruchem jednostajnie opóźnionym - ruch, w którym wartość prędkości maleje w jednostkowych przedziałach czasu o tę samą wartość",
+        "posługuje się pojęciem przyspieszenia do opisu ruchu prostoliniowego jednostajnie przyspieszonego i jednostajnie opóźnionego; wyznacza wartość przyspieszenia wraz z jednostką; stosuje do obliczeń związek przyspieszenia ze zmianą prędkości i czasem (Δv = α·Δt)",
+        "wyznacza zmianę prędkości i przyspieszenie z wykresów zależności prędkości od czasu dla ruchu prostoliniowego jednostajnie zmiennego",
+        "stosuje pojęcie siły jako wielkości opisującej oddziaływanie na ciało, uwzględnia wektorowy charakter siły - wskazuje wartość, kierunek i zwrot wektora siły oraz ciało, do którego przyłożona jest siła; posługuje się jednostką siły",
+        "rozpoznaje i nazywa siły, podaje ich przykłady w różnych sytuacjach praktycznych (siły: ciężkości, nacisku, sprężystości, oporów ruchu)",
+        "wyznacza i rysuje siłę wypadkową dla sił o jednakowych kierunkach; opisuje i rysuje siły, które się równoważą",
+        "opisuje wzajemne oddziaływanie ciał, posługując się trzecią zasadą dynamiki",
+        "analizuje zachowanie się ciał na podstawie pierwszej zasady dynamiki",
+        "posługuje się pojęciem masy i wyjaśnia jej związek z bezwładnością ciała; analizuje zachowanie się ciał na podstawie drugiej zasady dynamiki i stosuje do obliczeń związek między siłą wypadkową i masą a przyspieszeniem",
+        "opisuje spadek swobodny (bez oporów ruchu) jako przykład ruchu jednostajnie przyspieszonego pod wpływem siły grawitacji, z przyspieszeniem niezależnym od masy ciała",
+        "posługuje się pojęciem siły ciężkości; stosuje do obliczeń związek między siłą ciężkości, masą i przyspieszeniem grawitacyjnym"
+      ],
+      "doswiadczenia": [
+        "ilustruje I, II i III zasadę dynamiki",
+        "wyznacza prędkość z pomiaru czasu i drogi z użyciem przyrządów analogowych lub cyfrowych bądź oprogramowania do pomiarów na obrazach wideo",
+        "wyznacza wartość siły za pomocą siłomierza albo wagi analogowej lub cyfrowej"
+      ]
+    },
+    {
+      "numer": "III",
+      "nazwa": "Energia",
+      "tresci": [
+        "posługuje się pojęciem pracy mechanicznej wraz z jej jednostką; stosuje do obliczeń związek pracy z siłą i drogą, na jakiej została wykonana",
+        "posługuje się pojęciem mocy wraz z jej jednostką; stosuje do obliczeń związek mocy z pracą i czasem, w którym została wykonana",
+        "posługuje się pojęciem energii kinetycznej, potencjalnej grawitacji i potencjalnej sprężystości; opisuje wykonaną pracę jako zmianę energii",
+        "wyznacza zmianę energii potencjalnej grawitacji oraz energii kinetycznej",
+        "wykorzystuje zasadę zachowania energii do opisu zjawisk"
+      ]
+    },
+    {
+      "numer": "IV",
+      "nazwa": "Zjawiska cieplne",
+      "tresci": [
+        "posługuje się pojęciem temperatury; rozpoznaje, że ciała o równej temperaturze pozostają w stanie równowagi termicznej",
+        "posługuje się skalami temperatur (Celsjusza, Kelvina); przelicza temperaturę w skali Celsjusza na temperaturę w skali Kelvina i odwrotnie",
+        "wskazuje, że energię układu (energię wewnętrzną) można zmienić, wykonując nad nim pracę lub przekazując energię w postaci ciepła",
+        "analizuje jakościowo związek między temperaturą a średnią energią kinetyczną (ruchu chaotycznego) cząsteczek",
+        "opisuje zjawisko przewodnictwa cieplnego; rozróżnia materiały o różnym przewodnictwie; opisuje rolę izolacji cieplnej",
+        "opisuje ruch gazów i cieczy w zjawisku konwekcji",
+        "rozróżnia i nazywa zmiany stanów skupienia (zjawiska topnienia, krzepnięcia, parowania, skraplania, sublimacji i resublimacji); analizuje zjawiska topnienia i wrzenia jako procesy, w których dostarczenie energii w postaci ciepła nie powoduje zmiany temperatury"
+      ],
+      "doswiadczenia": [
+        "demonstruje zjawiska topnienia, wrzenia, skraplania",
+        "bada zjawisko przewodnictwa cieplnego i określa, który z badanych materiałów jest lepszym przewodnikiem ciepła",
+        "demonstruje zjawiska, w których dostarczenie ciepła lub wykonanie pracy powoduje wzrost temperatury ciała"
+      ]
+    },
+    {
+      "numer": "V",
+      "nazwa": "Właściwości materii (część 1)",
+      "tresci": [
+        "posługuje się pojęciami masy i gęstości oraz ich jednostkami; analizuje różnice gęstości substancji w różnych stanach skupienia wynikające z budowy mikroskopowej ciał stałych, cieczy i gazów",
+        "stosuje do obliczeń związek gęstości z masą i objętością"
+      ],
+      "doswiadczenia": [
+        "wyznacza gęstość substancji, z jakiej wykonany jest przedmiot o kształcie regularnym za pomocą wagi i przymiaru lub o nieregularnym kształcie za pomocą wagi, cieczy i cylindra miarowego"
+      ]
+    }
+  ]
+}

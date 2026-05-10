@@ -1,0 +1,89 @@
+{
+  "etap_edukacyjny": "Liceum ogólnokształcące i technikum",
+  "klasa": 3,
+  "zakres": "rozszerzony",
+  "przedmiot": "Fizyka",
+  "wymiar_godzin_w_cyklu": "6 godzin tygodniowo w cyklu kształcenia (dodatkowe godziny zakresu rozszerzonego)",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na cały etap edukacyjny. Poniższy rozkład na klasę 3 to typowa propozycja zgodna z programami nauczania zakresu rozszerzonego.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji oraz doświadczeń i wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych, oraz ocenianie wiarygodności źródeł.",
+    "V. Budowanie modeli fizycznych i matematycznych do opisu zjawisk oraz ilustracji praw i zależności fizycznych."
+  ],
+  "dzialy": [
+    {
+      "numer": "VII",
+      "nazwa": "Elektrostatyka",
+      "tresci": [
+        "posługuje się zasadą zachowania ładunku",
+        "oblicza wartość siły wzajemnego oddziaływania ładunków, stosując prawo Coulomba",
+        "posługuje się wektorem natężenia pola elektrycznego wraz z jego jednostką; ilustruje graficznie pole elektryczne za pomocą linii pola; interpretuje zagęszczenie linii pola jako miarę natężenia pola; rozróżnia pole centralne i pole jednorodne",
+        "analizuje natężenie pola wytwarzanego przez układ ładunków punktowych i oblicza jego wartość",
+        "opisuje pole na zewnątrz sferycznie symetrycznego układu ładunków",
+        "opisuje jakościowo rozkład ładunków w przewodnikach, zerowe natężenie pola elektrycznego wewnątrz przewodnika (klatka Faradaya), duże natężenie pola wokół ostrzy na powierzchni przewodnika",
+        "analizuje ruch cząstek naładowanych w polu elektrycznym",
+        "analizuje zmianę energii potencjalnej podczas ruchu ładunku w polu elektrycznym; posługuje się pojęciem napięcia między punktami w polu elektrycznym; posługuje się pojęciem potencjału pola i jego jednostką",
+        "oblicza zmianę energii ładunku w polu centralnym i jednorodnym; stosuje związek między napięciem i natężeniem pola w jednorodnym polu elektrycznym",
+        "opisuje kondensator jako układ dwóch przeciwnie naładowanych przewodników, między którymi istnieje napięcie elektryczne, oraz jako urządzenie magazynujące energię; opisuje ilościowo pole elektryczne wewnątrz kondensatora płaskiego",
+        "opisuje polaryzację dielektryków w polu elektrycznym zewnętrznym"
+      ],
+      "doswiadczenia": [
+        "ilustruje pole elektryczne oraz układ linii pola wokół przewodnika",
+        "demonstruje przekaz energii podczas rozładowania kondensatora (np. lampa błyskowa, przeskok iskry)"
+      ]
+    },
+    {
+      "numer": "VIII",
+      "nazwa": "Prąd elektryczny",
+      "tresci": [
+        "opisuje przewodnictwo w metalach, elektrolitach i gazach",
+        "posługuje się pojęciami natężenia prądu elektrycznego, napięcia elektrycznego; oporu elektrycznego oraz mocy wraz z ich jednostkami",
+        "analizuje zależność oporu od wymiarów przewodnika, posługuje się pojęciem oporu właściwego materiału i jego jednostką",
+        "rozróżnia metale i półprzewodniki; omawia zależność oporu od temperatury dla metali i półprzewodników",
+        "stosuje do obliczeń proporcjonalność natężenia prądu stałego do napięcia dla przewodników (prawo Ohma)",
+        "analizuje charakterystykę prądowo-napięciową elementów obwodu (zgodną lub niezgodną z prawem Ohma)",
+        "posługuje się pojęciami oporu wewnętrznego i siły elektromotorycznej jako cechami źródła napięcia",
+        "stosuje do obliczeń związek mocy wydzielonej na oporniku (ciepła Joule'a-Lenza) z natężeniem prądu i oporem oraz napięciem i oporem",
+        "wykorzystuje dane znamionowe urządzeń elektrycznych do obliczeń",
+        "interpretuje I prawo Kirchhoffa jako przykład zasady zachowania ładunku",
+        "opisuje sieć domową jako przykład obwodu rozgałęzionego; wyjaśnia funkcję bezpieczników różnicowych i przewodu uziemiającego",
+        "analizuje dodawanie i odejmowanie napięć w obwodzie, z uwzględnieniem źródeł i odbiorników energii (II prawo Kirchhoffa)",
+        "posługuje się pojęciem oporu zastępczego; oblicza opór zastępczy układu oporników połączonych szeregowo lub równolegle",
+        "opisuje funkcję diody półprzewodnikowej jako elementu przewodzącego w jednym kierunku; przedstawia jej zastosowanie w prostownikach oraz jako źródła światła"
+      ],
+      "doswiadczenia": [
+        "demonstruje I prawo Kirchhoffa",
+        "bada dodawanie napięć w układzie ogniw połączonych szeregowo",
+        "demonstruje rolę diody jako elementu składowego prostowników i źródła światła",
+        "bada charakterystykę prądowo-napięciową elementu, który nie spełnia prawa Ohma"
+      ]
+    },
+    {
+      "numer": "IX",
+      "nazwa": "Magnetyzm",
+      "tresci": [
+        "posługuje się pojęciem pola magnetycznego; rysuje linie pola magnetycznego w pobliżu magnesów stałych i przewodników z prądem (przewodnik prostoliniowy, zwojnica)",
+        "posługuje się pojęciem wektora indukcji magnetycznej wraz z jego jednostką, analizuje oddziaływanie pola magnetycznego na przewodnik z prądem oraz na poruszającą się cząstkę naładowaną (siła elektrodynamiczna, siła Lorentza)",
+        "opisuje rolę pola magnetycznego Ziemi jako osłony przed wiatrem słonecznym",
+        "analizuje tor cząstki naładowanej w jednorodnym polu magnetycznym",
+        "rysuje siły działające na pętlę z przewodnika w jednorodnym polu magnetycznym; na podstawie tego rysunku omawia zasadę działania silnika elektrycznego",
+        "stosuje do obliczeń związek wartości indukcji pola magnetycznego i natężenia prądu dla prostoliniowego przewodnika i długiej zwojnicy",
+        "analizuje siłę oddziaływania dwóch długich przewodników prostoliniowych",
+        "opisuje jakościowo podstawowe właściwości oraz zastosowania ferromagnetyków",
+        "oblicza strumień pola magnetycznego przez powierzchnię, stosuje jednostkę strumienia",
+        "opisuje zjawisko indukcji elektromagnetycznej; stosuje regułę Lenza; opisuje przemiany energii podczas działania prądnicy",
+        "oblicza siłę elektromotoryczną indukcji jako szybkość zmiany strumienia",
+        "opisuje cechy prądu przemiennego; posługuje się pojęciem napięcia i natężenia skutecznego; oblicza napięcie i natężenie skuteczne dla przebiegu sinusoidalnego",
+        "opisuje zasadę działania transformatora; przedstawia uproszczony model transformatora, w którym przekładnia napięciowa i przekładnia prądowa zależą tylko od liczb zwojów; opisuje zastosowania transformatorów",
+        "opisuje jakościowo współzależność zmian pola magnetycznego i elektrycznego oraz rozchodzenie się fal elektromagnetycznych"
+      ],
+      "doswiadczenia": [
+        "ilustruje układ linii pola magnetycznego",
+        "demonstruje zjawisko indukcji elektromagnetycznej i jego związek ze względnym ruchem magnesu i zwojnicy oraz ze zmianą natężenia prądu w elektromagnesie"
+      ]
+    }
+  ]
+}

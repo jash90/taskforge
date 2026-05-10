@@ -1,0 +1,81 @@
+{
+  "etap_edukacyjny": "Liceum ogólnokształcące i technikum",
+  "klasa": 2,
+  "zakres": "rozszerzony",
+  "przedmiot": "Fizyka",
+  "wymiar_godzin_w_cyklu": "6 godzin tygodniowo w cyklu kształcenia (dodatkowe godziny zakresu rozszerzonego)",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na cały etap edukacyjny. Poniższy rozkład na klasę 2 to typowa propozycja zgodna z programami nauczania zakresu rozszerzonego.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji oraz doświadczeń i wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych, oraz ocenianie wiarygodności źródeł.",
+    "V. Budowanie modeli fizycznych i matematycznych do opisu zjawisk oraz ilustracji praw i zależności fizycznych."
+  ],
+  "dzialy": [
+    {
+      "numer": "IV",
+      "nazwa": "Grawitacja i elementy astronomii",
+      "tresci": [
+        "posługuje się prawem powszechnego ciążenia do opisu oddziaływania grawitacyjnego; wskazuje siłę grawitacji jako przyczynę spadania ciał",
+        "stosuje do obliczeń związek między przyspieszeniem grawitacyjnym na powierzchni planety a jej masą i promieniem",
+        "analizuje jakościowo wpływ siły grawitacji Słońca na niejednostajny ruch planet po orbitach eliptycznych i siły grawitacji planet na ruch ich księżyców",
+        "wskazuje siłę grawitacji jako siłę dośrodkową w ruchu po orbicie kołowej, oblicza wartość prędkości na orbicie kołowej o dowolnym promieniu; omawia ruch satelitów wokół Ziemi",
+        "interpretuje III prawo Keplera jako konsekwencję prawa powszechnego ciążenia; stosuje do obliczeń III prawo Keplera dla orbit kołowych i eliptycznych",
+        "interpretuje II prawo Keplera jako konsekwencję zasady zachowania momentu pędu",
+        "oblicza zmiany energii potencjalnej grawitacji i stosuje zasadę zachowania energii do ruchu pod wpływem siły grawitacji; posługuje się pojęciem drugiej prędkości kosmicznej (prędkości ucieczki)",
+        "opisuje stan nieważkości i stan przeciążenia oraz podaje warunki i przykłady jego występowania",
+        "opisuje budowę Układu Słonecznego; wskazuje Słońce jako jedną z wielu gwiazd w Galaktyce oraz Galaktykę jako jedną z wielu galaktyk we Wszechświecie; posługuje się pojęciami jednostki astronomicznej, roku świetlnego",
+        "opisuje Wielki Wybuch jako początek znanego nam Wszechświata; zna przybliżony wiek Wszechświata, opisuje rozszerzanie się Wszechświata (ucieczkę galaktyk); stosuje do obliczeń prawo Hubble'a jako proporcjonalność prostą między odległością względną dalekich galaktyk a ich prędkością względną"
+      ]
+    },
+    {
+      "numer": "V",
+      "nazwa": "Drgania",
+      "tresci": [
+        "opisuje proporcjonalność siły sprężystości do wydłużenia; posługuje się pojęciem współczynnika sprężystości i jego jednostką",
+        "analizuje ruch pod wpływem siły sprężystości; posługuje się pojęciem ruchu harmonicznego; podaje przykłady takich ruchów",
+        "opisuje ruch harmoniczny, posługując się pojęciami wychylenia, amplitudy, częstości kołowej i przesunięcia fazowego; rozróżnia drgania o fazach zgodnych lub przeciwnych",
+        "analizuje zależności położenia, prędkości i przyspieszenia od czasu dla ciała w ruchu drgającym harmonicznym oraz interpretuje wykresy tych zależności",
+        "stosuje do obliczeń zależność okresu małych drgań wahadła matematycznego i ciężarka na sprężynie od ich parametrów",
+        "oblicza energię potencjalną sprężystości i uwzględnia ją w analizie przemian energii",
+        "omawia zjawisko rezonansu mechanicznego na wybranych przykładach"
+      ],
+      "doswiadczenia": [
+        "demonstruje niezależność okresu małych drgań wahadła od amplitudy",
+        "bada zależność okresu drgań od długości wahadła",
+        "bada zależność okresu drgań ciężarka od jego masy i od współczynnika sprężystości sprężyny",
+        "demonstruje zjawisko rezonansu mechanicznego",
+        "wyznacza wartość przyspieszenia ziemskiego za pomocą wahadła matematycznego"
+      ]
+    },
+    {
+      "numer": "VI",
+      "nazwa": "Termodynamika",
+      "tresci": [
+        "opisuje zjawisko rozszerzalności cieplnej: liniowej ciał stałych oraz objętościowej gazów i cieczy",
+        "rozróżnia przekaz energii w postaci ciepła między układami o różnych temperaturach i przekaz energii w formie pracy",
+        "posługuje się pojęciem energii wewnętrznej; analizuje pierwszą zasadę termodynamiki jako zasadę zachowania energii",
+        "opisuje przykłady współistnienia substancji w różnych fazach w stanie równowagi termodynamicznej",
+        "wykorzystuje pojęcie ciepła właściwego oraz ciepła przemiany fazowej w analizie bilansu cieplnego",
+        "opisuje skokową zmianę energii wewnętrznej w przemianach fazowych",
+        "wymienia szczególne własności wody i ich konsekwencje dla życia na Ziemi",
+        "stosuje pierwszą zasadę termodynamiki do analizy przemian gazowych; rozróżnia przemiany: izotermiczną, izobaryczną, izochoryczną i adiabatyczną gazów",
+        "posługuje się założeniami teorii kinetyczno-molekularnej gazu doskonałego",
+        "opisuje związek między temperaturą w skali Kelvina a średnią energią ruchu cząsteczek i energią wewnętrzną gazu doskonałego",
+        "analizuje wykresy przemian gazu doskonałego",
+        "stosuje równanie gazu doskonałego (równanie Clapeyrona) do wyznaczenia parametrów gazu",
+        "posługuje się pojęciem ciepła molowego gazu; interpretuje związek między ciepłem molowym przy stałym ciśnieniu a ciepłem molowym w stałej objętości dla gazu doskonałego",
+        "analizuje przepływ energii w postaci ciepła i pracy mechanicznej w silnikach i pompach cieplnych",
+        "analizuje przedstawione cykle termodynamiczne, oblicza sprawność silników cieplnych",
+        "interpretuje drugą zasadę termodynamiki, podaje przykłady zjawisk odwracalnych i nieodwracalnych"
+      ],
+      "doswiadczenia": [
+        "demonstruje rozszerzalność cieplną wybranych ciał stałych",
+        "bada proces wyrównywania temperatury ciał i posługuje się bilansem cieplnym",
+        "demonstruje stałość temperatury podczas przemiany fazowej"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "etap_edukacyjny": "Szkoła podstawowa",
+  "klasa": 8,
+  "przedmiot": "Fizyka",
+  "wymiar_godzin": "2 godziny tygodniowo",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na etap edukacyjny (kl. 7-8 łącznie). Poniższy rozkład na klasę 8 jest typową propozycją zgodną z programami nauczania największych wydawnictw.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji lub doświadczeń oraz wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych."
+  ],
+  "dzialy": [
+    {
+      "numer": "V",
+      "nazwa": "Właściwości materii (część 2 - hydrostatyka i aerostatyka)",
+      "tresci": [
+        "posługuje się pojęciem siły parcia oraz pojęciem ciśnienia w cieczach i gazach wraz z jego jednostką; stosuje do obliczeń związek między siłą parcia a ciśnieniem",
+        "posługuje się pojęciem ciśnienia atmosferycznego",
+        "posługuje się prawem Pascala, zgodnie z którym zwiększenie ciśnienia zewnętrznego powoduje jednakowy przyrost ciśnienia w całej objętości cieczy lub gazu",
+        "stosuje do obliczeń związek między ciśnieniem hydrostatycznym a wysokością słupa cieczy i jej gęstością",
+        "analizuje siły działające na ciała zanurzone w cieczach lub gazach, posługując się pojęciem siły wyporu i prawem Archimedesa; analizuje warunek pływania ciał",
+        "wymienia przykłady manifestowania się sił oddziaływania międzycząsteczkowego w różnych sytuacjach, w tym napięcie powierzchniowe i formowanie się kropel"
+      ],
+      "doswiadczenia": [
+        "demonstruje istnienie ciśnienia atmosferycznego",
+        "demonstruje zjawiska konwekcji i napięcia powierzchniowego",
+        "demonstruje prawo Pascala oraz zależność ciśnienia hydrostatycznego od wysokości słupa cieczy",
+        "demonstruje prawo Archimedesa, wyznacza wartość siły wyporu"
+      ]
+    },
+    {
+      "numer": "VI",
+      "nazwa": "Elektryczność",
+      "tresci": [
+        "opisuje sposoby elektryzowania ciał przez potarcie i dotyk; wskazuje, że zjawiska te polegają na przemieszczaniu elektronów",
+        "opisuje jakościowo oddziaływanie ładunków jednoimiennych i różnoimiennych",
+        "rozróżnia przewodniki od izolatorów oraz wskazuje ich przykłady",
+        "opisuje przemieszczenie ładunków w przewodnikach pod wpływem oddziaływania ze strony ładunku zewnętrznego (indukcja elektrostatyczna)",
+        "analizuje działanie elektroskopu na podstawie opisu jego budowy",
+        "posługuje się pojęciem ładunku elektrycznego jako wielokrotności ładunku elementarnego; stosuje jednostkę ładunku",
+        "opisuje przepływ prądu w obwodach jako ruch elektronów swobodnych albo jonów w przewodnikach",
+        "posługuje się pojęciem natężenia prądu wraz z jego jednostką; stosuje do obliczeń związek między natężeniem prądu a ładunkiem i czasem jego przepływu przez przekrój poprzeczny przewodnika",
+        "posługuje się pojęciem napięcia elektrycznego jako wielkości określającej ilość energii potrzebnej do przeniesienia jednostkowego ładunku w obwodzie; stosuje jednostkę napięcia",
+        "posługuje się pojęciem pracy i mocy prądu elektrycznego wraz z ich jednostkami; stosuje do obliczeń związki między tymi wielkościami; przelicza energię elektryczną wyrażoną w kilowatogodzinach na dżule i odwrotnie",
+        "wyróżnia formy energii, na jakie jest zamieniana energia elektryczna; wskazuje źródła energii elektrycznej i odbiorniki",
+        "posługuje się pojęciem oporu elektrycznego jako własnością przewodnika; stosuje do obliczeń związek między napięciem a natężeniem prądu i oporem; posługuje się jednostką oporu",
+        "rysuje schematy obwodów elektrycznych składających się z jednego źródła energii, jednego odbiornika, mierników i wyłączników; posługuje się symbolami graficznymi tych elementów",
+        "opisuje rolę izolacji i bezpieczników przeciążeniowych w domowej sieci elektrycznej oraz warunki bezpiecznego korzystania z energii elektrycznej"
+      ],
+      "doswiadczenia": [
+        "demonstruje zjawiska elektryzowania przez potarcie lub dotyk, posługuje się elektroskopem",
+        "demonstruje wzajemne oddziaływanie ciał naelektryzowanych",
+        "bada (np. za pomocą źródła napięcia oraz żarówki lub amperomierza), czy dana substancja jest przewodnikiem, czy izolatorem",
+        "łączy według podanego schematu obwód elektryczny składający się ze źródła (akumulatora, zasilacza), odbiornika (żarówki, brzęczyka, silnika, diody, grzejnika, opornika), wyłączników, woltomierzy, amperomierzy; odczytuje wskazania mierników",
+        "wyznacza opór przewodnika przez pomiary napięcia na jego końcach oraz natężenia prądu przez niego płynącego"
+      ]
+    },
+    {
+      "numer": "VII",
+      "nazwa": "Magnetyzm",
+      "tresci": [
+        "nazywa bieguny magnesów stałych i opisuje oddziaływanie między nimi",
+        "opisuje zachowanie się igły magnetycznej w obecności magnesu oraz zasadę działania kompasu; posługuje się pojęciem biegunów magnetycznych Ziemi",
+        "opisuje na przykładzie żelaza oddziaływanie magnesów na materiały magnetyczne i wymienia przykłady wykorzystania tego oddziaływania",
+        "opisuje zachowanie się igły magnetycznej w otoczeniu prostoliniowego przewodnika z prądem",
+        "opisuje budowę i działanie elektromagnesu; opisuje wzajemne oddziaływanie elektromagnesów i magnesów; wymienia przykłady zastosowania elektromagnesów",
+        "wskazuje oddziaływanie magnetyczne jako podstawę działania silników elektrycznych"
+      ],
+      "doswiadczenia": [
+        "demonstruje zachowanie się igły magnetycznej w obecności magnesu",
+        "demonstruje zjawisko oddziaływania przewodnika z prądem na igłę magnetyczną"
+      ]
+    },
+    {
+      "numer": "VIII",
+      "nazwa": "Ruch drgający i fale",
+      "tresci": [
+        "opisuje ruch okresowy wahadła; posługuje się pojęciami położenia równowagi, amplitudy, okresu i częstotliwości do opisu ruchu okresowego wraz z ich jednostkami",
+        "wyznacza amplitudę i okres drgań na podstawie przedstawionego wykresu zależności położenia od czasu",
+        "opisuje rozchodzenie się fali mechanicznej jako proces przekazywania energii bez przenoszenia materii",
+        "posługuje się pojęciami amplitudy, okresu, częstotliwości, długości fali i prędkości rozchodzenia się fali do opisu fal oraz stosuje do obliczeń związki między tymi wielkościami wraz z ich jednostkami",
+        "opisuje mechanizm powstawania i rozchodzenia się fal dźwiękowych w powietrzu; podaje przykłady źródeł dźwięku",
+        "opisuje jakościowo związek między wysokością dźwięku a częstotliwością fali oraz związek między natężeniem dźwięku (głośnością) a energią fali i amplitudą fali",
+        "rozróżnia dźwięki słyszalne, ultradźwięki i infradźwięki; wymienia przykłady ich źródeł i zastosowań"
+      ],
+      "doswiadczenia": [
+        "wyznacza okres i częstotliwość w ruchu okresowym",
+        "demonstruje dźwięki o różnych częstotliwościach z wykorzystaniem drgającego przedmiotu lub instrumentu muzycznego"
+      ]
+    },
+    {
+      "numer": "IX",
+      "nazwa": "Optyka",
+      "tresci": [
+        "ilustruje prostoliniowe rozchodzenie się światła w ośrodku jednorodnym; wyjaśnia powstawanie cienia i półcienia",
+        "opisuje zjawisko odbicia od powierzchni płaskiej i od powierzchni sferycznej",
+        "opisuje zjawisko rozproszenia światła przy odbiciu od powierzchni chropowatej",
+        "analizuje bieg promieni wychodzących z punktu w różnych kierunkach, a następnie odbitych od zwierciadła płaskiego i od zwierciadeł sferycznych; opisuje skupianie promieni w zwierciadle wklęsłym",
+        "konstruuje bieg promieni ilustrujący powstawanie obrazów pozornych wytwarzanych przez zwierciadło płaskie",
+        "opisuje jakościowo zjawisko załamania światła na granicy dwóch ośrodków różniących się prędkością rozchodzenia się światła; wskazuje kierunek załamania",
+        "opisuje bieg promieni równoległych do osi optycznej przechodzących przez soczewkę skupiającą i rozpraszającą, posługując się pojęciem ogniska",
+        "posługuje się pojęciem krótkowzroczności i dalekowzroczności oraz opisuje rolę soczewek w korygowaniu tych wad wzroku",
+        "opisuje światło białe jako mieszaninę barw; omawia jakościowo rozszczepienie światła w pryzmacie",
+        "opisuje światło lasera jako jednobarwne i ilustruje to brakiem rozszczepienia w pryzmacie",
+        "wymienia rodzaje fal elektromagnetycznych: radiowe, mikrofale, promieniowanie podczerwone, światło widzialne, promieniowanie nadfioletowe, rentgenowskie i gamma; wskazuje przykłady ich zastosowania"
+      ],
+      "doswiadczenia": [
+        "demonstruje zjawisko prostoliniowego rozchodzenia się światła, zjawisko załamania światła na granicy ośrodków, powstawanie obrazów za pomocą zwierciadeł płaskich i soczewek",
+        "demonstruje rozszczepienie światła w pryzmacie"
+      ]
+    }
+  ]
+}

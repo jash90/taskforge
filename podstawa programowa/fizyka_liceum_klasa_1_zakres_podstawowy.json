@@ -1,0 +1,84 @@
+{
+  "etap_edukacyjny": "Liceum ogólnokształcące i technikum",
+  "klasa": 1,
+  "zakres": "podstawowy",
+  "przedmiot": "Fizyka",
+  "wymiar_godzin_w_cyklu": "4 godziny w cyklu kształcenia (zakres podstawowy)",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na cały etap edukacyjny (kl. 1-4 LO / kl. 1-5 technikum). Poniższy rozkład na klasę 1 to typowa propozycja zgodna z programami nauczania (np. Nowa Era 'Odkryć fizykę').",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji lub doświadczeń oraz wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych, oraz ocenianie wiarygodności źródeł."
+  ],
+  "dzialy": [
+    {
+      "numer": "I",
+      "nazwa": "Wymagania przekrojowe",
+      "tresci": [
+        "przedstawia jednostki wielkości fizycznych, wyraża je poprzez jednostki podstawowe; przelicza wielokrotności i podwielokrotności",
+        "posługuje się materiałami pomocniczymi, w tym tablicami fizycznymi i chemicznymi oraz kartą wybranych wzorów i stałych fizykochemicznych",
+        "prowadzi obliczenia szacunkowe i poddaje analizie otrzymany wynik",
+        "przeprowadza obliczenia liczbowe, posługując się kalkulatorem",
+        "rozróżnia wielkości wektorowe i skalarne",
+        "tworzy teksty, tabele, diagramy lub wykresy, rysunki schematyczne lub blokowe dla zilustrowania zjawisk bądź problemu; właściwie skaluje, oznacza i dobiera zakresy osi",
+        "wyodrębnia z tekstów, tabel, diagramów lub wykresów, rysunków schematycznych lub blokowych informacje kluczowe dla opisywanego zjawiska bądź problemu; przedstawia te informacje w różnych postaciach",
+        "rozpoznaje zależność rosnącą bądź malejącą na podstawie danych z tabeli lub na podstawie wykresu; rozpoznaje proporcjonalność prostą na podstawie wykresu",
+        "przeprowadza wybrane obserwacje, pomiary i doświadczenia na podstawie ich opisów; wyróżnia kluczowe kroki i sposób postępowania oraz wskazuje rolę użytych przyrządów i uwzględnia ich rozdzielczość",
+        "przestrzega zasad bezpieczeństwa podczas wykonywania obserwacji, pomiarów i doświadczeń",
+        "wyznacza średnią z kilku pomiarów jako końcowy wynik pomiaru powtarzanego",
+        "posługuje się pojęciem niepewności pomiaru wielkości prostych; zapisuje wynik pomiaru wraz z jego jednostką oraz z uwzględnieniem informacji o niepewności",
+        "przeprowadza obliczenia i zapisuje wynik zaokrąglony do zadanej liczby cyfr znaczących",
+        "wyodrębnia zjawisko z kontekstu, nazywa je oraz wskazuje czynniki istotne i nieistotne dla jego przebiegu",
+        "przedstawia własnymi słowami główne tezy tekstu popularnonaukowego z dziedziny fizyki lub astronomii",
+        "przedstawia wybrane informacje z historii odkryć kluczowych dla rozwoju fizyki"
+      ]
+    },
+    {
+      "numer": "II",
+      "nazwa": "Mechanika",
+      "tresci": [
+        "rozróżnia pojęcia: położenie, tor i droga",
+        "posługuje się do opisu ruchów wielkościami wektorowymi: przemieszczenie, prędkość i przyspieszenie wraz z ich jednostkami",
+        "opisuje ruchy prostoliniowe jednostajne i jednostajnie zmienne, posługując się zależnościami położenia, wartości prędkości oraz drogi od czasu",
+        "opisuje ruch jednostajny po okręgu, posługując się pojęciami okresu, częstotliwości, prędkości liniowej wraz z ich jednostkami",
+        "wyznacza graficznie siłę wypadkową dla sił działających w dowolnych kierunkach na płaszczyźnie",
+        "stosuje zasady dynamiki do opisu zachowania się ciał",
+        "rozróżnia opory ruchu (opory ośrodka i tarcie); omawia rolę tarcia na wybranych przykładach",
+        "identyfikuje siłę wypadkową działającą na ciało w ruchu jednostajnym po okręgu jako siłę dośrodkową",
+        "rozróżnia układy inercjalne i nieinercjalne",
+        "posługuje się pojęciami pracy mechanicznej, mocy, energii kinetycznej, energii potencjalnej wraz z ich jednostkami; stosuje zasadę zachowania energii mechanicznej do obliczeń"
+      ],
+      "doswiadczenia": [
+        "demonstruje zachowanie ciał w układach poruszających się z przyspieszeniem",
+        "bada jakościowo związek między siłą dośrodkową a masą, prędkością liniową i promieniem w ruchu jednostajnym po okręgu"
+      ]
+    },
+    {
+      "numer": "III",
+      "nazwa": "Grawitacja i elementy astronomii",
+      "tresci": [
+        "posługuje się prawem powszechnego ciążenia do opisu oddziaływania grawitacyjnego; wskazuje siłę grawitacji jako przyczynę spadania ciał",
+        "wskazuje siłę grawitacji jako siłę dośrodkową w ruchu po orbicie kołowej; omawia ruch satelitów wokół Ziemi",
+        "opisuje stan nieważkości i stan przeciążenia oraz podaje warunki i przykłady jego występowania",
+        "opisuje budowę Układu Słonecznego; wskazuje Słońce jako jedną z wielu gwiazd w Galaktyce oraz Galaktykę jako jedną z wielu galaktyk we Wszechświecie; posługuje się pojęciami jednostki astronomicznej i roku świetlnego",
+        "opisuje Wielki Wybuch jako początek znanego nam Wszechświata; zna przybliżony wiek Wszechświata, opisuje rozszerzanie się Wszechświata (ucieczkę galaktyk)"
+      ]
+    },
+    {
+      "numer": "IV",
+      "nazwa": "Drgania",
+      "tresci": [
+        "opisuje proporcjonalność siły sprężystości do wydłużenia",
+        "analizuje ruch drgający pod wpływem siły sprężystości, posługując się pojęciami wychylenia, amplitudy oraz okresu drgań; podaje przykłady takiego ruchu",
+        "analizuje przemiany energii w ruchu drgającym",
+        "omawia zjawisko rezonansu mechanicznego na wybranych przykładach"
+      ],
+      "doswiadczenia": [
+        "bada jakościową zależność okresu drgań ciężarka na sprężynie od jego masy",
+        "demonstruje zjawisko rezonansu mechanicznego"
+      ]
+    }
+  ]
+}

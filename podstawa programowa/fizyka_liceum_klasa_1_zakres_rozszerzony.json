@@ -1,0 +1,97 @@
+{
+  "etap_edukacyjny": "Liceum ogólnokształcące i technikum",
+  "klasa": 1,
+  "zakres": "rozszerzony",
+  "przedmiot": "Fizyka",
+  "wymiar_godzin_w_cyklu": "6 godzin tygodniowo w cyklu kształcenia (dodatkowe godziny zakresu rozszerzonego)",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na cały etap edukacyjny. Poniższy rozkład na klasę 1 to typowa propozycja zgodna z programami nauczania zakresu rozszerzonego.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji oraz doświadczeń i wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych, oraz ocenianie wiarygodności źródeł.",
+    "V. Budowanie modeli fizycznych i matematycznych do opisu zjawisk oraz ilustracji praw i zależności fizycznych."
+  ],
+  "dzialy": [
+    {
+      "numer": "I",
+      "nazwa": "Wymagania przekrojowe",
+      "tresci": [
+        "przedstawia jednostki wielkości fizycznych, wyraża je poprzez jednostki podstawowe; przelicza wielokrotności i podwielokrotności",
+        "posługuje się materiałami pomocniczymi, w tym tablicami fizycznymi i chemicznymi oraz kartą wybranych wzorów i stałych fizykochemicznych",
+        "prowadzi obliczenia szacunkowe i poddaje analizie otrzymany wynik",
+        "przeprowadza obliczenia liczbowe, posługując się kalkulatorem",
+        "rozróżnia wielkości wektorowe i skalarne, wykonuje graficznie działania na wektorach (dodawanie, odejmowanie, mnożenie przez liczbę, rozkładanie na składowe)",
+        "tworzy teksty, tabele, diagramy lub wykresy, rysunki schematyczne lub blokowe dla zilustrowania zjawisk bądź problemu; właściwie skaluje, oznacza i dobiera zakresy osi",
+        "wyodrębnia z tekstów, tabel, diagramów lub wykresów, rysunków schematycznych lub blokowych informacje kluczowe dla opisywanego zjawiska bądź problemu; przedstawia te informacje w różnych postaciach",
+        "rozpoznaje zależność rosnącą bądź malejącą na podstawie danych z tabeli lub na podstawie wykresu; rozpoznaje proporcjonalność prostą na podstawie wykresu",
+        "dopasowuje prostą do danych przedstawionych w postaci wykresu; interpretuje nachylenie tej prostej i punkty przecięcia z osiami",
+        "przeprowadza wybrane obserwacje, pomiary i doświadczenia na podstawie ich opisów; planuje i modyfikuje ich przebieg; formułuje hipotezę i prezentuje kroki niezbędne do jej weryfikacji",
+        "opisuje przebieg doświadczenia lub pokazu; wyróżnia kluczowe kroki i sposób postępowania oraz wskazuje rolę użytych przyrządów i uwzględnia ich rozdzielczość",
+        "przestrzega zasad bezpieczeństwa podczas wykonywania obserwacji, pomiarów i doświadczeń",
+        "wyznacza średnią z kilku pomiarów jako końcowy wynik pomiaru powtarzanego",
+        "posługuje się pojęciem niepewności pomiaru wielkości prostych; zapisuje wynik pomiaru wraz z jego jednostką oraz z uwzględnieniem informacji o niepewności; uwzględnia niepewności przy sporządzaniu wykresów",
+        "przeprowadza obliczenia i zapisuje wynik zaokrąglony do zadanej liczby cyfr znaczących",
+        "przedstawia wybrane informacje z historii odkryć kluczowych dla rozwoju fizyki",
+        "przedstawia własnymi słowami główne tezy tekstu popularnonaukowego z dziedziny fizyki lub astronomii",
+        "wyodrębnia zjawisko z kontekstu, nazywa je oraz wskazuje czynniki istotne i nieistotne dla jego przebiegu",
+        "tworzy modele fizyczne lub matematyczne wybranych zjawisk i opisuje ich założenia; ilustruje prawa i zależności fizyczne z wykorzystaniem tych założeń"
+      ]
+    },
+    {
+      "numer": "II",
+      "nazwa": "Mechanika",
+      "tresci": [
+        "opisuje ruch względem różnych układów odniesienia",
+        "rozróżnia pojęcia położenie, tor i droga",
+        "opisuje ruchy postępowe, posługując się wielkościami wektorowymi: przemieszczeniem, prędkością i przyspieszeniem wraz z ich jednostkami",
+        "opisuje ruchy prostoliniowe jednostajne i jednostajnie zmienne, posługując się zależnościami położenia, wartości prędkości i przyspieszenia oraz drogi od czasu",
+        "sporządza i interpretuje wykresy zależności parametrów ruchu od czasu",
+        "wyznacza położenie, wartość prędkości, wartość przyspieszenia i drogę w ruchu jednostajnym i jednostajnie zmiennym na podstawie danych zawartych w postaci tabel i wykresów",
+        "opisuje ruchy złożone jako sumę ruchów prostych; analizuje rzut poziomy jako przykład ruchu dwuwymiarowego",
+        "opisuje ruch jednostajny po okręgu, posługując się pojęciami: okresu, częstotliwości, prędkości liniowej oraz przemieszczenia kątowego, prędkości kątowej i przyspieszenia dośrodkowego wraz z ich jednostkami",
+        "stosuje do obliczeń związki między promieniem okręgu, prędkością kątową, prędkością liniową oraz przyspieszeniem dośrodkowym",
+        "identyfikuje siłę wypadkową działającą na ciało w ruchu jednostajnym po okręgu jako siłę dośrodkową",
+        "opisuje ruch niejednostajny po okręgu",
+        "wyznacza graficznie siłę wypadkową dla sił działających w dowolnych kierunkach na płaszczyźnie",
+        "stosuje zasady dynamiki do opisu zachowania się ciał",
+        "posługuje się pojęciem pędu i jego jednostką; interpretuje II zasadę dynamiki jako związek między zmianą pędu, siłą wypadkową i czasem działania tej siły wypadkowej",
+        "wykorzystuje zasadę zachowania pędu do opisu zachowania się izolowanego układu ciał",
+        "rozróżnia i analizuje zderzenia sprężyste i niesprężyste",
+        "opisuje opory ruchu (opory ośrodka, tarcie statyczne, tarcie kinetyczne); rozróżnia współczynniki tarcia kinetycznego oraz tarcia statycznego; omawia rolę tarcia na wybranych przykładach",
+        "rozróżnia układy inercjalne i nieinercjalne; omawia różnice między opisem ruchu ciał w układach inercjalnych i nieinercjalnych; posługuje się pojęciem siły bezwładności",
+        "stosuje zasadę równoważności układów inercjalnych (zasadę względności Galileusza)",
+        "posługuje się pojęciami pracy mechanicznej, mocy, energii kinetycznej, energii potencjalnej wraz z ich jednostkami; wykorzystuje równość między pracą siły wypadkowej i zmianą energii kinetycznej oraz zasadę zachowania energii mechanicznej do obliczeń",
+        "posługuje się pojęciem sprawności urządzeń mechanicznych",
+        "interpretuje pole pod wykresem zależności siły od drogi i pole pod wykresem zależności mocy od czasu jako wykonaną pracę",
+        "opisuje ruch ciał na równi pochyłej",
+        "posługuje się pojęciem ciśnienia hydrostatycznego i stosuje je do obliczeń; analizuje równowagę cieczy w naczyniach połączonych",
+        "stosuje do obliczeń prawo Archimedesa i objaśnia warunki pływania ciał"
+      ],
+      "doswiadczenia": [
+        "demonstruje zachowanie ciał w układach poruszających się z przyspieszeniem",
+        "bada zderzenia ciał oraz wyznacza masę lub prędkość jednego z ciał, korzystając z zasady zachowania pędu",
+        "jakościowo bada związek między siłą dośrodkową a masą, prędkością liniową i promieniem w ruchu jednostajnym po okręgu",
+        "wyznacza współczynnik tarcia statycznego na podstawie analizy zachowania się ciała na równi"
+      ]
+    },
+    {
+      "numer": "III",
+      "nazwa": "Mechanika bryły sztywnej",
+      "tresci": [
+        "wyznacza położenie środka masy układu ciał",
+        "stosuje pojęcie bryły sztywnej; opisuje ruch obrotowy bryły sztywnej wokół osi",
+        "stosuje warunki statyki bryły sztywnej; posługuje się pojęciem momentu sił wraz z jednostką",
+        "stosuje zasady dynamiki dla ruchu obrotowego; posługuje się pojęciami przyspieszenia kątowego oraz momentu bezwładności jako wielkości zależnej od rozkładu mas, wraz z ich jednostkami",
+        "oblicza energię kinetyczną ruchu obrotowego bryły sztywnej dookoła nieruchomej osi przy zadanym momencie bezwładności względem tej osi; oblicza energię ruchu bryły sztywnej jako sumę energii kinetycznej ruchu postępowego środka masy i ruchu obrotowego wokół osi przechodzącej przez środek masy",
+        "posługuje się pojęciem momentu pędu punktu materialnego i bryły; stosuje do obliczeń związek między momentem pędu i prędkością kątową",
+        "stosuje zasadę zachowania momentu pędu"
+      ],
+      "doswiadczenia": [
+        "demonstruje zasadę zachowania momentu pędu",
+        "bada ruch ciał o różnych momentach bezwładności"
+      ]
+    }
+  ]
+}

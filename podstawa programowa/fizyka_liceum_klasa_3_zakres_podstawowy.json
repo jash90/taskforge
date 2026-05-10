@@ -1,0 +1,64 @@
+{
+  "etap_edukacyjny": "Liceum ogólnokształcące i technikum",
+  "klasa": 3,
+  "zakres": "podstawowy",
+  "przedmiot": "Fizyka",
+  "wymiar_godzin_w_cyklu": "4 godziny w cyklu kształcenia (zakres podstawowy)",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na cały etap edukacyjny. Poniższy rozkład na klasę 3 (kończącą realizację zakresu podstawowego) to typowa propozycja zgodna z programami nauczania.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji lub doświadczeń oraz wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych, oraz ocenianie wiarygodności źródeł."
+  ],
+  "dzialy": [
+    {
+      "numer": "IX",
+      "nazwa": "Fale i optyka",
+      "tresci": [
+        "opisuje rozchodzenie się fal na powierzchni wody i dźwięku w powietrzu na podstawie obrazu powierzchni falowych",
+        "opisuje jakościowo dyfrakcję fali na szczelinie",
+        "stosuje zasadę superpozycji fal; opisuje zjawisko interferencji fal; podaje warunki wzmocnienia oraz wygaszenia się fal w zjawisku interferencji; opisuje przestrzenny obraz interferencji",
+        "opisuje jakościowo efekt Dopplera; podaje przykłady występowania tego zjawiska (dla fal mechanicznych i elektromagnetycznych)",
+        "opisuje zjawiska jednoczesnego odbicia i załamania światła na granicy dwóch ośrodków różniących się prędkością rozchodzenia się światła; opisuje działanie światłowodu jako przykład wykorzystania zjawiska całkowitego wewnętrznego odbicia",
+        "rozróżnia fale poprzeczne i podłużne; opisuje światło jako falę elektromagnetyczną; opisuje polaryzację światła wynikającą z poprzecznego charakteru fali",
+        "opisuje widmo światła białego jako mieszaniny fal o różnych częstotliwościach",
+        "opisuje przykłady zjawisk optycznych w przyrodzie"
+      ],
+      "doswiadczenia": [
+        "obserwuje wygaszanie światła po przejściu przez dwa polaryzatory, których osie polaryzacji są prostopadłe",
+        "demonstruje rozpraszanie światła w ośrodku"
+      ]
+    },
+    {
+      "numer": "X",
+      "nazwa": "Fizyka atomowa",
+      "tresci": [
+        "analizuje na wybranych przykładach promieniowanie termiczne ciał i jego zależność od temperatury",
+        "opisuje dualizm korpuskularno-falowy światła; posługuje się pojęciem fotonu oraz oblicza jego energię",
+        "opisuje jakościowo pochodzenie widm emisyjnych i absorpcyjnych gazów",
+        "interpretuje linie widmowe jako skutek przejść między poziomami energetycznymi w atomach z emisją lub absorpcją fotonu; rozróżnia stan podstawowy i stany wzbudzone atomu",
+        "opisuje zjawiska jonizacji i fotoelektryczne jako wywołane tylko przez promieniowanie o częstotliwości większej od granicznej"
+      ]
+    },
+    {
+      "numer": "XI",
+      "nazwa": "Fizyka jądrowa",
+      "tresci": [
+        "posługuje się pojęciami pierwiastek, jądro atomowe, izotop, proton, neutron, elektron do opisu składu materii; opisuje skład jądra atomowego na podstawie liczb masowej i atomowej",
+        "zapisuje reakcje jądrowe, stosując zasadę zachowania liczby nukleonów i zasadę zachowania ładunku",
+        "wymienia właściwości promieniowania jądrowego; opisuje rozpady alfa, beta",
+        "opisuje powstawanie promieniowania gamma",
+        "opisuje rozpad izotopu promieniotwórczego; posługuje się pojęciem czasu połowicznego rozpadu",
+        "stosuje zasadę zachowania energii do opisu reakcji jądrowych; posługuje się pojęciami energii wiązania i deficytu masy; posługuje się pojęciem energii spoczynkowej",
+        "wskazuje wpływ promieniowania jonizującego na organizmy żywe",
+        "wymienia przykłady zastosowania zjawiska promieniotwórczości w technice i medycynie",
+        "opisuje jakościowo reakcję rozszczepienia jądra uranu 235U zachodzącą w wyniku pochłonięcia neutronu; podaje warunki zajścia reakcji łańcuchowej",
+        "opisuje ogólną zasadę działania elektrowni jądrowej oraz wymienia korzyści i niebezpieczeństwa płynące z energetyki jądrowej",
+        "wskazuje reakcję termojądrową przemiany wodoru w hel jako źródło energii gwiazd",
+        "opisuje elementy ewolucji gwiazd; omawia supernowe i czarne dziury"
+      ]
+    }
+  ]
+}
