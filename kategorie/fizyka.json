@@ -1,0 +1,1583 @@
+{
+  "kategorie": [
+    {
+      "nazwa": "Wymagania przekrojowe",
+      "poddzialy": [
+        {
+          "nazwa": "Praca z informacją",
+          "podpunkty": [
+            "Wyodrębnianie informacji z tekstów, tabel, wykresów i rysunków",
+            "Przedstawianie informacji w różnych postaciach (tabela, wykres, schemat)",
+            "Wyodrębnianie zjawiska z kontekstu i nazywanie go",
+            "Wskazywanie czynników istotnych i nieistotnych dla przebiegu zjawiska"
+          ]
+        },
+        {
+          "nazwa": "Metodologia doświadczenia",
+          "podpunkty": [
+            "Przeprowadzanie obserwacji, pomiarów i doświadczeń wg opisu",
+            "Opis przebiegu doświadczenia, kluczowe kroki, rola przyrządów",
+            "Zasady bezpieczeństwa podczas obserwacji i pomiarów"
+          ]
+        },
+        {
+          "nazwa": "Pomiar i niepewność",
+          "podpunkty": [
+            "Pojęcie niepewności pomiarowej",
+            "Zapis wyniku pomiaru z jednostką i niepewnością",
+            "Zaokrąglanie wyniku do zadanej liczby cyfr znaczących"
+          ]
+        },
+        {
+          "nazwa": "Jednostki i zależności",
+          "podpunkty": [
+            "Przeliczanie wielokrotności i podwielokrotności (mikro-, mili-, centy-, hekto-, kilo-, mega-)",
+            "Rozpoznawanie zależności rosnącej i malejącej z tabeli i wykresu",
+            "Rozpoznawanie proporcjonalności prostej na podstawie wykresu"
+          ]
+        },
+        {
+          "nazwa": "Jednostki i obliczenia",
+          "podpunkty": [
+            "Jednostki wielkości fizycznych, jednostki podstawowe",
+            "Przeliczanie wielokrotności i podwielokrotności",
+            "Tablice fizyczne i karta wzorów",
+            "Obliczenia szacunkowe i analiza wyniku",
+            "Obliczenia z kalkulatorem",
+            "Jednostki wielkości fizycznych i jednostki podstawowe"
+          ]
+        },
+        {
+          "nazwa": "Wektory i skalary",
+          "podpunkty": [
+            "Rozróżnianie wielkości wektorowych i skalarnych"
+          ]
+        },
+        {
+          "nazwa": "Praca z danymi",
+          "podpunkty": [
+            "Tworzenie tekstów, tabel, wykresów, schematów",
+            "Skalowanie i dobór zakresów osi",
+            "Wyodrębnianie informacji z różnych form danych",
+            "Rozpoznawanie zależności i proporcjonalności prostej",
+            "Tworzenie tabel, wykresów, schematów",
+            "Skalowanie osi i dobór zakresów",
+            "Rozpoznawanie zależności rosnących/malejących i proporcjonalności",
+            "Dopasowanie prostej do danych - interpretacja nachylenia i punktów przecięcia"
+          ]
+        },
+        {
+          "nazwa": "Doświadczenia i pomiary",
+          "podpunkty": [
+            "Wykonywanie pomiarów według opisu",
+            "Rozdzielczość przyrządów",
+            "Bezpieczeństwo podczas doświadczeń",
+            "Średnia z pomiarów powtarzanych",
+            "Niepewność pomiarowa i zapis wyniku",
+            "Zaokrąglanie do cyfr znaczących"
+          ]
+        },
+        {
+          "nazwa": "Kontekst nauki",
+          "podpunkty": [
+            "Wyodrębnianie zjawiska z kontekstu",
+            "Czytanie tekstów popularnonaukowych",
+            "Historia odkryć kluczowych dla rozwoju fizyki"
+          ]
+        },
+        {
+          "nazwa": "Wektory",
+          "podpunkty": [
+            "Rozróżnianie wielkości wektorowych i skalarnych",
+            "Graficzne dodawanie wektorów",
+            "Graficzne odejmowanie wektorów",
+            "Mnożenie wektora przez liczbę",
+            "Rozkładanie wektora na składowe"
+          ]
+        },
+        {
+          "nazwa": "Doświadczenia i hipotezy",
+          "podpunkty": [
+            "Planowanie i modyfikacja przebiegu doświadczenia",
+            "Formułowanie hipotezy i jej weryfikacja",
+            "Rola przyrządów, ich rozdzielczość",
+            "Bezpieczeństwo podczas obserwacji i pomiarów"
+          ]
+        },
+        {
+          "nazwa": "Niepewność pomiarowa",
+          "podpunkty": [
+            "Średnia z pomiarów powtarzanych",
+            "Niepewność pomiaru wielkości prostych",
+            "Zapis wyniku z jednostką i niepewnością",
+            "Uwzględnianie niepewności przy wykresach",
+            "Zaokrąglanie do cyfr znaczących"
+          ]
+        },
+        {
+          "nazwa": "Modele i kontekst nauki",
+          "podpunkty": [
+            "Tworzenie modeli fizycznych lub matematycznych zjawisk",
+            "Opis założeń modeli",
+            "Wyodrębnianie zjawiska z kontekstu",
+            "Czytanie tekstów popularnonaukowych",
+            "Historia kluczowych odkryć fizyki"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Mechanika",
+      "poddzialy": [
+        {
+          "nazwa": "Opis ruchu",
+          "podpunkty": [
+            "Względność ruchu i przykłady",
+            "Tor i droga - rozróżnienie pojęć",
+            "Jednostki czasu i ich przeliczanie (s, min, h)",
+            "Położenie, tor i droga - rozróżnienie",
+            "Wielkości wektorowe: przemieszczenie, prędkość, przyspieszenie",
+            "Jednostki wielkości kinematycznych"
+          ]
+        },
+        {
+          "nazwa": "Prędkość i ruch jednostajny",
+          "podpunkty": [
+            "Pojęcie prędkości w ruchu prostoliniowym",
+            "Wzór v = s/t, jednostki prędkości i ich przeliczanie",
+            "Ruch jednostajny - droga przebyta w jednostkowych przedziałach czasu",
+            "Wykresy zależności prędkości i drogi od czasu",
+            "Odczyt prędkości i drogi z wykresów"
+          ]
+        },
+        {
+          "nazwa": "Ruch jednostajnie zmienny",
+          "podpunkty": [
+            "Ruch jednostajnie przyspieszony - definicja",
+            "Ruch jednostajnie opóźniony - definicja",
+            "Pojęcie przyspieszenia i jego jednostka",
+            "Wzór Δv = a·Δt",
+            "Wykresy v(t) i wyznaczanie przyspieszenia z wykresu"
+          ]
+        },
+        {
+          "nazwa": "Siła jako wielkość wektorowa",
+          "podpunkty": [
+            "Siła jako wielkość opisująca oddziaływanie ciał",
+            "Wektor siły - wartość, kierunek, zwrot, punkt przyłożenia",
+            "Jednostka siły (niuton)",
+            "Rodzaje sił: ciężkości, nacisku, sprężystości, oporów ruchu",
+            "Siła wypadkowa dla sił o jednakowych kierunkach",
+            "Siły równoważące się"
+          ]
+        },
+        {
+          "nazwa": "Zasady dynamiki Newtona",
+          "podpunkty": [
+            "I zasada dynamiki - analiza zachowania ciał",
+            "II zasada dynamiki - F = m·a",
+            "III zasada dynamiki - wzajemne oddziaływanie ciał",
+            "Masa a bezwładność ciała"
+          ]
+        },
+        {
+          "nazwa": "Grawitacja i spadek swobodny",
+          "podpunkty": [
+            "Spadek swobodny jako ruch jednostajnie przyspieszony",
+            "Niezależność przyspieszenia od masy ciała",
+            "Siła ciężkości i jej związek z masą i g"
+          ]
+        },
+        {
+          "nazwa": "Wymagania doświadczalne",
+          "podpunkty": [
+            "Ilustracja I, II i III zasady dynamiki",
+            "Wyznaczanie prędkości z pomiaru czasu i drogi (przyrządy analogowe, cyfrowe, wideo)",
+            "Wyznaczanie wartości siły siłomierzem lub wagą",
+            "Demonstracja zachowania ciał w układach z przyspieszeniem",
+            "Jakościowe badanie związku F_d, m, v, r w ruchu po okręgu",
+            "Badanie zderzeń ciał i wyznaczanie masy/prędkości z zasady zachowania pędu",
+            "Wyznaczanie współczynnika tarcia statycznego z analizy ruchu na równi",
+            "Demonstracja zasady zachowania momentu pędu",
+            "Badanie ruchu ciał o różnych momentach bezwładności"
+          ]
+        },
+        {
+          "nazwa": "Praca mechaniczna i moc",
+          "podpunkty": [
+            "Pojęcie pracy mechanicznej, jednostka (J)",
+            "Wzór W = F·s",
+            "Pojęcie mocy, jednostka (W)",
+            "Wzór P = W/t"
+          ]
+        },
+        {
+          "nazwa": "Rodzaje energii",
+          "podpunkty": [
+            "Energia kinetyczna - definicja i wzór",
+            "Energia potencjalna grawitacji",
+            "Energia potencjalna sprężystości",
+            "Praca jako zmiana energii"
+          ]
+        },
+        {
+          "nazwa": "Zasada zachowania energii",
+          "podpunkty": [
+            "Wyznaczanie zmiany energii potencjalnej i kinetycznej",
+            "Stosowanie zasady zachowania energii do opisu zjawisk",
+            "Przemiany energii w układach mechanicznych"
+          ]
+        },
+        {
+          "nazwa": "Ruch prostoliniowy",
+          "podpunkty": [
+            "Ruch jednostajny prostoliniowy - zależności",
+            "Ruch jednostajnie zmienny - zależności",
+            "Zależność położenia, prędkości i drogi od czasu"
+          ]
+        },
+        {
+          "nazwa": "Ruch po okręgu",
+          "podpunkty": [
+            "Pojęcia okresu i częstotliwości",
+            "Prędkość liniowa",
+            "Siła dośrodkowa jako siła wypadkowa w ruchu jednostajnym po okręgu",
+            "Ruch jednostajny po okręgu - okres, częstotliwość, prędkość liniowa",
+            "Przemieszczenie kątowe i prędkość kątowa",
+            "Przyspieszenie dośrodkowe",
+            "Związki: v = ω·r, a = v²/r = ω²·r",
+            "Siła dośrodkowa jako siła wypadkowa",
+            "Ruch niejednostajny po okręgu"
+          ]
+        },
+        {
+          "nazwa": "Siły i zasady dynamiki",
+          "podpunkty": [
+            "Siła wypadkowa - wyznaczanie graficzne dla sił w dowolnych kierunkach",
+            "I, II, III zasada dynamiki - zastosowania",
+            "Opory ruchu: opory ośrodka i tarcie",
+            "Rola tarcia w przykładach praktycznych"
+          ]
+        },
+        {
+          "nazwa": "Układy odniesienia",
+          "podpunkty": [
+            "Układy inercjalne",
+            "Układy nieinercjalne",
+            "Opis ruchu względem różnych układów odniesienia",
+            "Położenie, tor i droga - rozróżnienie",
+            "Układy inercjalne i nieinercjalne",
+            "Siła bezwładności",
+            "Zasada równoważności układów inercjalnych (Galileusza)"
+          ]
+        },
+        {
+          "nazwa": "Energia mechaniczna",
+          "podpunkty": [
+            "Praca mechaniczna i moc",
+            "Energia kinetyczna",
+            "Energia potencjalna",
+            "Zasada zachowania energii mechanicznej w obliczeniach"
+          ]
+        },
+        {
+          "nazwa": "Kinematyka ruchów prostoliniowych",
+          "podpunkty": [
+            "Wektory: przemieszczenie, prędkość, przyspieszenie",
+            "Ruch jednostajny prostoliniowy - zależności x(t), v(t)",
+            "Ruch jednostajnie zmienny - zależności x(t), v(t), a(t)",
+            "Sporządzanie i interpretacja wykresów",
+            "Wyznaczanie parametrów ruchu z tabel i wykresów"
+          ]
+        },
+        {
+          "nazwa": "Ruchy złożone",
+          "podpunkty": [
+            "Ruch złożony jako suma ruchów prostych",
+            "Rzut poziomy jako ruch dwuwymiarowy",
+            "Zasięg i czas rzutu"
+          ]
+        },
+        {
+          "nazwa": "Zasady dynamiki",
+          "podpunkty": [
+            "Siła wypadkowa - wyznaczanie graficzne w dowolnych kierunkach",
+            "I, II, III zasada dynamiki",
+            "Pęd i jego jednostka",
+            "II zasada dynamiki w postaci pędowej",
+            "Zasada zachowania pędu w układzie izolowanym",
+            "Zderzenia sprężyste i niesprężyste"
+          ]
+        },
+        {
+          "nazwa": "Opory ruchu",
+          "podpunkty": [
+            "Opory ośrodka",
+            "Tarcie statyczne i tarcie kinetyczne",
+            "Współczynniki tarcia kinetycznego i statycznego",
+            "Rola tarcia w przykładach"
+          ]
+        },
+        {
+          "nazwa": "Praca, energia i moc",
+          "podpunkty": [
+            "Praca mechaniczna i moc",
+            "Energia kinetyczna i energia potencjalna",
+            "Równość pracy siły wypadkowej i zmiany energii kinetycznej",
+            "Zasada zachowania energii mechanicznej",
+            "Sprawność urządzeń mechanicznych",
+            "Pole pod wykresem F(s) i P(t) jako wykonana praca"
+          ]
+        },
+        {
+          "nazwa": "Wybrane zagadnienia mechaniki",
+          "podpunkty": [
+            "Ruch ciał na równi pochyłej",
+            "Ciśnienie hydrostatyczne i naczynia połączone",
+            "Prawo Archimedesa - obliczenia, warunki pływania ciał"
+          ]
+        },
+        {
+          "nazwa": "Środek masy i bryła sztywna",
+          "podpunkty": [
+            "Wyznaczanie położenia środka masy układu ciał",
+            "Pojęcie bryły sztywnej",
+            "Ruch obrotowy bryły sztywnej wokół osi"
+          ]
+        },
+        {
+          "nazwa": "Statyka bryły sztywnej",
+          "podpunkty": [
+            "Warunki statyki bryły sztywnej",
+            "Moment siły i jego jednostka"
+          ]
+        },
+        {
+          "nazwa": "Dynamika ruchu obrotowego",
+          "podpunkty": [
+            "Zasady dynamiki dla ruchu obrotowego",
+            "Przyspieszenie kątowe",
+            "Moment bezwładności jako wielkość zależna od rozkładu mas",
+            "Jednostki wielkości"
+          ]
+        },
+        {
+          "nazwa": "Energia kinetyczna ruchu obrotowego",
+          "podpunkty": [
+            "Obliczanie energii kinetycznej ruchu obrotowego wokół ustalonej osi",
+            "Energia ruchu bryły jako suma: ruch postępowy środka masy + ruch obrotowy wokół osi przez środek masy"
+          ]
+        },
+        {
+          "nazwa": "Moment pędu",
+          "podpunkty": [
+            "Moment pędu punktu materialnego",
+            "Moment pędu bryły",
+            "Związek L = I·ω",
+            "Zasada zachowania momentu pędu"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Właściwości materii",
+      "poddzialy": [
+        {
+          "nazwa": "Masa i gęstość",
+          "podpunkty": [
+            "Pojęcie masy i jej jednostki",
+            "Pojęcie gęstości i jej jednostki",
+            "Wzór ρ = m/V",
+            "Różnice gęstości substancji w różnych stanach skupienia",
+            "Budowa mikroskopowa ciał stałych, cieczy i gazów"
+          ]
+        },
+        {
+          "nazwa": "Wymagania doświadczalne",
+          "podpunkty": [
+            "Wyznaczanie gęstości ciała o regularnym kształcie (waga + przymiar)",
+            "Wyznaczanie gęstości ciała o nieregularnym kształcie (waga + cylinder miarowy + ciecz)",
+            "Demonstracja istnienia ciśnienia atmosferycznego",
+            "Demonstracja konwekcji i napięcia powierzchniowego",
+            "Demonstracja prawa Pascala",
+            "Zależność ciśnienia hydrostatycznego od wysokości słupa",
+            "Demonstracja prawa Archimedesa, wyznaczanie siły wyporu"
+          ]
+        },
+        {
+          "nazwa": "Ciśnienie i parcie",
+          "podpunkty": [
+            "Pojęcie siły parcia",
+            "Pojęcie ciśnienia w cieczach i gazach, jednostka (Pa)",
+            "Wzór p = F/S i obliczenia"
+          ]
+        },
+        {
+          "nazwa": "Ciśnienie atmosferyczne",
+          "podpunkty": [
+            "Pojęcie ciśnienia atmosferycznego",
+            "Wartość ciśnienia normalnego",
+            "Doświadczenie Torricellego - kontekst"
+          ]
+        },
+        {
+          "nazwa": "Prawo Pascala",
+          "podpunkty": [
+            "Treść prawa Pascala",
+            "Przyrost ciśnienia w cieczach i gazach",
+            "Zastosowania (prasa hydrauliczna, podnośnik)"
+          ]
+        },
+        {
+          "nazwa": "Ciśnienie hydrostatyczne",
+          "podpunkty": [
+            "Wzór ciśnienia hydrostatycznego p = ρ·g·h",
+            "Zależność od wysokości słupa cieczy",
+            "Zależność od gęstości cieczy"
+          ]
+        },
+        {
+          "nazwa": "Prawo Archimedesa i pływanie ciał",
+          "podpunkty": [
+            "Siła wyporu - definicja",
+            "Treść prawa Archimedesa",
+            "Warunek pływania ciał",
+            "Tonięcie, pływanie, wynurzanie"
+          ]
+        },
+        {
+          "nazwa": "Oddziaływania międzycząsteczkowe",
+          "podpunkty": [
+            "Przykłady manifestowania się sił międzycząsteczkowych",
+            "Napięcie powierzchniowe",
+            "Formowanie się kropel"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Grawitacja i astronomia",
+      "poddzialy": [
+        {
+          "nazwa": "Prawo powszechnego ciążenia",
+          "podpunkty": [
+            "Treść prawa powszechnego ciążenia",
+            "Siła grawitacji jako przyczyna spadania ciał",
+            "Związek między przyspieszeniem grawitacyjnym na powierzchni planety a jej masą i promieniem"
+          ]
+        },
+        {
+          "nazwa": "Ruch satelitów",
+          "podpunkty": [
+            "Siła grawitacji jako siła dośrodkowa w ruchu orbitalnym",
+            "Ruch satelitów wokół Ziemi"
+          ]
+        },
+        {
+          "nazwa": "Stan nieważkości i przeciążenia",
+          "podpunkty": [
+            "Warunki występowania stanu nieważkości",
+            "Warunki występowania stanu przeciążenia",
+            "Przykłady z życia codziennego i kosmonautyki"
+          ]
+        },
+        {
+          "nazwa": "Astronomia podstawowa",
+          "podpunkty": [
+            "Budowa Układu Słonecznego",
+            "Słońce jako jedna z gwiazd Galaktyki",
+            "Galaktyka jako jedna z wielu we Wszechświecie",
+            "Jednostka astronomiczna (AU)",
+            "Rok świetlny",
+            "Słońce jako gwiazda Galaktyki",
+            "Jednostka astronomiczna i rok świetlny"
+          ]
+        },
+        {
+          "nazwa": "Kosmologia",
+          "podpunkty": [
+            "Wielki Wybuch jako początek Wszechświata",
+            "Przybliżony wiek Wszechświata",
+            "Rozszerzanie się Wszechświata - ucieczka galaktyk",
+            "Wielki Wybuch i wiek Wszechświata",
+            "Prawo Hubble'a - proporcjonalność prosta odległości i prędkości"
+          ]
+        },
+        {
+          "nazwa": "Ruch w polu grawitacyjnym",
+          "podpunkty": [
+            "Jakościowy wpływ siły grawitacji Słońca na ruch planet po orbitach eliptycznych",
+            "Wpływ siły grawitacji planet na ruch ich księżyców",
+            "Siła grawitacji jako siła dośrodkowa w ruchu orbitalnym",
+            "Obliczanie prędkości na orbicie kołowej o dowolnym promieniu",
+            "Ruch satelitów wokół Ziemi"
+          ]
+        },
+        {
+          "nazwa": "Prawa Keplera",
+          "podpunkty": [
+            "II prawo Keplera jako konsekwencja zasady zachowania momentu pędu",
+            "III prawo Keplera jako konsekwencja prawa powszechnego ciążenia",
+            "Obliczenia z III prawa Keplera dla orbit kołowych i eliptycznych"
+          ]
+        },
+        {
+          "nazwa": "Energia w polu grawitacyjnym",
+          "podpunkty": [
+            "Zmiany energii potencjalnej grawitacji",
+            "Zasada zachowania energii w ruchu pod wpływem siły grawitacji",
+            "Druga prędkość kosmiczna (prędkość ucieczki)"
+          ]
+        },
+        {
+          "nazwa": "Nieważkość i przeciążenie",
+          "podpunkty": [
+            "Stan nieważkości - warunki i przykłady",
+            "Stan przeciążenia - warunki i przykłady"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Drgania, fale i optyka",
+      "poddzialy": [
+        {
+          "nazwa": "Ruch drgający",
+          "podpunkty": [
+            "Ruch okresowy wahadła",
+            "Położenie równowagi",
+            "Amplituda, okres, częstotliwość - definicje i jednostki",
+            "Odczyt amplitudy i okresu z wykresu x(t)",
+            "Ruch pod wpływem siły sprężystości",
+            "Wychylenie, amplituda, okres drgań",
+            "Przykłady ruchu drgającego"
+          ]
+        },
+        {
+          "nazwa": "Fale mechaniczne",
+          "podpunkty": [
+            "Rozchodzenie się fali jako przekaz energii bez przenoszenia materii",
+            "Amplituda, okres, częstotliwość, długość fali, prędkość fali",
+            "Wzór v = λ·f",
+            "Obliczenia związane z falami"
+          ]
+        },
+        {
+          "nazwa": "Dźwięk",
+          "podpunkty": [
+            "Mechanizm powstawania fali dźwiękowej",
+            "Rozchodzenie się dźwięku w powietrzu",
+            "Przykłady źródeł dźwięku",
+            "Wysokość dźwięku a częstotliwość",
+            "Natężenie dźwięku a energia i amplituda fali",
+            "Dźwięki słyszalne, ultradźwięki, infradźwięki - zastosowania"
+          ]
+        },
+        {
+          "nazwa": "Wymagania doświadczalne",
+          "podpunkty": [
+            "Wyznaczanie okresu i częstotliwości w ruchu okresowym",
+            "Demonstracja dźwięków o różnych częstotliwościach",
+            "Demonstracja prostoliniowego rozchodzenia się światła",
+            "Demonstracja załamania światła na granicy ośrodków",
+            "Powstawanie obrazów w zwierciadle płaskim i przez soczewki",
+            "Demonstracja rozszczepienia światła w pryzmacie",
+            "Jakościowa zależność okresu drgań ciężarka na sprężynie od jego masy",
+            "Demonstracja zjawiska rezonansu mechanicznego",
+            "Obserwacja wygaszania światła przez dwa polaryzatory o prostopadłych osiach",
+            "Demonstracja rozpraszania światła w ośrodku",
+            "Demonstracja niezależności okresu małych drgań wahadła od amplitudy",
+            "Badanie zależności okresu drgań od długości wahadła",
+            "Badanie zależności okresu drgań ciężarka od jego masy i współczynnika sprężystości",
+            "Wyznaczanie przyspieszenia ziemskiego za pomocą wahadła matematycznego",
+            "Obserwacja zmian natężenia światła po przejściu przez dwa polaryzatory o różnych kątach osi",
+            "Obserwacja dyfrakcji fali na szczelinie",
+            "Obserwacja interferencji fal",
+            "Wyznaczanie współczynnika załamania z pomiaru kąta granicznego",
+            "Badanie związku ogniskowej soczewki z położeniami przedmiotu i obrazu"
+          ]
+        },
+        {
+          "nazwa": "Prostoliniowe rozchodzenie się światła",
+          "podpunkty": [
+            "Rozchodzenie się światła w ośrodku jednorodnym",
+            "Powstawanie cienia",
+            "Powstawanie półcienia"
+          ]
+        },
+        {
+          "nazwa": "Odbicie światła",
+          "podpunkty": [
+            "Odbicie od powierzchni płaskiej",
+            "Odbicie od powierzchni sferycznej",
+            "Rozproszenie światła na powierzchni chropowatej"
+          ]
+        },
+        {
+          "nazwa": "Zwierciadła",
+          "podpunkty": [
+            "Bieg promieni odbitych od zwierciadła płaskiego",
+            "Bieg promieni odbitych od zwierciadeł sferycznych",
+            "Skupianie promieni w zwierciadle wklęsłym",
+            "Konstrukcja obrazu pozornego w zwierciadle płaskim"
+          ]
+        },
+        {
+          "nazwa": "Załamanie światła",
+          "podpunkty": [
+            "Jakościowy opis załamania na granicy ośrodków",
+            "Wskazywanie kierunku załamania w zależności od prędkości światła"
+          ]
+        },
+        {
+          "nazwa": "Soczewki",
+          "podpunkty": [
+            "Bieg promieni równoległych przez soczewkę skupiającą",
+            "Bieg promieni przez soczewkę rozpraszającą",
+            "Pojęcie ogniska soczewki",
+            "Jakościowa zależność ogniskowej soczewki od krzywizny",
+            "Jakościowa zależność ogniskowej od współczynnika załamania",
+            "Zdolność skupiająca i jej jednostka (dioptria)",
+            "Konstrukcja obrazów w soczewkach",
+            "Równanie soczewki w obliczeniach"
+          ]
+        },
+        {
+          "nazwa": "Wady wzroku",
+          "podpunkty": [
+            "Krótkowzroczność",
+            "Dalekowzroczność",
+            "Rola soczewek w korygowaniu wad wzroku"
+          ]
+        },
+        {
+          "nazwa": "Światło białe i widmo",
+          "podpunkty": [
+            "Światło białe jako mieszanina barw",
+            "Rozszczepienie światła w pryzmacie",
+            "Światło lasera jako jednobarwne (brak rozszczepienia)"
+          ]
+        },
+        {
+          "nazwa": "Fale elektromagnetyczne",
+          "podpunkty": [
+            "Fale radiowe",
+            "Mikrofale",
+            "Promieniowanie podczerwone",
+            "Światło widzialne",
+            "Promieniowanie nadfioletowe",
+            "Promieniowanie rentgenowskie",
+            "Promieniowanie gamma",
+            "Przykłady zastosowań poszczególnych rodzajów"
+          ]
+        },
+        {
+          "nazwa": "Siła sprężystości",
+          "podpunkty": [
+            "Proporcjonalność siły sprężystości do wydłużenia (prawo Hooke'a jakościowo)",
+            "Proporcjonalność siły sprężystości do wydłużenia",
+            "Współczynnik sprężystości i jego jednostka"
+          ]
+        },
+        {
+          "nazwa": "Energia w ruchu drgającym",
+          "podpunkty": [
+            "Przemiany energii potencjalnej i kinetycznej",
+            "Punkty maksymalnej energii potencjalnej i kinetycznej"
+          ]
+        },
+        {
+          "nazwa": "Rezonans mechaniczny",
+          "podpunkty": [
+            "Pojęcie rezonansu",
+            "Przykłady zjawiska rezonansu",
+            "Przykłady rezonansu"
+          ]
+        },
+        {
+          "nazwa": "Rozchodzenie się fal",
+          "podpunkty": [
+            "Rozchodzenie się fal na powierzchni wody",
+            "Rozchodzenie się fal dźwiękowych w powietrzu",
+            "Powierzchnie falowe",
+            "Analiza rozchodzenia się fal na powierzchni wody",
+            "Analiza rozchodzenia się dźwięku w powietrzu",
+            "Pojęcie natężenia fali, jednostka W/m²",
+            "Proporcjonalność natężenia do kwadratu amplitudy",
+            "Zależność natężenia i amplitudy fali kulistej od odległości od źródła"
+          ]
+        },
+        {
+          "nazwa": "Dyfrakcja i interferencja",
+          "podpunkty": [
+            "Jakościowy opis dyfrakcji fali na szczelinie",
+            "Zasada superpozycji fal",
+            "Zjawisko interferencji",
+            "Warunki wzmocnienia i wygaszenia fal",
+            "Przestrzenny obraz interferencji"
+          ]
+        },
+        {
+          "nazwa": "Efekt Dopplera",
+          "podpunkty": [
+            "Jakościowy opis efektu Dopplera",
+            "Przykłady dla fal mechanicznych",
+            "Przykłady dla fal elektromagnetycznych",
+            "Analiza efektu Dopplera dla małych prędkości",
+            "Przykłady dla fal dźwiękowych"
+          ]
+        },
+        {
+          "nazwa": "Optyka geometryczna",
+          "podpunkty": [
+            "Jednoczesne odbicie i załamanie na granicy ośrodków",
+            "Całkowite wewnętrzne odbicie",
+            "Światłowód jako zastosowanie",
+            "Prawo odbicia fal",
+            "Prawo załamania fal na granicy dwóch ośrodków",
+            "Współczynnik załamania ośrodka",
+            "Obliczanie kąta granicznego",
+            "Działanie światłowodu"
+          ]
+        },
+        {
+          "nazwa": "Fale poprzeczne i podłużne",
+          "podpunkty": [
+            "Rozróżnienie fal poprzecznych i podłużnych",
+            "Światło jako fala elektromagnetyczna",
+            "Polaryzacja światła wynikająca z poprzecznego charakteru fali"
+          ]
+        },
+        {
+          "nazwa": "Widmo światła",
+          "podpunkty": [
+            "Światło białe jako mieszanina fal o różnych częstotliwościach",
+            "Zjawiska optyczne w przyrodzie (tęcza, miraże)"
+          ]
+        },
+        {
+          "nazwa": "Ruch harmoniczny",
+          "podpunkty": [
+            "Ruch pod wpływem siły sprężystości",
+            "Pojęcie ruchu harmonicznego i przykłady",
+            "Wychylenie, amplituda",
+            "Częstość kołowa, przesunięcie fazowe",
+            "Drgania o fazach zgodnych i przeciwnych"
+          ]
+        },
+        {
+          "nazwa": "Zależności w ruchu harmonicznym",
+          "podpunkty": [
+            "Zależność x(t) w ruchu harmonicznym",
+            "Zależność v(t) w ruchu harmonicznym",
+            "Zależność a(t) w ruchu harmonicznym",
+            "Interpretacja wykresów"
+          ]
+        },
+        {
+          "nazwa": "Okres drgań",
+          "podpunkty": [
+            "Wzór na okres małych drgań wahadła matematycznego",
+            "Wzór na okres ciężarka na sprężynie",
+            "Obliczenia z zależności okresu od parametrów"
+          ]
+        },
+        {
+          "nazwa": "Energia w ruchu harmonicznym",
+          "podpunkty": [
+            "Energia potencjalna sprężystości",
+            "Przemiany energii potencjalnej i kinetycznej"
+          ]
+        },
+        {
+          "nazwa": "Światło i widmo",
+          "podpunkty": [
+            "Widmo światła białego jako mieszanina fal o różnych częstotliwościach",
+            "Światło laserowe - skolimowana wiązka, monochromatyczność, zgodność faz"
+          ]
+        },
+        {
+          "nazwa": "Dyfrakcja",
+          "podpunkty": [
+            "Jakościowy związek dyfrakcji na szczelinie z szerokością szczeliny",
+            "Jakościowy związek dyfrakcji z długością fali"
+          ]
+        },
+        {
+          "nazwa": "Interferencja",
+          "podpunkty": [
+            "Zasada superpozycji fal",
+            "Zjawisko interferencji - wzmocnienia i wygaszenia",
+            "Interferencja wiązek odbitych od dwóch powierzchni cienkiej warstwy",
+            "Zależność przestrzennego obrazu interferencji od długości fali i odległości źródeł",
+            "Obraz po przejściu światła przez siatkę dyfrakcyjną",
+            "Związek między kątem dyfrakcji, stałą siatki i długością fali"
+          ]
+        },
+        {
+          "nazwa": "Polaryzacja",
+          "podpunkty": [
+            "Fale poprzeczne i podłużne",
+            "Światło jako fala elektromagnetyczna poprzeczna",
+            "Światło spolaryzowane i niespolaryzowane",
+            "Polaryzacja po przejściu przez polaryzator"
+          ]
+        },
+        {
+          "nazwa": "Zjawiska optyczne w przyrodzie",
+          "podpunkty": [
+            "Przykłady zjawisk optycznych (tęcza, halo, miraż)"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Termodynamika",
+      "poddzialy": [
+        {
+          "nazwa": "Temperatura i równowaga termiczna",
+          "podpunkty": [
+            "Pojęcie temperatury",
+            "Równowaga termiczna ciał o równej temperaturze",
+            "Skala Celsjusza i skala Kelvina",
+            "Przeliczanie temperatury między skalami"
+          ]
+        },
+        {
+          "nazwa": "Energia wewnętrzna i ciepło",
+          "podpunkty": [
+            "Energia wewnętrzna układu",
+            "Zmiana energii wewnętrznej przez pracę lub przekaz ciepła",
+            "Związek temperatury ze średnią energią kinetyczną cząsteczek"
+          ]
+        },
+        {
+          "nazwa": "Przekaz ciepła",
+          "podpunkty": [
+            "Przewodnictwo cieplne - opis zjawiska",
+            "Materiały o różnym przewodnictwie - przewodniki i izolatory cieplne",
+            "Rola izolacji cieplnej",
+            "Konwekcja - ruch gazów i cieczy"
+          ]
+        },
+        {
+          "nazwa": "Zmiany stanów skupienia",
+          "podpunkty": [
+            "Topnienie i krzepnięcie",
+            "Parowanie i skraplanie",
+            "Sublimacja i resublimacja",
+            "Stałość temperatury podczas topnienia i wrzenia"
+          ]
+        },
+        {
+          "nazwa": "Wymagania doświadczalne",
+          "podpunkty": [
+            "Demonstracja topnienia, wrzenia, skraplania",
+            "Badanie przewodnictwa cieplnego różnych materiałów",
+            "Zjawiska, w których ciepło lub praca powodują wzrost temperatury",
+            "Wyznaczanie ciepła właściwego substancji",
+            "Demonstracja rozszerzalności cieplnej ciał stałych",
+            "Badanie procesu wyrównywania temperatury i bilans cieplny",
+            "Demonstracja stałości temperatury podczas przemiany fazowej"
+          ]
+        },
+        {
+          "nazwa": "Rozszerzalność cieplna",
+          "podpunkty": [
+            "Rozszerzalność liniowa ciał stałych",
+            "Rozszerzalność objętościowa gazów i cieczy",
+            "Konsekwencje praktyczne (np. dylatacje)"
+          ]
+        },
+        {
+          "nazwa": "Ciepło i praca",
+          "podpunkty": [
+            "Przekaz energii w postaci ciepła między układami o różnych temperaturach",
+            "Przekaz energii w formie pracy",
+            "Odróżnianie dwóch sposobów zmiany energii",
+            "Przekaz energii w postaci ciepła",
+            "Energia wewnętrzna",
+            "I zasada termodynamiki jako zasada zachowania energii"
+          ]
+        },
+        {
+          "nazwa": "I zasada termodynamiki",
+          "podpunkty": [
+            "Pojęcie energii wewnętrznej",
+            "I zasada termodynamiki jako zasada zachowania energii"
+          ]
+        },
+        {
+          "nazwa": "Ciepło właściwe i przemiany fazowe",
+          "podpunkty": [
+            "Pojęcie ciepła właściwego",
+            "Ciepło przemiany fazowej",
+            "Obliczanie ciepła Q = m·c·ΔT i przy przemianach fazowych"
+          ]
+        },
+        {
+          "nazwa": "Szczególne własności wody",
+          "podpunkty": [
+            "Anomalna rozszerzalność wody",
+            "Wysokie ciepło właściwe i jego skutki",
+            "Konsekwencje dla życia na Ziemi"
+          ]
+        },
+        {
+          "nazwa": "Bilans cieplny i przemiany fazowe",
+          "podpunkty": [
+            "Współistnienie substancji w różnych fazach w równowadze termodynamicznej",
+            "Ciepło właściwe",
+            "Ciepło przemiany fazowej",
+            "Bilans cieplny",
+            "Skokowa zmiana energii wewnętrznej w przemianach fazowych",
+            "Szczególne własności wody i ich konsekwencje"
+          ]
+        },
+        {
+          "nazwa": "Przemiany gazowe",
+          "podpunkty": [
+            "I zasada termodynamiki w analizie przemian gazowych",
+            "Przemiana izotermiczna",
+            "Przemiana izobaryczna",
+            "Przemiana izochoryczna",
+            "Przemiana adiabatyczna",
+            "Analiza wykresów przemian gazowych"
+          ]
+        },
+        {
+          "nazwa": "Gaz doskonały",
+          "podpunkty": [
+            "Założenia teorii kinetyczno-molekularnej",
+            "Związek temperatury w skali Kelvina ze średnią energią ruchu cząsteczek",
+            "Energia wewnętrzna gazu doskonałego",
+            "Równanie Clapeyrona pV = nRT",
+            "Ciepło molowe gazu",
+            "Związek między c_p i c_V"
+          ]
+        },
+        {
+          "nazwa": "Silniki cieplne i II zasada termodynamiki",
+          "podpunkty": [
+            "Przepływ energii w silnikach cieplnych",
+            "Przepływ energii w pompach cieplnych",
+            "Cykle termodynamiczne",
+            "Sprawność silników cieplnych",
+            "II zasada termodynamiki - interpretacja",
+            "Zjawiska odwracalne i nieodwracalne - przykłady"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Elektryczność",
+      "poddzialy": [
+        {
+          "nazwa": "Elektrostatyka - elektryzowanie ciał",
+          "podpunkty": [
+            "Elektryzowanie przez potarcie",
+            "Elektryzowanie przez dotyk",
+            "Przemieszczanie elektronów jako istota zjawiska",
+            "Oddziaływanie ładunków jednoimiennych i różnoimiennych"
+          ]
+        },
+        {
+          "nazwa": "Przewodniki, izolatory, indukcja",
+          "podpunkty": [
+            "Przewodniki i izolatory - przykłady",
+            "Indukcja elektrostatyczna",
+            "Budowa i działanie elektroskopu"
+          ]
+        },
+        {
+          "nazwa": "Ładunek elektryczny",
+          "podpunkty": [
+            "Ładunek elementarny",
+            "Ładunek jako wielokrotność ładunku elementarnego",
+            "Jednostka ładunku (kulomb)"
+          ]
+        },
+        {
+          "nazwa": "Prąd elektryczny",
+          "podpunkty": [
+            "Przepływ prądu jako ruch elektronów lub jonów",
+            "Natężenie prądu, wzór I = q/t, jednostka (amper)",
+            "Napięcie elektryczne - energia na jednostkę ładunku",
+            "Jednostka napięcia (wolt)"
+          ]
+        },
+        {
+          "nazwa": "Opór i prawo Ohma",
+          "podpunkty": [
+            "Pojęcie oporu elektrycznego",
+            "Jednostka oporu (om)",
+            "Związek U = I·R"
+          ]
+        },
+        {
+          "nazwa": "Praca i moc prądu",
+          "podpunkty": [
+            "Praca prądu elektrycznego, wzór W = U·I·t",
+            "Moc prądu, wzór P = U·I",
+            "Przeliczanie kWh na J i odwrotnie",
+            "Formy energii powstające z energii elektrycznej",
+            "Źródła i odbiorniki energii elektrycznej"
+          ]
+        },
+        {
+          "nazwa": "Obwody elektryczne",
+          "podpunkty": [
+            "Schematy obwodów - symbole graficzne elementów",
+            "Źródło, odbiornik, mierniki, wyłączniki",
+            "Łączenie obwodu według schematu"
+          ]
+        },
+        {
+          "nazwa": "Bezpieczeństwo elektryczne",
+          "podpunkty": [
+            "Rola izolacji",
+            "Bezpieczniki przeciążeniowe",
+            "Warunki bezpiecznego korzystania z energii elektrycznej"
+          ]
+        },
+        {
+          "nazwa": "Wymagania doświadczalne",
+          "podpunkty": [
+            "Demonstracja elektryzowania, posługiwanie się elektroskopem",
+            "Demonstracja oddziaływania ciał naelektryzowanych",
+            "Badanie, czy substancja jest przewodnikiem czy izolatorem",
+            "Łączenie obwodu i odczyt wskazań mierników (woltomierz, amperomierz)",
+            "Wyznaczanie oporu przewodnika przez pomiar U i I",
+            "Ilustracja pola elektrycznego i linii pola wokół przewodnika",
+            "Demonstracja przekazu energii podczas rozładowania kondensatora (lampa błyskowa, przeskok iskry)",
+            "Demonstracja I prawa Kirchhoffa",
+            "Sprawdzanie dodawania napięć w układzie ogniw szeregowo",
+            "Demonstracja roli diody jako elementu prostownika i źródła światła",
+            "Demonstracja przekazu energii podczas rozładowania kondensatora",
+            "Badanie dodawania napięć w układzie ogniw szeregowo",
+            "Demonstracja roli diody w prostownikach i jako źródła światła",
+            "Badanie charakterystyki prądowo-napięciowej elementu niespełniającego prawa Ohma"
+          ]
+        },
+        {
+          "nazwa": "Zachowanie ładunku",
+          "podpunkty": [
+            "Zasada zachowania ładunku elektrycznego",
+            "Ładunek dodatni i ujemny"
+          ]
+        },
+        {
+          "nazwa": "Prawo Coulomba",
+          "podpunkty": [
+            "Treść prawa Coulomba",
+            "Wzór i jednostki",
+            "Obliczenia siły oddziaływania ładunków"
+          ]
+        },
+        {
+          "nazwa": "Pole elektryczne",
+          "podpunkty": [
+            "Pojęcie pola elektrycznego",
+            "Graficzna ilustracja - linie pola",
+            "Pole jednorodne",
+            "Wektor natężenia pola elektrycznego, jednostka (V/m)",
+            "Linie pola elektrycznego",
+            "Zagęszczenie linii pola jako miara natężenia",
+            "Pole centralne",
+            "Natężenie pola wytwarzanego przez układ ładunków punktowych",
+            "Pole na zewnątrz sferycznie symetrycznego układu ładunków"
+          ]
+        },
+        {
+          "nazwa": "Kondensator",
+          "podpunkty": [
+            "Kondensator jako układ dwóch przeciwnie naładowanych przewodników",
+            "Napięcie między okładkami",
+            "Kondensator jako urządzenie magazynujące energię",
+            "Budowa kondensatora",
+            "Magazynowanie energii",
+            "Ilościowy opis pola elektrycznego w kondensatorze płaskim"
+          ]
+        },
+        {
+          "nazwa": "Podstawowe pojęcia",
+          "podpunkty": [
+            "Natężenie prądu, jednostka (A)",
+            "Napięcie elektryczne, jednostka (V)",
+            "Opór elektryczny, jednostka (Ω)",
+            "Moc prądu, jednostka (W)"
+          ]
+        },
+        {
+          "nazwa": "Przewodnictwo elektryczne",
+          "podpunkty": [
+            "Metale i półprzewodniki - różnice",
+            "Zależność oporu od temperatury dla metali",
+            "Zależność oporu od temperatury dla półprzewodników"
+          ]
+        },
+        {
+          "nazwa": "Prawo Ohma",
+          "podpunkty": [
+            "Proporcjonalność natężenia prądu do napięcia",
+            "Stosowanie U = I·R w obliczeniach",
+            "Proporcjonalność I do U dla przewodników",
+            "Charakterystyka I-U elementów zgodnych z prawem Ohma",
+            "Charakterystyka I-U elementów niezgodnych z prawem Ohma"
+          ]
+        },
+        {
+          "nazwa": "Prawa Kirchhoffa",
+          "podpunkty": [
+            "I prawo Kirchhoffa jako zasada zachowania ładunku",
+            "Dodawanie napięć w układzie ogniw szeregowo - związek z zasadą zachowania energii",
+            "II prawo Kirchhoffa - dodawanie napięć w obwodzie",
+            "Źródła i odbiorniki energii w obwodzie"
+          ]
+        },
+        {
+          "nazwa": "Sieć domowa",
+          "podpunkty": [
+            "Obwód rozgałęziony",
+            "Bezpieczniki różnicowe",
+            "Przewód uziemiający",
+            "Dane znamionowe urządzeń - obliczenia mocy i energii"
+          ]
+        },
+        {
+          "nazwa": "Dioda półprzewodnikowa",
+          "podpunkty": [
+            "Dioda jako element przewodzący w jednym kierunku",
+            "Dioda jako źródło światła (LED)",
+            "Zastosowanie w prostownikach"
+          ]
+        },
+        {
+          "nazwa": "Ładunek i prawo Coulomba",
+          "podpunkty": [
+            "Zasada zachowania ładunku",
+            "Prawo Coulomba",
+            "Obliczenia siły oddziaływania ładunków punktowych"
+          ]
+        },
+        {
+          "nazwa": "Pole w przewodnikach i dielektrykach",
+          "podpunkty": [
+            "Rozkład ładunków w przewodnikach",
+            "Zerowe natężenie pola wewnątrz przewodnika - klatka Faradaya",
+            "Duże natężenie pola wokół ostrzy",
+            "Polaryzacja dielektryków w polu zewnętrznym"
+          ]
+        },
+        {
+          "nazwa": "Ruch ładunków w polu elektrycznym",
+          "podpunkty": [
+            "Analiza ruchu cząstek naładowanych w polu elektrycznym",
+            "Zmiana energii potencjalnej podczas ruchu ładunku",
+            "Napięcie między punktami w polu",
+            "Potencjał pola i jego jednostka"
+          ]
+        },
+        {
+          "nazwa": "Energia w polu elektrycznym",
+          "podpunkty": [
+            "Zmiana energii ładunku w polu centralnym",
+            "Zmiana energii ładunku w polu jednorodnym",
+            "Związek między napięciem a natężeniem pola w polu jednorodnym"
+          ]
+        },
+        {
+          "nazwa": "Przewodnictwo",
+          "podpunkty": [
+            "Przewodnictwo w metalach",
+            "Przewodnictwo w elektrolitach",
+            "Przewodnictwo w gazach"
+          ]
+        },
+        {
+          "nazwa": "Podstawowe wielkości",
+          "podpunkty": [
+            "Natężenie prądu",
+            "Napięcie elektryczne",
+            "Opór elektryczny",
+            "Moc elektryczna"
+          ]
+        },
+        {
+          "nazwa": "Opór elektryczny",
+          "podpunkty": [
+            "Zależność oporu od wymiarów przewodnika",
+            "Opór właściwy materiału i jego jednostka",
+            "Zależność oporu od temperatury dla metali",
+            "Zależność oporu od temperatury dla półprzewodników"
+          ]
+        },
+        {
+          "nazwa": "Źródła napięcia",
+          "podpunkty": [
+            "Opór wewnętrzny źródła",
+            "Siła elektromotoryczna"
+          ]
+        },
+        {
+          "nazwa": "Moc i ciepło Joule'a-Lenza",
+          "podpunkty": [
+            "Związek mocy z natężeniem i oporem (P = I²·R)",
+            "Związek mocy z napięciem i oporem (P = U²/R)",
+            "Wykorzystywanie danych znamionowych urządzeń"
+          ]
+        },
+        {
+          "nazwa": "Obwody z opornikami",
+          "podpunkty": [
+            "Opór zastępczy układu szeregowego",
+            "Opór zastępczy układu równoległego",
+            "Sieć domowa jako obwód rozgałęziony",
+            "Bezpieczniki różnicowe",
+            "Przewód uziemiający"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Magnetyzm i indukcja elektromagnetyczna",
+      "poddzialy": [
+        {
+          "nazwa": "Magnesy stałe",
+          "podpunkty": [
+            "Bieguny magnesów i oddziaływanie między nimi",
+            "Igła magnetyczna w obecności magnesu",
+            "Zasada działania kompasu",
+            "Bieguny magnetyczne Ziemi"
+          ]
+        },
+        {
+          "nazwa": "Oddziaływanie magnesów z materiałami",
+          "podpunkty": [
+            "Oddziaływanie magnesów na żelazo",
+            "Materiały magnetyczne - przykłady",
+            "Zastosowania oddziaływań magnetycznych"
+          ]
+        },
+        {
+          "nazwa": "Elektromagnetyzm",
+          "podpunkty": [
+            "Zachowanie igły magnetycznej w pobliżu przewodnika z prądem",
+            "Budowa i działanie elektromagnesu",
+            "Oddziaływanie elektromagnesów i magnesów",
+            "Zastosowania elektromagnesów"
+          ]
+        },
+        {
+          "nazwa": "Silnik elektryczny",
+          "podpunkty": [
+            "Oddziaływanie magnetyczne jako podstawa silnika elektrycznego"
+          ]
+        },
+        {
+          "nazwa": "Wymagania doświadczalne",
+          "podpunkty": [
+            "Demonstracja zachowania igły magnetycznej w obecności magnesu",
+            "Demonstracja oddziaływania przewodnika z prądem na igłę magnetyczną",
+            "Ilustracja układu linii pola magnetycznego",
+            "Demonstracja zjawiska indukcji elektromagnetycznej (magnes + zwojnica lub zmiana prądu w elektromagnesie)",
+            "Demonstracja zjawiska indukcji elektromagnetycznej"
+          ]
+        },
+        {
+          "nazwa": "Pole magnetyczne",
+          "podpunkty": [
+            "Pojęcie pola magnetycznego",
+            "Linie pola magnetycznego wokół magnesów stałych",
+            "Linie pola wokół przewodnika prostoliniowego z prądem",
+            "Linie pola wokół zwojnicy",
+            "Linie pola wokół przewodnika prostoliniowego",
+            "Wektor indukcji magnetycznej i jego jednostka (tesla)"
+          ]
+        },
+        {
+          "nazwa": "Oddziaływanie pola magnetycznego",
+          "podpunkty": [
+            "Jakościowy opis oddziaływania na przewodniki z prądem",
+            "Jakościowy opis oddziaływania na poruszające się cząstki naładowane"
+          ]
+        },
+        {
+          "nazwa": "Pole magnetyczne Ziemi",
+          "podpunkty": [
+            "Rola jako osłona przed wiatrem słonecznym"
+          ]
+        },
+        {
+          "nazwa": "Indukcja elektromagnetyczna",
+          "podpunkty": [
+            "Zjawisko indukcji elektromagnetycznej",
+            "Związek z względnym ruchem magnesu i zwojnicy",
+            "Związek ze zmianą natężenia prądu w elektromagnesie",
+            "Przemiany energii w prądnicy",
+            "Strumień pola magnetycznego przez powierzchnię, jednostka strumienia",
+            "Reguła Lenza",
+            "Siła elektromotoryczna indukcji jako szybkość zmiany strumienia"
+          ]
+        },
+        {
+          "nazwa": "Prąd przemienny i transformator",
+          "podpunkty": [
+            "Cechy prądu przemiennego",
+            "Zasada działania transformatora",
+            "Przykłady zastosowań transformatora",
+            "Napięcie i natężenie skuteczne",
+            "Obliczenia U_sk i I_sk dla przebiegu sinusoidalnego",
+            "Uproszczony model transformatora - przekładnia napięciowa i prądowa",
+            "Zastosowania transformatorów"
+          ]
+        },
+        {
+          "nazwa": "Siły magnetyczne",
+          "podpunkty": [
+            "Siła elektrodynamiczna - oddziaływanie pola na przewodnik z prądem",
+            "Siła Lorentza - oddziaływanie na poruszającą się cząstkę naładowaną",
+            "Tor cząstki naładowanej w jednorodnym polu magnetycznym",
+            "Siły na pętlę z przewodnika - zasada działania silnika elektrycznego"
+          ]
+        },
+        {
+          "nazwa": "Indukcja magnetyczna i obliczenia",
+          "podpunkty": [
+            "Indukcja pola wokół prostoliniowego przewodnika z prądem",
+            "Indukcja pola wewnątrz długiej zwojnicy",
+            "Siła oddziaływania dwóch długich przewodników prostoliniowych"
+          ]
+        },
+        {
+          "nazwa": "Ferromagnetyki",
+          "podpunkty": [
+            "Właściwości ferromagnetyków",
+            "Zastosowania ferromagnetyków"
+          ]
+        },
+        {
+          "nazwa": "Fale elektromagnetyczne",
+          "podpunkty": [
+            "Jakościowa współzależność zmian pola magnetycznego i elektrycznego",
+            "Rozchodzenie się fal elektromagnetycznych"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Fizyka atomowa",
+      "poddzialy": [
+        {
+          "nazwa": "Promieniowanie termiczne",
+          "podpunkty": [
+            "Analiza promieniowania termicznego na wybranych przykładach",
+            "Zależność promieniowania od temperatury",
+            "Analiza promieniowania termicznego na przykładach"
+          ]
+        },
+        {
+          "nazwa": "Dualizm korpuskularno-falowy",
+          "podpunkty": [
+            "Pojęcie fotonu",
+            "Energia fotonu E = h·f",
+            "Dualizm korpuskularno-falowy światła"
+          ]
+        },
+        {
+          "nazwa": "Widma gazów",
+          "podpunkty": [
+            "Widma emisyjne",
+            "Widma absorpcyjne",
+            "Jakościowe pochodzenie widm"
+          ]
+        },
+        {
+          "nazwa": "Model atomu",
+          "podpunkty": [
+            "Poziomy energetyczne w atomach",
+            "Stan podstawowy i stany wzbudzone",
+            "Linie widmowe jako skutek przejść między poziomami",
+            "Emisja i absorpcja fotonu"
+          ]
+        },
+        {
+          "nazwa": "Zjawiska kwantowe",
+          "podpunkty": [
+            "Zjawisko jonizacji",
+            "Zjawisko fotoelektryczne",
+            "Warunek częstotliwości granicznej",
+            "Zjawisko dyfrakcji elektronów i innych cząstek",
+            "Zjawisko interferencji cząstek",
+            "Długość fali de Broglie'a"
+          ]
+        },
+        {
+          "nazwa": "Foton i dualizm",
+          "podpunkty": [
+            "Dualizm korpuskularno-falowy światła",
+            "Pojęcie fotonu",
+            "Obliczanie energii fotonu E = h·f",
+            "Pęd fotonu",
+            "Zasada zachowania pędu w emisji i absorpcji",
+            "Odrzut atomu emitującego kwant światła"
+          ]
+        },
+        {
+          "nazwa": "Widma i poziomy energetyczne",
+          "podpunkty": [
+            "Widma emisyjne i absorpcyjne gazów",
+            "Linie widmowe jako skutek przejść między poziomami energetycznymi",
+            "Stan podstawowy i stany wzbudzone atomu",
+            "Seryjny układ linii widmowych - widmo atomu wodoru",
+            "Obliczanie różnic energii między poziomami w atomie wodoru"
+          ]
+        },
+        {
+          "nazwa": "Wymagania doświadczalne",
+          "podpunkty": [
+            "Obserwacja widm atomowych za pomocą siatki dyfrakcyjnej"
+          ]
+        }
+      ]
+    },
+    {
+      "nazwa": "Fizyka jądrowa i relatywistyczna",
+      "poddzialy": [
+        {
+          "nazwa": "Budowa jądra atomowego",
+          "podpunkty": [
+            "Pierwiastek, jądro atomowe, izotop",
+            "Proton, neutron, elektron",
+            "Liczba masowa i liczba atomowa",
+            "Skład jądra atomowego",
+            "Liczba masowa i atomowa"
+          ]
+        },
+        {
+          "nazwa": "Reakcje jądrowe",
+          "podpunkty": [
+            "Zapis reakcji jądrowych",
+            "Zasada zachowania liczby nukleonów",
+            "Zasada zachowania ładunku"
+          ]
+        },
+        {
+          "nazwa": "Promieniowanie jądrowe",
+          "podpunkty": [
+            "Właściwości promieniowania jądrowego",
+            "Rozpad alfa",
+            "Rozpad beta",
+            "Powstawanie promieniowania gamma",
+            "Rozpad beta plus (ß+)",
+            "Rozpad beta minus (ß-)",
+            "Jądra stabilne i niestabilne"
+          ]
+        },
+        {
+          "nazwa": "Rozpad promieniotwórczy",
+          "podpunkty": [
+            "Opis rozpadu izotopu promieniotwórczego",
+            "Czas połowicznego rozpadu",
+            "Przypadkowy charakter rozpadu jąder",
+            "Obliczanie liczby jąder pozostających w próbce po dowolnym czasie",
+            "Datowanie substancji metodą węgla 14C"
+          ]
+        },
+        {
+          "nazwa": "Energia w reakcjach jądrowych",
+          "podpunkty": [
+            "Zasada zachowania energii w reakcjach jądrowych",
+            "Energia wiązania",
+            "Deficyt masy",
+            "Energia spoczynkowa"
+          ]
+        },
+        {
+          "nazwa": "Wpływ promieniowania na organizmy",
+          "podpunkty": [
+            "Wpływ promieniowania jonizującego na organizmy żywe",
+            "Zastosowania w technice",
+            "Zastosowania w medycynie"
+          ]
+        },
+        {
+          "nazwa": "Rozszczepienie i synteza",
+          "podpunkty": [
+            "Rozszczepienie jądra uranu 235U",
+            "Warunki reakcji łańcuchowej",
+            "Zasada działania elektrowni jądrowej",
+            "Korzyści energetyki jądrowej",
+            "Niebezpieczeństwa energetyki jądrowej",
+            "Reakcja termojądrowa przemiany wodoru w hel - źródło energii gwiazd"
+          ]
+        },
+        {
+          "nazwa": "Ewolucja gwiazd",
+          "podpunkty": [
+            "Elementy ewolucji gwiazd",
+            "Supernowe",
+            "Czarne dziury"
+          ]
+        },
+        {
+          "nazwa": "Szczególna teoria względności",
+          "podpunkty": [
+            "Niezależność prędkości światła w próżni od prędkości źródła i obserwatora",
+            "Związek między energią całkowitą, masą cząstki i jej prędkością",
+            "Energia spoczynkowa",
+            "Równoważność masy i energii spoczynkowej (E = mc²)",
+            "Prędkość światła jako maksymalna prędkość przekazu energii i informacji"
+          ]
+        },
+        {
+          "nazwa": "Reakcje jądrowe i energia wiązania",
+          "podpunkty": [
+            "Zapis reakcji jądrowych",
+            "Zasada zachowania liczby nukleonów",
+            "Zasada zachowania ładunku",
+            "Zasada zachowania energii w reakcjach jądrowych",
+            "Energia wiązania",
+            "Obliczanie energii spoczynkowej, deficytu masy i energii wiązania dowolnego izotopu"
+          ]
+        },
+        {
+          "nazwa": "Zastosowania i zagrożenia",
+          "podpunkty": [
+            "Wpływ promieniowania jonizującego na organizmy żywe",
+            "Zastosowania w technice",
+            "Zastosowania w medycynie"
+          ]
+        },
+        {
+          "nazwa": "Energetyka jądrowa",
+          "podpunkty": [
+            "Reakcja rozszczepienia jądra uranu 235U",
+            "Warunki reakcji łańcuchowej",
+            "Zasada działania elektrowni jądrowej",
+            "Korzyści energetyki jądrowej",
+            "Niebezpieczeństwa energetyki jądrowej"
+          ]
+        },
+        {
+          "nazwa": "Reakcje termojądrowe i ewolucja gwiazd",
+          "podpunkty": [
+            "Reakcja termojądrowa przemiany wodoru w hel jako źródło energii gwiazd",
+            "Analiza reakcji termojądrowej na podstawie schematu",
+            "Elementy ewolucji gwiazd",
+            "Supernowe",
+            "Czarne dziury"
+          ]
+        },
+        {
+          "nazwa": "Cząstki elementarne",
+          "podpunkty": [
+            "Kreacja pary cząstka-antycząstka",
+            "Anihilacja pary cząstka-antycząstka",
+            "Zasady zachowania energii, pędu i ładunku w kreacji/anihilacji pary elektron-pozyton"
+          ]
+        }
+      ]
+    }
+  ]
+}

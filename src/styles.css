@@ -1620,10 +1620,12 @@ tr:hover td { background: var(--surface-2); }
   border: 0;
 }
 
-.desktop-only { display: block; }
-.mobile-only  { display: none; }
+/* desktop-only / mobile-only: hide the element below/above 720px without
+   forcing a display value otherwise (so .btn keeps its inline-flex,
+   div keeps its block, etc.). */
+.mobile-only { display: none; }
 @media (max-width: 720px) {
-  .desktop-only { display: none; }
+  .desktop-only { display: none !important; }
   .mobile-only  { display: inline-flex; }
 }
 
