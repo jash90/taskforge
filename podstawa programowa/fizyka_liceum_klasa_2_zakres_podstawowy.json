@@ -1,0 +1,81 @@
+{
+  "etap_edukacyjny": "Liceum ogólnokształcące i technikum",
+  "klasa": 2,
+  "zakres": "podstawowy",
+  "przedmiot": "Fizyka",
+  "wymiar_godzin_w_cyklu": "4 godziny w cyklu kształcenia (zakres podstawowy)",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na cały etap edukacyjny. Poniższy rozkład na klasę 2 to typowa propozycja zgodna z programami nauczania.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji lub doświadczeń oraz wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych, oraz ocenianie wiarygodności źródeł."
+  ],
+  "dzialy": [
+    {
+      "numer": "V",
+      "nazwa": "Termodynamika",
+      "tresci": [
+        "opisuje zjawisko rozszerzalności cieplnej: liniowej ciał stałych oraz objętościowej gazów i cieczy",
+        "odróżnia przekaz energii w postaci ciepła między układami o różnych temperaturach od przekazu energii w formie pracy",
+        "posługuje się pojęciem energii wewnętrznej; analizuje pierwszą zasadę termodynamiki jako zasadę zachowania energii",
+        "wykorzystuje pojęcie ciepła właściwego oraz ciepła przemiany fazowej do obliczania ciepła",
+        "wymienia szczególne własności wody i ich konsekwencje dla życia na Ziemi"
+      ],
+      "doswiadczenia": [
+        "wyznacza ciepło właściwe substancji",
+        "demonstruje rozszerzalność cieplną wybranych ciał stałych"
+      ]
+    },
+    {
+      "numer": "VI",
+      "nazwa": "Elektrostatyka",
+      "tresci": [
+        "posługuje się zasadą zachowania ładunku",
+        "oblicza wartość siły wzajemnego oddziaływania ładunków, stosując prawo Coulomba",
+        "posługuje się pojęciem pola elektrycznego; ilustruje graficznie pole elektryczne za pomocą linii pola; opisuje pole jednorodne",
+        "opisuje kondensator jako układ dwóch przeciwnie naładowanych przewodników, między którymi istnieje napięcie elektryczne oraz jako urządzenie magazynujące energię"
+      ],
+      "doswiadczenia": [
+        "ilustruje pole elektryczne oraz układ linii pola wokół przewodnika",
+        "demonstruje przekaz energii podczas rozładowania kondensatora (np. lampa błyskowa, przeskok iskry)"
+      ]
+    },
+    {
+      "numer": "VII",
+      "nazwa": "Prąd elektryczny",
+      "tresci": [
+        "posługuje się pojęciami natężenia prądu elektrycznego, napięcia elektrycznego, oporu elektrycznego oraz mocy wraz z ich jednostkami",
+        "rozróżnia metale i półprzewodniki; omawia zależność oporu od temperatury dla metali i półprzewodników",
+        "stosuje do obliczeń proporcjonalność natężenia prądu stałego do napięcia dla przewodników (prawo Ohma)",
+        "stosuje I prawo Kirchhoffa jako przykład zasady zachowania ładunku",
+        "opisuje sieć domową jako przykład obwodu rozgałęzionego; wyjaśnia funkcję bezpieczników różnicowych i przewodu uziemiającego",
+        "wykorzystuje dane znamionowe urządzeń elektrycznych do obliczeń",
+        "opisuje zasadę dodawania napięć w układzie ogniw połączonych szeregowo i jej związek z zasadą zachowania energii",
+        "opisuje funkcję diody półprzewodnikowej jako elementu przewodzącego w jednym kierunku oraz jako źródła światła"
+      ],
+      "doswiadczenia": [
+        "demonstruje I prawo Kirchhoffa",
+        "sprawdza dodawanie napięć w układzie ogniw połączonych szeregowo",
+        "demonstruje rolę diody jako elementu składowego prostowników i źródło światła"
+      ]
+    },
+    {
+      "numer": "VIII",
+      "nazwa": "Magnetyzm",
+      "tresci": [
+        "posługuje się pojęciem pola magnetycznego; rysuje linie pola magnetycznego w pobliżu magnesów stałych i przewodników z prądem (przewodnik prostoliniowy, zwojnica)",
+        "opisuje jakościowo oddziaływanie pola magnetycznego na przewodniki z prądem i poruszające się cząstki naładowane",
+        "omawia rolę pola magnetycznego Ziemi jako osłony przed wiatrem słonecznym",
+        "opisuje zjawisko indukcji elektromagnetycznej i jej związek ze względnym ruchem magnesu i zwojnicy lub zmianą natężenia prądu w elektromagnesie; opisuje przemiany energii podczas działania prądnicy",
+        "opisuje cechy prądu przemiennego",
+        "opisuje zasadę działania transformatora oraz podaje przykłady jego zastosowania"
+      ],
+      "doswiadczenia": [
+        "ilustruje układ linii pola magnetycznego",
+        "demonstruje zjawisko indukcji elektromagnetycznej na przykładzie względnego ruchu magnesu i zwojnicy lub na przykładzie zmiany natężenia prądu w elektromagnesie"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "etap_edukacyjny": "Liceum ogólnokształcące i technikum",
+  "klasa": 4,
+  "zakres": "rozszerzony",
+  "przedmiot": "Fizyka",
+  "wymiar_godzin_w_cyklu": "6 godzin tygodniowo w cyklu kształcenia (dodatkowe godziny zakresu rozszerzonego)",
+  "zrodlo": "Rozporządzenie MEN, podstawa programowa - zpe.gov.pl / podstawaprogramowa.pl (obowiązująca od 1 września 2024)",
+  "uwaga": "Podstawa programowa MEN dzieli treści na cały etap edukacyjny. Poniższy rozkład na klasę 4 (kończącą realizację zakresu rozszerzonego, przygotowującą do matury) to typowa propozycja zgodna z programami nauczania.",
+  "cele_ksztalcenia_wymagania_ogolne": [
+    "I. Wykorzystanie pojęć i wielkości fizycznych do opisu zjawisk oraz wskazywanie ich przykładów w otaczającej rzeczywistości.",
+    "II. Rozwiązywanie problemów z wykorzystaniem praw i zależności fizycznych.",
+    "III. Planowanie i przeprowadzanie obserwacji oraz doświadczeń i wnioskowanie na podstawie ich wyników.",
+    "IV. Posługiwanie się informacjami pochodzącymi z analizy materiałów źródłowych, w tym tekstów popularnonaukowych i źródeł internetowych, oraz ocenianie wiarygodności źródeł.",
+    "V. Budowanie modeli fizycznych i matematycznych do opisu zjawisk oraz ilustracji praw i zależności fizycznych."
+  ],
+  "dzialy": [
+    {
+      "numer": "X",
+      "nazwa": "Fale i optyka",
+      "tresci": [
+        "analizuje rozchodzenie się fal na powierzchni wody i dźwięku w powietrzu na podstawie obrazu powierzchni falowych",
+        "posługuje się pojęciem natężenia fali wraz z jej jednostką (W/m²) oraz proporcjonalnością do kwadratu amplitudy",
+        "opisuje zależność natężenia i amplitudy fali kulistej od odległości od punktowego źródła",
+        "opisuje widmo światła białego jako mieszaniny fal elektromagnetycznych o różnych częstotliwościach",
+        "opisuje światło laserowe jako skolimowaną wiązkę światła monochromatycznego o zgodnej fazie",
+        "stosuje prawo odbicia i prawo załamania fal na granicy dwóch ośrodków; posługuje się pojęciem współczynnika załamania ośrodka; oblicza kąt graniczny",
+        "opisuje działanie światłowodu jako przykład wykorzystania zjawiska całkowitego wewnętrznego odbicia",
+        "opisuje jakościowo związek między dyfrakcją na szczelinie a szerokością szczeliny i długością fali",
+        "stosuje zasadę superpozycji fal; wyjaśnia zjawisko interferencji fal; podaje warunki wzmocnienia oraz wygaszenia się fal",
+        "analizuje jakościowo zjawisko interferencji wiązek światła odbitych od dwóch powierzchni cienkiej warstwy",
+        "opisuje zależność przestrzennego obrazu interferencji od długości fali i odległości między źródłami",
+        "analizuje efekt Dopplera dla fal w przypadku, gdy źródło lub obserwator poruszają się znacznie wolniej niż fala; podaje przykłady występowania tego efektu dla fal dźwiękowych i elektromagnetycznych",
+        "rozróżnia fale poprzeczne i podłużne; opisuje światło jako falę elektromagnetyczną poprzeczną; rozróżnia światło spolaryzowane i niespolaryzowane; analizuje polaryzację światła po przejściu przez polaryzator, wynikającą z poprzecznego charakteru fali elektromagnetycznej",
+        "opisuje obraz powstający po przejściu światła przez siatkę dyfrakcyjną; stosuje do obliczeń związek między kątem dyfrakcji, stałą siatki i długością fali",
+        "opisuje jakościowo zależność ogniskowej soczewki od jej krzywizny oraz współczynnika załamania; stosuje do obliczeń pojęcie zdolności skupiającej wraz z jej jednostką",
+        "rysuje konstrukcyjnie obrazy wytworzone przez soczewki; stosuje do obliczeń równanie soczewki",
+        "opisuje przykłady zjawisk optycznych w przyrodzie"
+      ],
+      "doswiadczenia": [
+        "obserwuje zmiany natężenia światła po przejściu przez dwa polaryzatory, których osie polaryzacji tworzą różne kąty",
+        "obserwuje zjawisko dyfrakcji fali na szczelinie",
+        "obserwuje zjawisko interferencji fal",
+        "demonstruje rozpraszanie światła w ośrodku",
+        "wyznacza wartość współczynnika załamania światła z pomiaru kąta granicznego",
+        "bada związek między ogniskową soczewki a położeniami przedmiotu i obrazu"
+      ]
+    },
+    {
+      "numer": "XI",
+      "nazwa": "Fizyka atomowa",
+      "tresci": [
+        "analizuje na wybranych przykładach promieniowanie termiczne ciał i jego zależność od temperatury",
+        "opisuje dualizm korpuskularno-falowy światła; posługuje się pojęciem fotonu oraz oblicza jego energię",
+        "rozróżnia widma emisyjne i absorpcyjne gazów; interpretuje linie widmowe jako skutek przejść między poziomami energetycznymi w atomach z emisją lub absorpcją kwantu światła; rozróżnia stan podstawowy i stany wzbudzone atomu",
+        "analizuje seryjny układ linii widmowych na przykładzie widma atomu wodoru; oblicza różnice energii między poziomami energetycznymi w atomie wodoru",
+        "posługuje się pojęciem pędu fotonu; stosuje zasadę zachowania energii i zasadę zachowania pędu do opisu emisji i absorpcji przez swobodne atomy; opisuje odrzut atomu emitującego kwant światła",
+        "opisuje zjawiska jonizacji i fotoelektryczne jako wywołane tylko przez promieniowanie o częstotliwości większej od granicznej",
+        "opisuje zjawiska dyfrakcji oraz interferencji elektronów i innych cząstek; oblicza długość fali de Broglie'a poruszających się cząstek"
+      ],
+      "doswiadczenia": [
+        "obserwuje widma atomowe za pomocą siatki dyfrakcyjnej"
+      ]
+    },
+    {
+      "numer": "XII",
+      "nazwa": "Elementy fizyki relatywistycznej i fizyka jądrowa",
+      "tresci": [
+        "wskazuje niezależność prędkości światła w próżni od prędkości źródła i prędkości obserwatora",
+        "posługuje się związkiem między energią całkowitą, masą cząstki i jej prędkością; posługuje się pojęciem energii spoczynkowej",
+        "opisuje równoważność masy i energii spoczynkowej",
+        "wskazuje prędkość światła w próżni jako maksymalną prędkość przekazu energii i informacji",
+        "posługuje się pojęciami pierwiastek, jądro atomowe, izotop, proton, neutron, elektron; opisuje skład jądra atomowego na podstawie liczb masowej i atomowej",
+        "zapisuje reakcje jądrowe, stosując zasadę zachowania liczby nukleonów i zasadę zachowania ładunku",
+        "stosuje zasadę zachowania energii do opisu reakcji jądrowych; posługuje się pojęciem energii wiązania",
+        "oblicza dla dowolnego izotopu energię spoczynkową, deficyt masy i energię wiązania",
+        "wymienia właściwości promieniowania jądrowego; opisuje rozpady alfa, beta (ß+, ß-)",
+        "posługuje się pojęciem jądra stabilnego i niestabilnego; opisuje powstawanie promieniowania gamma",
+        "opisuje przypadkowy charakter rozpadu jąder atomowych",
+        "opisuje rozpad izotopu promieniotwórczego; posługuje się pojęciem czasu połowicznego rozpadu; oblicza liczbę jąder izotopu promieniotwórczego, które pozostają w próbce po dowolnym czasie; opisuje zasadę datowania substancji na podstawie węgla 14C",
+        "wskazuje wpływ promieniowania jonizującego na organizmy żywe",
+        "wymienia przykłady zastosowania zjawiska promieniotwórczości w technice i medycynie",
+        "opisuje reakcję rozszczepienia jądra uranu 235U zachodzącą w wyniku pochłonięcia neutronu; podaje warunki zajścia reakcji łańcuchowej",
+        "opisuje zasadę działania elektrowni jądrowej oraz wymienia korzyści i niebezpieczeństwa płynące z energetyki jądrowej",
+        "wskazuje reakcję termojądrową przemiany wodoru w hel jako źródło energii gwiazd; analizuje reakcję termojądrową na podstawie podanego schematu reakcji",
+        "opisuje elementy ewolucji gwiazd; omawia supernowe i czarne dziury",
+        "opisuje kreację lub anihilację par cząstka-antycząstka; stosuje zasady zachowania energii i pędu oraz zasadę zachowania ładunku do analizy kreacji lub anihilacji pary elektron-pozyton"
+      ]
+    }
+  ]
+}
