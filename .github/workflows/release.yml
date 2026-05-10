@@ -1,12 +1,12 @@
 name: Release (Tauri)
 
-# Triggers on tags like v1.0.0, v1.0.1-beta, etc.
-# Builds desktop binaries for macOS (Intel + ARM), Linux (x86_64), Windows (x86_64)
-# and uploads them to a GitHub Release (created as draft).
+# - push to a v* tag        → full build + upload to GitHub Release (draft)
+# - push to main            → CI build only (no release upload), verifies all 4 platforms still compile
+# - manual workflow_dispatch → same as the "main" branch run
 on:
   push:
-    tags:
-      - "v*"
+    branches: [main]
+    tags: ["v*"]
   workflow_dispatch:
 
 permissions:
@@ -69,11 +69,15 @@ jobs:
         uses: swatinem/rust-cache@v2
         with:
           workspaces: src-tauri -> target
+          # Keep CI cache hot across main pushes; release builds reuse it too.
+          shared-key: ${{ matrix.platform }}-${{ matrix.rust-target }}
 
       - name: Install JS deps
         run: npm ci
 
-      - name: Build Tauri app
+      # Tag push → produce a real Release with installers attached.
+      - name: Build Tauri app (release)
+        if: startsWith(github.ref, 'refs/tags/v')
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -97,3 +101,32 @@ jobs:
           releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
+
+      # main push / manual run → just verify the build compiles on every platform.
+      # No tagName means tauri-action skips the release-upload step.
+      - name: Build Tauri app (CI verify)
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: ${{ matrix.args }}
+
+      # Upload the build artefacts so a maintainer can grab them from any push,
+      # even before tagging a release. Skipped on tag pushes (assets are already on the Release).
+      - name: Upload installers as workflow artifact
+        if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: TaskForge-${{ matrix.label }}
+          path: |
+            src-tauri/target/release/bundle/**/*.dmg
+            src-tauri/target/release/bundle/**/*.msi
+            src-tauri/target/release/bundle/**/*.exe
+            src-tauri/target/release/bundle/**/*.deb
+            src-tauri/target/release/bundle/**/*.AppImage
+            src-tauri/target/release/bundle/**/*.rpm
+            src-tauri/target/aarch64-apple-darwin/release/bundle/**/*.dmg
+            src-tauri/target/x86_64-apple-darwin/release/bundle/**/*.dmg
+          if-no-files-found: ignore
+          retention-days: 14
