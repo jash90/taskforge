@@ -57,3 +57,4 @@ pnpm-debug.log*
 
 # Working notes / scratch
 *.tmp
+.vercel

@@ -1,0 +1,100 @@
+name: Release (Tauri)
+
+# Triggers on tags like v1.0.0, v1.0.1-beta, etc.
+# Builds desktop binaries for macOS (Intel + ARM), Linux (x86_64), Windows (x86_64)
+# and uploads them to a GitHub Release (created as draft).
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-tauri:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+            args: "--target aarch64-apple-darwin"
+            label: "macOS (Apple Silicon)"
+            rust-target: "aarch64-apple-darwin"
+          - platform: macos-latest
+            args: "--target x86_64-apple-darwin"
+            label: "macOS (Intel)"
+            rust-target: "x86_64-apple-darwin"
+          - platform: ubuntu-22.04
+            args: ""
+            label: "Linux (x86_64)"
+            rust-target: ""
+          - platform: windows-latest
+            args: ""
+            label: "Windows (x86_64)"
+            rust-target: ""
+
+    runs-on: ${{ matrix.platform }}
+    name: Build · ${{ matrix.label }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Linux build deps
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            libssl-dev \
+            libgtk-3-dev \
+            libayatana-appindicator3-dev
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.rust-target }}
+
+      - name: Cache Rust build
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri -> target
+
+      - name: Install JS deps
+        run: npm ci
+
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        with:
+          tagName: ${{ env.TAG_NAME }}
+          releaseName: TaskForge ${{ env.TAG_NAME }}
+          releaseBody: |
+            ## TaskForge
+
+            Wersja desktopowa zbudowana lokalnie dla Twojego systemu.
+
+            - **macOS** — `.dmg` (Apple Silicon: `aarch64`, Intel: `x64`)
+            - **Windows** — `.msi` (x86_64)
+            - **Linux** — `.AppImage` lub `.deb` (x86_64)
+
+            Wersja webowa: https://taskforge-eta-cyan.vercel.app
+
+            ---
+            Wygenerowano automatycznie przez GitHub Actions.
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}
