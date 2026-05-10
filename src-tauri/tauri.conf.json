@@ -1,6 +1,6 @@
 {
   "productName": "TaskForge",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "identifier": "pl.taskforge.app",
   "build": {
     "beforeDevCommand": "npm run dev",
