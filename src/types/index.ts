@@ -1,4 +1,4 @@
-export type SchoolLevel = 'podstawowa' | 'liceum' | 'technikum';
+export type SchoolLevel = 'podstawowa' | 'ponadpodstawowa';
 export type SchoolClass = string;
 
 export interface ProgramPoint {

@@ -46,7 +46,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
   const [catPickerOpen, setCatPickerOpen] = useState(false);
 
   const [subject, setSubject] = useState<string>('Fizyka');
-  const [level, setLevel] = useState<SchoolLevel>('liceum');
+  const [level, setLevel] = useState<SchoolLevel>('ponadpodstawowa');
   const [klasa, setKlasa] = useState<string>('1');
   const [count, setCount] = useState<number>(3);
   const [difficulty, setDifficulty] = useState<'łatwe' | 'średnie' | 'trudne' | 'mieszane'>('średnie');
@@ -97,7 +97,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
     const parts: string[] = [];
     parts.push(`Wygeneruj ${count} ${count === 1 ? 'zadanie edukacyjne' : count < 5 ? 'zadania edukacyjne' : 'zadań edukacyjnych'}.`);
     parts.push(`Przedmiot: ${subject}.`);
-    parts.push(`Poziom: ${level === 'podstawowa' ? 'szkoła podstawowa' : level === 'liceum' ? 'liceum' : 'technikum'}, klasa ${klasa}.`);
+    parts.push(`Poziom: ${level === 'podstawowa' ? 'szkoła podstawowa' : 'liceum / technikum'}, klasa ${klasa}.`);
     parts.push(`Trudność: ${difficulty}.`);
     if (withParameters) {
       parts.push(`Każde zadanie powinno zawierać liczby i jednostki w treści (np. "20 km/h", "3 godziny", "100 zł"), żeby można było je sparametryzować.`);
@@ -424,8 +424,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
             <label htmlFor="ai-level">Poziom</label>
             <select id="ai-level" value={level} onChange={(e) => setLevel(e.target.value as SchoolLevel)}>
               <option value="podstawowa">Szkoła podstawowa</option>
-              <option value="liceum">Liceum</option>
-              <option value="technikum">Technikum</option>
+              <option value="ponadpodstawowa">Liceum / technikum</option>
             </select>
           </div>
           <div className="form-group mb-0">

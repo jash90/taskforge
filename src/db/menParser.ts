@@ -22,11 +22,8 @@ const levelsForEtap = (etap: string | undefined): SchoolLevel[] => {
   if (!etap) return ['podstawowa'];
   const e = etap.toLowerCase();
   if (e.includes('podstawow')) return ['podstawowa'];
-  // "Liceum ogólnokształcące i technikum" — same curriculum applies to both
-  const out: SchoolLevel[] = [];
-  if (e.includes('liceum')) out.push('liceum');
-  if (e.includes('technikum')) out.push('technikum');
-  return out.length > 0 ? out : ['liceum'];
+  // "Liceum ogólnokształcące i technikum" — MEN treats them as one curriculum.
+  return ['ponadpodstawowa'];
 };
 
 export function isMENCurriculum(data: unknown): data is MENCurriculum {

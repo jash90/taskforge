@@ -34,6 +34,22 @@ db.version(4).stores({
   categories: 'id, parentId, name, position, createdAt',
 });
 
+// v5: merge SchoolLevel 'liceum' and 'technikum' into 'ponadpodstawowa'.
+// Migrate existing tasks and clear programPoints for fresh re-seed.
+db.version(5).stores({
+  tasks: 'id, title, subject, level, class, tags, createdAt',
+  programPoints: 'id, code, level, class, subject, zakres',
+  tests: 'id, title, generatedAt',
+  categories: 'id, parentId, name, position, createdAt',
+}).upgrade(async (tx) => {
+  await tx.table('tasks').toCollection().modify((t: { level?: string }) => {
+    if (t.level === 'liceum' || t.level === 'technikum') {
+      t.level = 'ponadpodstawowa';
+    }
+  });
+  await tx.table('programPoints').clear();
+});
+
 export default db;
 
 export const runSeed = async () => {

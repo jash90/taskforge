@@ -188,8 +188,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
             >
               <option value="">Wszystkie poziomy</option>
               <option value="podstawowa">Szkoła podstawowa</option>
-              <option value="liceum">Liceum</option>
-              <option value="technikum">Technikum</option>
+              <option value="ponadpodstawowa">Liceum / technikum</option>
             </select>
           </div>
           <button
@@ -393,8 +392,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
                 >
                   <option value="">Wszystkie</option>
                   <option value="podstawowa">Szkoła podstawowa</option>
-                  <option value="liceum">Liceum</option>
-                  <option value="technikum">Technikum</option>
+                  <option value="ponadpodstawowa">Liceum / technikum</option>
                 </select>
               </div>
               <div className="form-group">

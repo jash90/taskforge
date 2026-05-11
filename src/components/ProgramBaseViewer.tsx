@@ -247,8 +247,7 @@ export default function ProgramBaseViewer() {
             <select id="pp-level" value={level} onChange={(e) => setLevel(e.target.value as ProgramPoint['level'] | '')}>
               <option value="">Wszystkie poziomy</option>
               <option value="podstawowa">Szkoła podstawowa</option>
-              <option value="liceum">Liceum</option>
-              <option value="technikum">Technikum</option>
+              <option value="ponadpodstawowa">Liceum / technikum</option>
             </select>
           </div>
           <div className="form-group mb-0" style={{ flex: '0 1 160px' }}>
@@ -442,8 +441,7 @@ export default function ProgramBaseViewer() {
                   <label htmlFor="np-level">Poziom</label>
                   <select id="np-level" value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value as ProgramPoint['level'] })}>
                     <option value="podstawowa">Szkoła podstawowa</option>
-                    <option value="liceum">Liceum</option>
-                    <option value="technikum">Technikum</option>
+                    <option value="ponadpodstawowa">Liceum / technikum</option>
                   </select>
                 </div>
                 <div className="form-group mb-0">

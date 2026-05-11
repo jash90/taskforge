@@ -284,8 +284,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
             <label htmlFor="task-level">Poziom</label>
             <select id="task-level" value={level} onChange={(e) => setLevelD(e.target.value as Task['level'])}>
               <option value="podstawowa">Szkoła podstawowa</option>
-              <option value="liceum">Liceum</option>
-              <option value="technikum">Technikum</option>
+              <option value="ponadpodstawowa">Liceum / technikum</option>
             </select>
           </div>
           <div className="form-group">
