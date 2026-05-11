@@ -41,7 +41,7 @@ const TABS: TabDef[] = [
   { id: 'export',     label: 'Eksport / Import',    icon: <Upload size={18} />,        group: 'library',   inBottom: false },
   { id: 'settings',   label: 'Ustawienia',          icon: <SettingsIcon size={18} />,  group: 'library',   inBottom: false },
   { id: 'editor',     label: 'Edytor',              icon: <Pencil size={18} />,        group: 'workspace', inBottom: true },
-  { id: 'ai',         label: 'Generuj AI',          icon: <Sparkles size={18} />,      group: 'workspace', inBottom: true },
+  { id: 'ai',         label: 'Generuj AI',          icon: <Sparkles size={18} />,      group: 'workspace', inBottom: false },
   { id: 'randomizer', label: 'Losowanie',           icon: <Shuffle size={18} />,       group: 'workspace', inBottom: false },
   { id: 'tests',      label: 'Testy',               icon: <FileText size={18} />,      group: 'workspace', inBottom: true },
 ];
