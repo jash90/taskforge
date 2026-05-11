@@ -13,14 +13,12 @@ interface Props {
 
 const LEVEL_LABEL: Record<SchoolLevel, string> = {
   podstawowa: 'Szkoła podstawowa',
-  liceum: 'Liceum',
-  technikum: 'Technikum',
+  ponadpodstawowa: 'Liceum / technikum',
 };
 
 const LEVEL_SHORT: Record<SchoolLevel, string> = {
   podstawowa: 'SP',
-  liceum: 'LO',
-  technikum: 'TECH',
+  ponadpodstawowa: 'LO/T',
 };
 
 export default function ProgramPointPicker({
@@ -102,8 +100,7 @@ export default function ProgramPointPicker({
           <select id="ppp-level" value={level} onChange={(e) => setLevel(e.target.value as '' | SchoolLevel)}>
             <option value="">Wszystkie poziomy</option>
             <option value="podstawowa">Szkoła podstawowa</option>
-            <option value="liceum">Liceum</option>
-            <option value="technikum">Technikum</option>
+            <option value="ponadpodstawowa">Liceum / technikum</option>
           </select>
         </div>
         <div className="form-group mb-0" style={{ flex: '0 1 140px' }}>

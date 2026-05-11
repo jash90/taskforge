@@ -14,14 +14,12 @@ interface Props {
 
 const LEVEL_LABEL: Record<SchoolLevel, string> = {
   podstawowa: 'Szkoła podstawowa',
-  liceum: 'Liceum',
-  technikum: 'Technikum',
+  ponadpodstawowa: 'Liceum / technikum',
 };
 
 const LEVEL_SHORT: Record<SchoolLevel, string> = {
   podstawowa: 'SP',
-  liceum: 'LO',
-  technikum: 'TECH',
+  ponadpodstawowa: 'LO/T',
 };
 
 export default function SectionProgramBase({
@@ -85,7 +83,7 @@ export default function SectionProgramBase({
   return (
     <div>
       <div className="form-row">
-        {(['podstawowa', 'liceum', 'technikum'] as const).map((lvl) => (
+        {(['podstawowa', 'ponadpodstawowa'] as const).map((lvl) => (
           <button
             key={lvl}
             type="button"

@@ -7,7 +7,7 @@ export interface ProgramPoint {
   level: SchoolLevel;
   class: string;
   subject: string;
-  zakres?: string;         // "podstawowy" | "rozszerzony" (dla liceum)
+  zakres?: string;         // "podstawowy" | "rozszerzony" (dla liceum / technikum)
   dzialNazwa?: string;     // np. "Ruch i siły"
   dzialNumer?: string;     // np. "I", "II"
   lpWDziale?: number;      // numer wewnątrz działu
