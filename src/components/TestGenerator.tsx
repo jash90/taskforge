@@ -238,12 +238,12 @@ export default function TestGenerator() {
               placeholder="Czas pracy: 45 minut. Każde zadanie ma podaną liczbę punktów…" />
           </div>
           <div className="form-row">
-            <label className="flex items-center gap-1 mb-0" style={{ textTransform: 'none', letterSpacing: 0, fontSize: 'var(--text-sm)' }}>
-              <input type="checkbox" checked={settings.shuffleTasks} onChange={(e) => setSettings({ ...settings, shuffleTasks: e.target.checked })} style={{ width: 16, height: 16 }} />
+            <label className="flex items-center gap-1 mb-0 label-plain">
+              <input type="checkbox" className="icon-16" checked={settings.shuffleTasks} onChange={(e) => setSettings({ ...settings, shuffleTasks: e.target.checked })} />
               Losowa kolejność zadań
             </label>
-            <label className="flex items-center gap-1 mb-0" style={{ textTransform: 'none', letterSpacing: 0, fontSize: 'var(--text-sm)' }}>
-              <input type="checkbox" checked={settings.showPoints} onChange={(e) => setSettings({ ...settings, showPoints: e.target.checked })} style={{ width: 16, height: 16 }} />
+            <label className="flex items-center gap-1 mb-0 label-plain">
+              <input type="checkbox" className="icon-16" checked={settings.showPoints} onChange={(e) => setSettings({ ...settings, showPoints: e.target.checked })} />
               Pokazuj punkty
             </label>
             <div className="form-group mb-0">
@@ -253,9 +253,9 @@ export default function TestGenerator() {
             </div>
           </div>
 
-          <div className="flex justify-between items-center mt-2 mb-1" style={{ flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+          <div className="flex justify-between items-center mt-2 mb-1 wrap gap-1">
             <strong className="text-sm">
-              Wybrane: {selectedTasks.length} {selectedTotalPoints > 0 && <span className="badge badge-success" style={{ marginLeft: 6 }}>{selectedTotalPoints} pkt</span>}
+              Wybrane: {selectedTasks.length} {selectedTotalPoints > 0 && <span className="badge badge-success ml-px-6">{selectedTotalPoints} pkt</span>}
             </strong>
             <div className="flex gap-1">
               {filteredTasks && filteredTasks.length > 0 && (
@@ -284,7 +284,7 @@ export default function TestGenerator() {
             </div>
           </div>
 
-          <div className="form-group" style={{ marginBottom: 'var(--space-3)' }}>
+          <div className="form-group mb-1">
             <div className="flex gap-1 wrap">
               <div className="search-input grow">
                 <Search size={14} aria-hidden="true" />
@@ -304,7 +304,7 @@ export default function TestGenerator() {
                 <GraduationCap size={14} aria-hidden="true" />
                 Podstawa programowa
                 {filterPP.size > 0 && (
-                  <span className="badge" style={{ background: 'rgba(255,255,255,0.25)', color: 'var(--accent-fg)' }}>
+                  <span className="badge badge-on-primary">
                     {filterPP.size}
                   </span>
                 )}
@@ -318,14 +318,14 @@ export default function TestGenerator() {
                 <FolderTree size={14} aria-hidden="true" />
                 Kategorie
                 {filterCategoryIds.length > 0 && (
-                  <span className="badge" style={{ background: 'rgba(255,255,255,0.25)', color: 'var(--accent-fg)' }}>
+                  <span className="badge badge-on-primary">
                     {filterCategoryIds.length}
                   </span>
                 )}
               </button>
             </div>
             {(filterPP.size > 0 || filterCategoryIds.length > 0) && (
-              <div className="flex gap-1 wrap" style={{ marginTop: 'var(--space-3)', alignItems: 'center' }}>
+              <div className="flex gap-1 wrap items-center mt-1">
                 {filterPP.size > 0 && (
                   <>
                     <span className="text-xs text-muted">Podstawa:</span>
@@ -333,8 +333,7 @@ export default function TestGenerator() {
                       <button
                         key={pp.id}
                         type="button"
-                        className="badge badge-primary"
-                        style={{ display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer', border: 'none' }}
+                        className="badge badge-primary badge-action"
                         onClick={() => togglePpFilter(pp.id)}
                         title={pp.description}
                         aria-label={`Usuń filtr ${pp.code}`}
@@ -347,13 +346,12 @@ export default function TestGenerator() {
                 )}
                 {filterCategoryIds.length > 0 && (
                   <>
-                    <span className="text-xs text-muted" style={{ marginLeft: filterPP.size > 0 ? 'var(--space-3)' : 0 }}>Kategorie:</span>
+                    <span className="text-xs text-muted" data-spaced={filterPP.size > 0 || undefined}>Kategorie:</span>
                     {filterCategoriesDetailed.map((cat) => (
                       <button
                         key={cat.id}
                         type="button"
-                        className="badge badge-primary"
-                        style={{ display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer', border: 'none' }}
+                        className="badge badge-primary badge-action"
                         onClick={() => removeCategoryFilter(cat.id)}
                         title={pathLabel(categories || [], cat.id)}
                         aria-label={`Usuń filtr ${cat.name}`}
@@ -377,7 +375,7 @@ export default function TestGenerator() {
             )}
           </div>
 
-          <div ref={taskListRef} className="task-list" style={{ maxHeight: 360, overflowY: 'auto', contain: 'paint' }}>
+          <div ref={taskListRef} className="task-list list-scroll-tall">
             {pagedTasks === undefined ? (
               [0, 1].map((i) => <div key={i} className="skeleton skeleton-card" />)
             ) : pagedTasks.length === 0 ? (
@@ -388,15 +386,14 @@ export default function TestGenerator() {
               return (
                 <label key={t.id} className={`list-row ${checked ? 'selected' : ''}`}>
                   {checked
-                    ? <CheckSquare size={16} aria-hidden="true" style={{ color: 'var(--accent)' }} />
+                    ? <CheckSquare size={16} aria-hidden="true" className="color-accent" />
                     : <Square size={16} aria-hidden="true" />}
-                  <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-                    <span style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
-                      <strong className="text-sm" style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{t.title}</strong>
+                  <span className="col-tight">
+                    <span className="flex items-center gap-tight min-w-0">
+                      <strong className="text-sm truncate">{t.title}</strong>
                       {t.aiGenerated && (
                         <span
-                          className="badge"
-                          style={{ background: 'var(--info-bg)', color: 'var(--info)', display: 'inline-flex', alignItems: 'center', gap: 3, flexShrink: 0 }}
+                          className="badge badge-ai"
                           title={t.aiModel ? `AI · ${t.aiModel}` : 'Wygenerowane przez AI'}
                         >
                           <Sparkles size={10} aria-hidden="true" /> AI
@@ -440,7 +437,7 @@ export default function TestGenerator() {
             {tests === undefined ? (
               [0, 1].map((i) => <div key={i} className="skeleton skeleton-card" />)
             ) : tests.length === 0 ? (
-              <div className="empty-state" style={{ padding: 'var(--space-6)' }}>
+              <div className="empty-state empty-state-padded">
                 <FileText size={32} aria-hidden="true" />
                 <p>Brak zapisanych testów. Wybierz zadania i kliknij „Utwórz test".</p>
               </div>
@@ -449,8 +446,8 @@ export default function TestGenerator() {
               const totalPoints = testTasks.reduce((sum, t) => sum + taskPoints(t), 0);
               return (
                 <div key={test.id} className="card card-tight">
-                  <div className="flex justify-between items-center" style={{ gap: 'var(--space-3)' }}>
-                    <div style={{ minWidth: 0, flex: 1 }}>
+                  <div className="flex justify-between items-center gap-1">
+                    <div className="grow">
                       <strong>{test.title}</strong>
                       <div className="text-muted text-sm">
                         {test.tasks.length} zadań · {totalPoints} pkt · {new Date(test.generatedAt).toLocaleDateString('pl-PL')}
@@ -480,8 +477,7 @@ export default function TestGenerator() {
       {catPickerOpen && (
         <div className="overlay" onMouseDown={() => setCatPickerOpen(false)} role="presentation">
           <div
-            className="overlay-content"
-            style={{ maxWidth: 720 }}
+            className="overlay-content max-w-720"
             onMouseDown={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -513,8 +509,7 @@ export default function TestGenerator() {
       {ppPickerOpen && (
         <div className="overlay" onMouseDown={() => setPpPickerOpen(false)} role="presentation">
           <div
-            className="overlay-content"
-            style={{ maxWidth: 880 }}
+            className="overlay-content max-w-880"
             onMouseDown={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
@@ -565,9 +560,9 @@ export default function TestGenerator() {
                   <div className="preview-box mt-1">
                     {renderParameterized(t.content, t.parameters)}
                     {t.taskType === 'closed' && t.choices && t.choices.length > 0 && (
-                      <ol style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+                      <ol className="preview-list is-tight">
                         {t.choices.map((c, ci) => (
-                          <li key={c.id} style={{ marginTop: 2 }}>
+                          <li key={c.id}>
                             <strong>{String.fromCharCode(97 + ci)})</strong> {renderParameterized(c.content, t.parameters)}
                           </li>
                         ))}
