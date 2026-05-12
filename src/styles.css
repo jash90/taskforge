@@ -39,8 +39,8 @@
   --signal-danger-500:  oklch(0.555 0.150 25);
 
   /* ── Type scale (1.25 ratio) ──────────────────────────────── */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body:    'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-display: 'Noto Serif', Georgia, 'Times New Roman', serif;
+  --font-body:    'Noto Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   /* User-controlled font scale multiplier (set by FontSizeToggle). */
   --font-scale: 1;
   --text-xs:   calc(11px * var(--font-scale));
