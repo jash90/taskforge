@@ -103,6 +103,10 @@ export interface GenerateOptions {
   maxTokens?: number;
   /** Abort controller for cancellation. */
   signal?: AbortSignal;
+  /** Hard timeout per request in ms. Defaults to 90s — long enough for
+   *  slow free-tier models, short enough that an unresponsive provider
+   *  surfaces as an error instead of looking like an infinite spinner. */
+  timeoutMs?: number;
 }
 
 export interface GenerationResult {
@@ -124,12 +128,40 @@ export async function generateChat(opts: GenerateOptions): Promise<GenerationRes
   if (typeof opts.temperature === 'number') body.temperature = opts.temperature;
   if (typeof opts.maxTokens === 'number') body.max_tokens = opts.maxTokens;
 
-  const res = await fetch(`${BASE}/chat/completions`, {
-    method: 'POST',
-    headers: DEFAULT_HEADERS(opts.apiKey),
-    body: JSON.stringify(body),
-    signal: opts.signal,
-  });
+  // Combine user-supplied cancel signal with a hard timeout so a hung
+  // provider doesn't keep the request open forever (which manifested as
+  // "Wygenerowano 0 z N" stuck at 0 — the worker pool was waiting on
+  // fetch promises that never resolved).
+  const ctrl = new AbortController();
+  const timeoutId = setTimeout(() => ctrl.abort(new DOMException('Timeout', 'TimeoutError')), opts.timeoutMs ?? 90_000);
+  const onParentAbort = () => ctrl.abort((opts.signal as AbortSignal & { reason?: unknown })?.reason);
+  if (opts.signal) {
+    if (opts.signal.aborted) onParentAbort();
+    else opts.signal.addEventListener('abort', onParentAbort, { once: true });
+  }
+
+  let res: Response;
+  try {
+    res = await fetch(`${BASE}/chat/completions`, {
+      method: 'POST',
+      headers: DEFAULT_HEADERS(opts.apiKey),
+      body: JSON.stringify(body),
+      signal: ctrl.signal,
+    });
+  } catch (err) {
+    if ((err as Error)?.name === 'AbortError' || (err as Error)?.name === 'TimeoutError') {
+      // Re-throw as a recognisable error so the AI generator's retry logic
+      // can distinguish "timeout" from "user pressed Anuluj". User-aborts
+      // keep AbortError; timeouts get a clearer Polish message.
+      if (ctrl.signal.reason instanceof DOMException && ctrl.signal.reason.name === 'TimeoutError') {
+        throw new Error(`Model nie odpowiedział w ciągu ${Math.round((opts.timeoutMs ?? 90_000) / 1000)} s.`);
+      }
+    }
+    throw err;
+  } finally {
+    clearTimeout(timeoutId);
+    opts.signal?.removeEventListener('abort', onParentAbort);
+  }
   if (!res.ok) {
     const errBody = await res.json().catch(() => undefined);
     throw new Error(polishError(res.status, errBody));
