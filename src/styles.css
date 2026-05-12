@@ -1924,6 +1924,7 @@ tr:hover td { background: var(--surface-2); }
 .card-warning { background: var(--warning-bg); border-color: var(--warning); }
 .card-danger  { background: var(--danger-bg);  border-color: var(--danger);  color: var(--danger); }
 .card-success { background: var(--success-bg); border-color: var(--success); }
+.card-accent  { background: var(--accent-soft); border-color: var(--accent); }
 
 /* Input wrapper for password-style fields with an in-field action
    button (e.g. Settings API key with show/hide toggle). */
@@ -1947,8 +1948,11 @@ tr:hover td { background: var(--surface-2); }
 .textarea-prose { font-family: var(--font-body); line-height: 1.5; }
 
 /* Pixel margin helpers used in alert callouts and ad-hoc spacing. */
-.mt-px-4 { margin-top: 4px; }
-.mt-px-6 { margin-top: 6px; }
+.mt-px-4  { margin-top: 4px; }
+.mt-px-6  { margin-top: 6px; }
+.mt-px-12 { margin-top: 12px; }   /* --space-4 */
+.mb-px-4  { margin-bottom: 4px; }
+.mb-px-6  { margin-bottom: 6px; } /* --space-2 */
 
 /* Inline icon helpers — for icons that need to sit inside a sentence
    (next to text) rather than being block-level. */
@@ -2068,6 +2072,15 @@ tr:hover td { background: var(--surface-2); }
 .list-scroll-tall {
   max-height: 360px;
   overflow-y: auto;
+  contain: paint;
+}
+
+/* Viewport-relative scroll container — used in tall picker modals
+   where 60vh fits more content than a fixed 360px on large screens. */
+.list-scroll-vh {
+  max-height: min(60vh, 480px);
+  overflow-y: auto;
+  padding-right: 4px;
   contain: paint;
 }
 
