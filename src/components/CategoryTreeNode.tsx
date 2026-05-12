@@ -35,7 +35,7 @@ export default function CategoryTreeNode({
     <>
       <div
         className={`category-row ${className}`.trim()}
-        style={{ paddingLeft: `calc(${node.depth * indent}px + var(--space-3))` }}
+        data-depth={Math.min(node.depth, 8)}
       >
         <button
           type="button"
@@ -46,17 +46,16 @@ export default function CategoryTreeNode({
           disabled={!hasChildren}
           tabIndex={hasChildren ? 0 : -1}
         >
-          {hasChildren ? <Icon size={14} aria-hidden="true" /> : <span style={{ display: 'inline-block', width: 14, height: 14 }} aria-hidden="true" />}
+          {hasChildren ? <Icon size={14} aria-hidden="true" /> : <span className="tree-icon-placeholder" aria-hidden="true" />}
         </button>
 
         {renderLeading?.(node)}
 
         <button
           type="button"
-          className="category-row-label"
+          className={`category-row-label ${onSelect ? 'cursor-pointer' : 'cursor-default'}`}
           onClick={() => onSelect?.(node)}
           tabIndex={onSelect ? 0 : -1}
-          style={{ cursor: onSelect ? 'pointer' : 'default' }}
         >
           <span className="category-row-name">{node.name}</span>
           {hasChildren && (

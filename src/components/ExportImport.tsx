@@ -130,8 +130,8 @@ export default function ExportImport({ onImport }: Props) {
           ref={fileRef}
           type="file"
           accept=".json,application/json"
+          className="hidden"
           onChange={handleFileChange}
-          style={{ display: 'none' }}
         />
         <div
           className={`dropzone ${dragOver ? 'over' : ''}`}
@@ -144,13 +144,13 @@ export default function ExportImport({ onImport }: Props) {
           onDrop={handleDrop}
           aria-label="Upuść plik JSON tutaj lub kliknij, aby wybrać"
         >
-          <Upload size={28} aria-hidden="true" style={{ marginBottom: 8 }} />
+          <Upload size={28} aria-hidden="true" className="mb-1" />
           <div className="text-sm font-semibold">Upuść plik JSON tutaj</div>
           <div className="text-xs text-faint">lub kliknij, aby wybrać z dysku</div>
         </div>
 
         {error && (
-          <div className="mt-1 flex items-center gap-1" style={{ color: 'var(--danger)' }} role="alert">
+          <div className="mt-1 flex items-center gap-1 color-danger" role="alert">
             <AlertTriangle size={16} aria-hidden="true" /> {error}
           </div>
         )}

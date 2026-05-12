@@ -52,10 +52,10 @@ export default function EditorPreview({ title, content, parameters, choices, onO
         <div className="preview-box">
           {text}
           {choices && choices.length > 0 && (
-            <ol className="choices-list" style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+            <ol className="choices-list preview-list is-tight">
               {choices.map((c, i) => (
-                <li key={c.id} style={{ marginTop: 2 }}>
-                  <strong>{String.fromCharCode(97 + i)})</strong> {renderChoice(c) || <em style={{ opacity: 0.5 }}>—</em>}
+                <li key={c.id}>
+                  <strong>{String.fromCharCode(97 + i)})</strong> {renderChoice(c) || <em className="em-placeholder">—</em>}
                 </li>
               ))}
             </ol>
