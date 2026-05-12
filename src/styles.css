@@ -1339,6 +1339,19 @@ tr:hover td { background: var(--surface-2); }
   background: var(--surface-2);
 }
 
+/* Hide keyboard-shortcut affordances on narrow viewports — there is no
+   physical keyboard on mobile, so ⌘K hints, per-command shortcut hints
+   and the palette footer (↑↓/Enter/Esc) are noise rather than help.
+   Placed AFTER the base .palette-footer rule so this override wins the
+   cascade for equal specificity. */
+@media (max-width: 720px) {
+  .kbd-hint,
+  .palette-item-hint,
+  .palette-footer {
+    display: none;
+  }
+}
+
 @keyframes palette-in {
   from { opacity: 0; transform: translateY(-8px) scale(0.98); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
