@@ -1884,6 +1884,33 @@ tr:hover td { background: var(--surface-2); }
 .mb-half  { margin-bottom: 4px; }
 .mt-quart { margin-top: 2px; }
 
+/* Margin left/right scale (matches existing .mt-*/.mb-* numbering — 1=8px, 2=16px, 3=24px). */
+.ml-1     { margin-left: var(--space-3); }
+.ml-2     { margin-left: var(--space-5); }
+.ml-3     { margin-left: var(--space-6); }
+.ml-half  { margin-left: 4px; }
+.ml-px-6  { margin-left: 6px; }
+.mr-1     { margin-right: var(--space-3); }
+.mr-2     { margin-right: var(--space-5); }
+.mr-3     { margin-right: var(--space-6); }
+.mr-half  { margin-right: 4px; }
+
+/* Half / quart gap variants */
+.gap-half  { gap: 4px; }       /* --space-1 */
+.gap-tight { gap: 6px; }       /* --space-2 */
+
+/* min-width utility */
+.min-w-0 { min-width: 0; }
+
+/* Data attribute hook: `data-spaced` adds an --space-3 left margin.
+   Used where the spacing is conditional on sibling rendering (e.g.
+   "Kategorie:" label only gets left-margin when a "Podstawa:" group
+   precedes it). Driven by state via `data-spaced={cond || undefined}`. */
+[data-spaced] { margin-left: var(--space-3); }
+
+/* Empty-state padded variant (used inside list panels) */
+.empty-state-padded { padding: var(--space-6); }
+
 /* Inline icon helpers — for icons that need to sit inside a sentence
    (next to text) rather than being block-level. */
 .icon-inline { display: inline; vertical-align: middle; }
@@ -1950,6 +1977,15 @@ tr:hover td { background: var(--surface-2); }
 .badge-soft {
   background: var(--surface-2);
   color: var(--text-muted);
+}
+/* AI-source marker badge (info-colored, inline-flex with tight gap). */
+.badge-ai {
+  background: var(--info-bg);
+  color: var(--info);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  flex-shrink: 0;
 }
 
 /* Inline action badge that wraps a clickable element — used for
