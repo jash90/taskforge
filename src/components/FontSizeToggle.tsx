@@ -56,7 +56,7 @@ export default function FontSizeToggle() {
       {open && (
         <div className="font-size-popover" role="dialog" aria-label="Rozmiar czcionki">
           <div className="font-size-popover-header">
-            <span className="text-sm" style={{ fontWeight: 600 }}>Rozmiar czcionki</span>
+            <span className="text-sm font-semibold">Rozmiar czcionki</span>
             <span className="badge badge-primary">{Math.round(scale * 100)}%</span>
           </div>
 

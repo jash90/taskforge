@@ -36,8 +36,7 @@ export default function ConfirmDialog({
   return (
     <div className="overlay" onMouseDown={onCancel} role="presentation">
       <div
-        className="overlay-content"
-        style={{ maxWidth: 440 }}
+        className="overlay-content max-w-440"
         onMouseDown={(e) => e.stopPropagation()}
         role="alertdialog"
         aria-modal="true"
@@ -45,7 +44,7 @@ export default function ConfirmDialog({
         aria-describedby={description ? 'confirm-desc' : undefined}
       >
         <div className="flex items-center gap-1 mb-2">
-          {destructive && <AlertTriangle size={20} style={{ color: 'var(--danger)' }} aria-hidden="true" />}
+          {destructive && <AlertTriangle size={20} className="color-danger" aria-hidden="true" />}
           <h2 id="confirm-title" className="card-title mb-0">{title}</h2>
         </div>
         {description && (
