@@ -377,7 +377,7 @@ export default function TestGenerator() {
             )}
           </div>
 
-          <div ref={taskListRef} className="task-list" style={{ maxHeight: 360, overflowY: 'auto' }}>
+          <div ref={taskListRef} className="task-list" style={{ maxHeight: 360, overflowY: 'auto', contain: 'paint' }}>
             {pagedTasks === undefined ? (
               [0, 1].map((i) => <div key={i} className="skeleton skeleton-card" />)
             ) : pagedTasks.length === 0 ? (
