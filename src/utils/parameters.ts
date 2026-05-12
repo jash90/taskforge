@@ -146,6 +146,15 @@ export function renderParameterized(content: string, parameters: TaskParameter[]
   return result;
 }
 
+export function shuffleArray<T>(items: T[]): T[] {
+  const arr = [...items];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
 export function randomizeParameter(p: TaskParameter): TaskParameter {
   if (p.type === 'text' || p.type === 'choice') return { ...p };
   if (p.min === undefined || p.max === undefined) return { ...p };

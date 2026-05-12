@@ -7,7 +7,7 @@ import {
 import db from '../db';
 import type { Task } from '../types';
 import { renderParameterized } from '../utils/parameters';
-import { copyAsWord, downloadFile } from '../utils/export';
+import { copyAsWord, downloadFile, taskPoints } from '../utils/export';
 import { buildTree, descendantIds, findNode, pathLabel } from '../utils/categoryTree';
 import OverflowMenu from './OverflowMenu';
 import ConfirmDialog from './ConfirmDialog';
@@ -300,7 +300,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
 
           <div className="task-list">
             {filtered.map((task) => {
-              const totalPoints = task.answerKey.reduce((s, a) => s + a.points, 0);
+              const totalPoints = taskPoints(task);
               const isSelected = selected.has(task.id);
               return (
                 <article key={task.id} className={`task-item ${isSelected ? 'selected' : ''}`}>

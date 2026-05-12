@@ -7,7 +7,7 @@ import {
 import db from '../db';
 import type { Task, Test } from '../types';
 import { randomizeParameter, renderParameterized } from '../utils/parameters';
-import { generateTestDoc, generateTestAnswerKey, downloadFile } from '../utils/export';
+import { generateTestDoc, generateTestAnswerKey, downloadFile, taskPoints } from '../utils/export';
 import { buildTree, descendantIds, findNode, pathLabel } from '../utils/categoryTree';
 import OverflowMenu from './OverflowMenu';
 import ConfirmDialog from './ConfirmDialog';
@@ -143,7 +143,7 @@ export default function TestGenerator() {
     if (!tasks) return 0;
     const ids = new Set(selectedTasks);
     return tasks.filter((t) => ids.has(t.id))
-      .reduce((sum, t) => sum + t.answerKey.reduce((s, a) => s + a.points, 0), 0);
+      .reduce((sum, t) => sum + taskPoints(t), 0);
   }, [tasks, selectedTasks]);
 
   const toggleTask = (id: string) => {
@@ -376,7 +376,7 @@ export default function TestGenerator() {
               <p className="text-muted text-sm">Brak zadań spełniających filtr.</p>
             ) : pagedTasks.map((t) => {
               const checked = selectedTasks.includes(t.id);
-              const points = t.answerKey.reduce((s, a) => s + a.points, 0);
+              const points = taskPoints(t);
               return (
                 <label key={t.id} className={`list-row ${checked ? 'selected' : ''}`}>
                   {checked
@@ -438,7 +438,7 @@ export default function TestGenerator() {
               </div>
             ) : tests.map((test) => {
               const testTasks = (tasks || []).filter((t) => test.tasks.includes(t.id));
-              const totalPoints = testTasks.reduce((sum, t) => sum + t.answerKey.reduce((s, a) => s + a.points, 0), 0);
+              const totalPoints = testTasks.reduce((sum, t) => sum + taskPoints(t), 0);
               return (
                 <div key={test.id} className="card card-tight">
                   <div className="flex justify-between items-center" style={{ gap: 'var(--space-3)' }}>
@@ -552,9 +552,20 @@ export default function TestGenerator() {
                 <div key={t.id} className="card card-tight">
                   <div className="flex justify-between items-center">
                     <strong>Zadanie {i + 1}</strong>
-                    <span className="badge badge-success">{t.answerKey.reduce((s, a) => s + a.points, 0)} pkt</span>
+                    <span className="badge badge-success">{taskPoints(t)} pkt</span>
                   </div>
-                  <div className="preview-box mt-1">{renderParameterized(t.content, t.parameters)}</div>
+                  <div className="preview-box mt-1">
+                    {renderParameterized(t.content, t.parameters)}
+                    {t.taskType === 'closed' && t.choices && t.choices.length > 0 && (
+                      <ol style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+                        {t.choices.map((c, ci) => (
+                          <li key={c.id} style={{ marginTop: 2 }}>
+                            <strong>{String.fromCharCode(97 + ci)})</strong> {renderParameterized(c.content, t.parameters)}
+                          </li>
+                        ))}
+                      </ol>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>

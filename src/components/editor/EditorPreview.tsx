@@ -1,20 +1,22 @@
 import { useState } from 'react';
 import { Maximize2, Copy, CheckCircle } from 'lucide-react';
-import type { TaskParameter } from '../../types';
+import type { TaskParameter, TaskChoice } from '../../types';
 import { renderParameterized } from '../../utils/parameters';
 
 interface Props {
   title: string;
   content: string;
   parameters: TaskParameter[];
+  choices?: TaskChoice[];
   onOpenFull: () => void;
   onCopyWord: () => Promise<void>;
 }
 
-export default function EditorPreview({ title, content, parameters, onOpenFull, onCopyWord }: Props) {
+export default function EditorPreview({ title, content, parameters, choices, onOpenFull, onCopyWord }: Props) {
   const [mode, setMode] = useState<'with' | 'without'>('with');
   const [copied, setCopied] = useState(false);
   const text = mode === 'with' ? renderParameterized(content, parameters) : content;
+  const renderChoice = (c: TaskChoice) => (mode === 'with' ? renderParameterized(c.content, parameters) : c.content);
 
   const handleCopy = async () => {
     await onCopyWord();
@@ -47,7 +49,18 @@ export default function EditorPreview({ title, content, parameters, onOpenFull, 
       {title && <strong className="text-sm">{title}</strong>}
 
       {content ? (
-        <div className="preview-box">{text}</div>
+        <div className="preview-box">
+          {text}
+          {choices && choices.length > 0 && (
+            <ol className="choices-list" style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+              {choices.map((c, i) => (
+                <li key={c.id} style={{ marginTop: 2 }}>
+                  <strong>{String.fromCharCode(97 + i)})</strong> {renderChoice(c) || <em style={{ opacity: 0.5 }}>—</em>}
+                </li>
+              ))}
+            </ol>
+          )}
+        </div>
       ) : (
         <div className="text-muted text-sm">Wpisz treść zadania, aby zobaczyć podgląd.</div>
       )}
