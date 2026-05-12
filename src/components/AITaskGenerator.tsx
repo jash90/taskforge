@@ -579,8 +579,8 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
           <span className="flex items-center gap-1 text-muted text-sm">
             <Loader2 size={14} aria-hidden="true" className="spinner" />
             {count > 1
-              ? `Wygenerowano ${progressDone} z ${count}…`
-              : 'Model myśli…'}
+              ? `${progressDone}/${count} ukończonych${drafts.length < progressDone ? ` (${drafts.length} udanych)` : ''} — model może odpowiadać do 90 s na zadanie`
+              : 'Model myśli (do 90 s)…'}
           </span>
         )}
       </div>
