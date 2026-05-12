@@ -79,7 +79,7 @@ function KeepAlive({ active, visited, children }: { active: boolean; visited: bo
 }
 
 export default function App() {
-  const { tab: activeTab, setTab: setActiveTab } = useRoute();
+  const { tab: activeTab, param: routeParam, setTab: setActiveTab, setRoute } = useRoute();
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   // Tabs the user has visited at least once. We mount their components on
@@ -94,6 +94,7 @@ export default function App() {
       return next;
     });
   }, [activeTab, visited]);
+
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const { cycle: cycleTheme } = useTheme();
@@ -103,23 +104,44 @@ export default function App() {
   const programPointsAll = useLiveQuery(() => db.programPoints.toArray(), []);
   const categoriesAll = useLiveQuery(() => db.categories.toArray(), []);
 
+  // Keep editingTask in sync with the URL param. Two scenarios this handles:
+  //  - Deep link / refresh: URL says `#/edytor/<id>` but state is empty —
+  //    look the task up in Dexie once it loads, then set it.
+  //  - Browser back/forward to a different task — URL param changes, but
+  //    editingTask still points to the previous one; resync.
+  // We only react when the *id* (param) changes or the tab toggles into a
+  // task-aware route, so Dexie's live updates to the same task do not
+  // re-set editingTask (which would otherwise wipe in-progress edits via
+  // TaskEditor's hydration effect).
+  useEffect(() => {
+    const usesParam = activeTab === 'editor' || activeTab === 'randomizer';
+    if (!usesParam) return;
+    if (!routeParam) {
+      if (editingTask) setEditingTask(null);
+      return;
+    }
+    if (editingTask?.id === routeParam) return;
+    const found = (tasksAll || []).find((t) => t.id === routeParam) ?? null;
+    setEditingTask(found);
+  }, [activeTab, routeParam, tasksAll, editingTask]);
+
   const refresh = useCallback(() => setRefreshKey((k) => k + 1), []);
 
   const goNewTask = useCallback(() => {
     setEditingTask(null);
-    setActiveTab('editor');
-  }, []);
+    setRoute('editor');
+  }, [setRoute]);
 
   const goEditTask = useCallback((id: string) => {
     const t = (tasksAll || []).find((x) => x.id === id) || null;
     setEditingTask(t);
-    setActiveTab('editor');
-  }, [tasksAll]);
+    setRoute('editor', id);
+  }, [tasksAll, setRoute]);
 
   const goRandomize = useCallback((task: Task) => {
     setEditingTask(task);
-    setActiveTab('randomizer');
-  }, []);
+    setRoute('randomizer', task.id);
+  }, [setRoute]);
 
   const exportJson = useCallback(() => {
     const json = exportTasksToJSON(tasksAll || [], testsAll || [], programPointsAll || [], categoriesAll || []);
@@ -225,7 +247,7 @@ export default function App() {
       <main id="main" className="app-main" key={refreshKey}>
         <KeepAlive active={activeTab === 'tasks'} visited={visited.has('tasks')}>
           <TaskList
-            onEdit={(task) => { setEditingTask(task); setActiveTab('editor'); }}
+            onEdit={(task) => goEditTask(task.id)}
             onRandomize={goRandomize}
             onNew={goNewTask}
           />
@@ -233,12 +255,12 @@ export default function App() {
         <KeepAlive active={activeTab === 'editor'} visited={visited.has('editor')}>
           <TaskEditor
             task={editingTask}
-            onSaved={() => { refresh(); setActiveTab('tasks'); setEditingTask(null); }}
-            onCancel={() => { setActiveTab('tasks'); setEditingTask(null); }}
+            onSaved={() => { refresh(); setRoute('tasks'); setEditingTask(null); }}
+            onCancel={() => { setRoute('tasks'); setEditingTask(null); }}
           />
         </KeepAlive>
         <KeepAlive active={activeTab === 'randomizer'} visited={visited.has('randomizer')}>
-          <RandomizerPanel task={editingTask} onClose={() => { setActiveTab('tasks'); setEditingTask(null); }} />
+          <RandomizerPanel task={editingTask} onClose={() => { setRoute('tasks'); setEditingTask(null); }} />
         </KeepAlive>
         <KeepAlive active={activeTab === 'tests'} visited={visited.has('tests')}>
           <TestGenerator />
