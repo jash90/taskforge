@@ -40,6 +40,7 @@ interface Props {
       | 'program'
       | 'categories'
       | 'export'
+      | 'download'
       | 'ai'
       | 'settings',
   ) => void
