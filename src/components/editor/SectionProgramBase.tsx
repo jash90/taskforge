@@ -116,17 +116,9 @@ export default function SectionProgramBase({
 
       {/* Selected pinned summary */}
       {selectedCount > 0 && (
-        <div
-          className="card card-tight"
-          style={{
-            background: 'var(--accent-soft)',
-            borderColor: 'var(--accent)',
-            marginTop: 'var(--space-3)',
-            marginBottom: 'var(--space-3)',
-          }}
-        >
+        <div className="card card-tight card-accent mt-1 mb-1">
           <div className="flex justify-between items-center mb-1">
-            <strong className="text-sm" style={{ color: 'var(--accent)' }}>
+            <strong className="text-sm color-accent">
               Wybrane punkty ({selectedCount})
             </strong>
             <button
@@ -143,8 +135,7 @@ export default function SectionProgramBase({
               <button
                 key={pp.id}
                 type="button"
-                className="badge badge-primary"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer', border: 'none' }}
+                className="badge badge-primary badge-action"
                 onClick={() => onToggle(pp.id)}
                 aria-label={`Usuń wybór punktu ${pp.code}`}
                 title={pp.description}
@@ -158,7 +149,7 @@ export default function SectionProgramBase({
       )}
 
       {/* Cross-level toggle + counts */}
-      <div className="flex justify-between items-center" style={{ flexWrap: 'wrap', gap: 'var(--space-3)', marginBottom: 'var(--space-3)' }}>
+      <div className="flex justify-between items-center wrap gap-1 mb-1">
         <span className="text-sm text-muted">
           {list.length} {list.length === 1 ? 'dostępny punkt' : list.length < 5 ? 'dostępne punkty' : 'dostępnych punktów'}
           {!allLevels && <> · {LEVEL_LABEL[level]} · klasa {cls || '—'}</>}
@@ -175,23 +166,13 @@ export default function SectionProgramBase({
       </div>
 
       {hasMatchesOutsideScope && (
-        <div
-          className="text-sm"
-          style={{
-            background: 'var(--info-bg)',
-            color: 'var(--info)',
-            padding: 'var(--space-3) var(--space-4)',
-            borderRadius: 'var(--radius-sm)',
-            marginBottom: 'var(--space-3)',
-          }}
-          role="status"
-        >
+        <div className="text-sm info-banner mb-1" role="status">
           Brak wyników w bieżącej klasie. Punkty pasujące do „{query}" istnieją w innych klasach lub poziomach.
           {' '}
           <button
             type="button"
+            className="btn-link-inline"
             onClick={() => setAllLevels(true)}
-            style={{ background: 'transparent', border: 'none', color: 'var(--info)', textDecoration: 'underline', cursor: 'pointer', font: 'inherit', padding: 0 }}
           >
             Pokaż wszystkie
           </button>
@@ -206,22 +187,22 @@ export default function SectionProgramBase({
 
       {grouped.map(([groupKey, pts]) => (
         <div key={groupKey} className="mb-1">
-          <div className="text-sm font-semibold text-muted" style={{ marginTop: 12, marginBottom: 6 }}>{groupKey}</div>
+          <div className="text-sm font-semibold text-muted mt-px-12 mb-px-6">{groupKey}</div>
           {pts.map((pp) => {
             const checked = selectedIds.includes(pp.id);
             return (
-              <label key={pp.id} className={`list-row ${checked ? 'selected' : ''}`} style={{ marginBottom: 4 }}>
+              <label key={pp.id} className={`list-row mb-half ${checked ? 'selected' : ''}`}>
                 <input
                   type="checkbox"
+                  className="icon-16"
                   checked={checked}
                   onChange={() => onToggle(pp.id)}
-                  style={{ width: 16, height: 16 }}
                 />
-                <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                <span className="col-tight">
                   <span className="flex items-center gap-1 wrap">
                     <span className="badge badge-info">{pp.code}</span>
                     {allLevels && (
-                      <span className="badge" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
+                      <span className="badge badge-soft">
                         {LEVEL_SHORT[pp.level]} · {pp.class}
                       </span>
                     )}

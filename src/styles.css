@@ -2020,6 +2020,27 @@ tr:hover td { background: var(--surface-2); }
 /* Long-text cells in narrow tables */
 .col-max-w-400 { max-width: 400px; }
 
+/* Inline-status banner (info-colored padded block, used inline within
+   content). Smaller than a full card. */
+.info-banner {
+  background: var(--info-bg);
+  color: var(--info);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+}
+
+/* Inline link-button — styled like a hyperlink rather than a button.
+   Inherits font/size from surrounding text, info-colored, underlined. */
+.btn-link-inline {
+  background: transparent;
+  border: none;
+  color: var(--info);
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+  padding: 0;
+}
+
 /* Max-width caps used by full-page sections (settings, modals, hero blocks) */
 .max-w-440 { max-width: 440px; }
 .max-w-480 { max-width: 480px; }
