@@ -1,0 +1,5 @@
+export { default as CategoryManager } from './screens/CategoryManager'
+export { default as CategoryPicker } from './components/CategoryPicker'
+export { default as CategoryTreeNode } from './components/CategoryTreeNode'
+export * from './utils/categoryTree'
+export type { Category } from '@shared/types'
