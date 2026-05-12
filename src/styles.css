@@ -1028,6 +1028,20 @@ tr:hover td { background: var(--surface-2); }
 @media (max-width: 900px) {
   .grid-2, .grid-3 { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
+  /* Podstawa-programowa controls: keep the two level buttons side by side
+     and put Klasa+Szukaj on one row instead of stacking everything. */
+  .form-row.pp-controls {
+    grid-template-columns: 80px 1fr;
+    gap: var(--space-3);
+  }
+  .form-row.pp-controls .level-toggle {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 4px;
+  }
+  .form-row.pp-controls .level-toggle .btn { flex: 1; }
+  .form-row.pp-controls .pp-class-field { grid-column: 1; }
+  .form-row.pp-controls .pp-search-field { grid-column: 2; }
 }
 
 /* ── Overlay / Dialog ───────────────────────────────────────── */
