@@ -40,6 +40,18 @@ export interface TaskSpecification {
   answerKeyConclusions?: string;
 }
 
+export type TaskType = 'open' | 'closed';
+
+export interface TaskChoice {
+  id: string;
+  /** Treść wariantu odpowiedzi; może zawierać placeholdery `{{paramId}}`. */
+  content: string;
+  isCorrect: boolean;
+  /** Punkty za zaznaczenie tej odpowiedzi (domyślnie 1 jeśli isCorrect, 0 wpp.). */
+  points?: number;
+  explanation?: string;
+}
+
 export interface Task {
   id: string;
   title: string;
@@ -59,6 +71,12 @@ export interface Task {
   aiGenerated?: boolean;
   /** ID of the model that generated the task (e.g. "anthropic/claude-3.5-sonnet"). */
   aiModel?: string;
+  /** Rodzaj zadania: 'open' (tradycyjne) lub 'closed' (ABCD). Brak = 'open'. */
+  taskType?: TaskType;
+  /** Warianty odpowiedzi a, b, c, d (dla taskType === 'closed'). */
+  choices?: TaskChoice[];
+  /** Czy losowo mieszać kolejność wariantów podczas generowania. */
+  shuffleChoices?: boolean;
 }
 
 export interface Category {
@@ -90,4 +108,7 @@ export interface RandomizedTask {
   title: string;
   content: string;
   parameters: TaskParameter[];
+  /** Warianty po podstawieniu parametrów + opcjonalnym przemieszaniu kolejności. */
+  choices?: TaskChoice[];
+  taskType?: TaskType;
 }

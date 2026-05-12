@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Wand2, Plus, Trash2, GripVertical, Maximize2, X } from 'lucide-react';
 import db from '../db';
-import type { Task, TaskParameter, AnswerKeyItem, TaskSpecification } from '../types';
+import type { Task, TaskParameter, AnswerKeyItem, TaskSpecification, TaskChoice, TaskType } from '../types';
 import { detectParameters, renderParameterized } from '../utils/parameters';
 import { copyAsWord } from '../utils/export';
 import { useShortcuts } from '../hooks/useShortcuts';
@@ -44,6 +44,9 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
   const [answerKey, setAnswerKey] = useState<AnswerKeyItem[]>([]);
   const [spec, setSpec] = useState<TaskSpecification>(emptySpec);
   const [tags, setTags] = useState('');
+  const [taskType, setTaskType] = useState<TaskType>('open');
+  const [choices, setChoices] = useState<TaskChoice[]>([]);
+  const [shuffleChoices, setShuffleChoices] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [showFullPreview, setShowFullPreview] = useState(false);
@@ -64,10 +67,14 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
       setAnswerKey(task.answerKey);
       setSpec(task.specification);
       setTags(task.tags.join(', '));
+      setTaskType(task.taskType ?? 'open');
+      setChoices(task.choices ?? []);
+      setShuffleChoices(task.shuffleChoices ?? false);
     } else {
       setTitle(''); setContent(''); setSubject(SUBJECTS[0]); setLevel('podstawowa');
       setCls('7'); setSelectedPP([]); setSelectedCategories([]); setParameters([]); setAnswerKey([]);
       setSpec(emptySpec); setTags('');
+      setTaskType('open'); setChoices([]); setShuffleChoices(false);
     }
     setDirty(false);
     setErrors({});
@@ -123,6 +130,49 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
     });
   };
 
+  const setTaskTypeD = (t: TaskType) => {
+    markDirty();
+    setTaskType(t);
+    if (t === 'closed' && choices.length === 0) {
+      // Seed with 4 empty choices a–d, first marked correct.
+      const seed: TaskChoice[] = ['a', 'b', 'c', 'd'].map((_l, i) => ({
+        id: `choice-${Date.now()}-${i}`,
+        content: '',
+        isCorrect: i === 0,
+        points: i === 0 ? 1 : 0,
+      }));
+      setChoices(seed);
+    }
+  };
+
+  const addChoice = () => {
+    if (choices.length >= 6) return;
+    markDirty();
+    setChoices((c) => [...c, { id: `choice-${Date.now()}`, content: '', isCorrect: false, points: 0 }]);
+  };
+  const updateChoice = (id: string, patch: Partial<TaskChoice>) => {
+    markDirty();
+    setChoices((cs) => cs.map((c) => (c.id === id ? { ...c, ...patch } : c)));
+  };
+  const removeChoice = (id: string) => {
+    if (choices.length <= 2) return;
+    markDirty();
+    setChoices((cs) => cs.filter((c) => c.id !== id));
+  };
+  const moveChoice = (id: string, dir: -1 | 1) => {
+    markDirty();
+    setChoices((cs) => {
+      const idx = cs.findIndex((c) => c.id === id);
+      if (idx < 0) return cs;
+      const ni = idx + dir;
+      if (ni < 0 || ni >= cs.length) return cs;
+      const next = [...cs];
+      [next[idx], next[ni]] = [next[ni], next[idx]];
+      return next;
+    });
+  };
+  const setShuffleChoicesD = (v: boolean) => { markDirty(); setShuffleChoices(v); };
+
   const addAnswer = () => {
     markDirty();
     setAnswerKey((a) => [...a, { id: `ans-${Date.now()}`, answer: '', points: 1, explanation: '' }]);
@@ -172,6 +222,9 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
         tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
         createdAt: task?.createdAt || Date.now(),
         updatedAt: Date.now(),
+        taskType,
+        choices: taskType === 'closed' ? choices : undefined,
+        shuffleChoices: taskType === 'closed' ? shuffleChoices : undefined,
       };
       await db.tasks.put(payload);
       setDirty(false);
@@ -182,7 +235,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
     } finally {
       setSaving(false);
     }
-  }, [task, title, content, subject, level, cls, selectedPP, selectedCategories, parameters, answerKey, spec, tags, onSaved]);
+  }, [task, title, content, subject, level, cls, selectedPP, selectedCategories, parameters, answerKey, spec, tags, taskType, choices, shuffleChoices, onSaved]);
 
   const handleCopyWord = useCallback(async () => {
     const html = copyAsWord({
@@ -190,6 +243,9 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
       programPoints: selectedPP, parameters, answerKey, specification: spec,
       tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
       createdAt: Date.now(), updatedAt: Date.now(),
+      taskType,
+      choices: taskType === 'closed' ? choices : undefined,
+      shuffleChoices: taskType === 'closed' ? shuffleChoices : undefined,
     });
     const blob = new Blob([html], { type: 'text/html' });
     const item = new ClipboardItem({
@@ -198,24 +254,34 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
     });
     await navigator.clipboard.write([item]);
     toast.success({ title: 'Skopiowano jako Word', description: 'Wklej do edytora dokumentów (Word, Pages, Google Docs).' });
-  }, [title, content, subject, level, cls, selectedPP, parameters, answerKey, spec, tags]);
+  }, [title, content, subject, level, cls, selectedPP, parameters, answerKey, spec, tags, taskType, choices, shuffleChoices]);
 
   useShortcuts([
     { combo: 'mod+s', allowInInputs: true, handler: () => { void handleSave(); } },
   ]);
 
-  const totalPoints = answerKey.reduce((s, a) => s + a.points, 0);
+  const totalPoints = taskType === 'closed'
+    ? choices.reduce((s, c) => s + (c.isCorrect ? (c.points ?? 1) : (c.points ?? 0)), 0)
+    : answerKey.reduce((s, a) => s + a.points, 0);
 
-  const outline: OutlineEntry[] = useMemo(() => [
-    { id: 'sec-content',    label: 'Treść',           filled: !!title.trim() && !!content.trim() },
-    { id: 'sec-meta',       label: 'Klasyfikacja',    filled: !!subject && !!cls },
-    { id: 'sec-params',     label: 'Parametry',       filled: parameters.length > 0 },
-    { id: 'sec-answers',    label: 'Klucz odpowiedzi',filled: answerKey.length > 0 },
-    { id: 'sec-spec',       label: 'Kryteria',        filled: !!spec.answerKeyMethod || !!spec.answerKeyAnswer },
-    { id: 'sec-program',    label: 'Podstawa',        filled: selectedPP.length > 0 },
-    { id: 'sec-categories', label: 'Kategorie',       filled: selectedCategories.length > 0 },
-    { id: 'sec-tags',       label: 'Tagi',            filled: !!tags.trim() },
-  ], [title, content, subject, cls, parameters.length, answerKey.length, spec, selectedPP.length, selectedCategories.length, tags]);
+  const hasAnyCorrectChoice = choices.some((c) => c.isCorrect);
+  const hasFilledChoices = choices.length >= 2 && choices.every((c) => c.content.trim()) && hasAnyCorrectChoice;
+
+  const outline: OutlineEntry[] = useMemo(() => {
+    const answersEntry: OutlineEntry = taskType === 'closed'
+      ? { id: 'sec-choices', label: 'Warianty (ABCD)', filled: hasFilledChoices }
+      : { id: 'sec-answers', label: 'Klucz odpowiedzi', filled: answerKey.length > 0 };
+    return [
+      { id: 'sec-content',    label: 'Treść',           filled: !!title.trim() && !!content.trim() },
+      { id: 'sec-meta',       label: 'Klasyfikacja',    filled: !!subject && !!cls },
+      { id: 'sec-params',     label: 'Parametry',       filled: parameters.length > 0 },
+      answersEntry,
+      { id: 'sec-spec',       label: 'Kryteria',        filled: !!spec.answerKeyMethod || !!spec.answerKeyAnswer },
+      { id: 'sec-program',    label: 'Podstawa',        filled: selectedPP.length > 0 },
+      { id: 'sec-categories', label: 'Kategorie',       filled: selectedCategories.length > 0 },
+      { id: 'sec-tags',       label: 'Tagi',            filled: !!tags.trim() },
+    ];
+  }, [title, content, subject, cls, parameters.length, taskType, answerKey.length, hasFilledChoices, spec, selectedPP.length, selectedCategories.length, tags]);
 
   return (
     <div className="editor-shell">
@@ -274,6 +340,13 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
 
         {/* === Klasyfikacja (toolbar) === */}
         <section id="sec-meta" className="editor-section editor-toolbar">
+          <div className="form-group">
+            <label htmlFor="task-type">Typ</label>
+            <select id="task-type" value={taskType} onChange={(e) => setTaskTypeD(e.target.value as TaskType)}>
+              <option value="open">Otwarte</option>
+              <option value="closed">Zamknięte (ABCD)</option>
+            </select>
+          </div>
           <div className="form-group">
             <label htmlFor="task-subject">Przedmiot</label>
             <select id="task-subject" value={subject} onChange={(e) => setSubjectD(e.target.value)}>
@@ -393,45 +466,156 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
           )}
         </section>
 
-        {/* === Klucz odpowiedzi === */}
-        <section id="sec-answers" className="card editor-section">
-          <div className="section-header">
-            <span className="section-no">3</span>
-            <h3>Klucz odpowiedzi</h3>
-            <span className="grow" />
-            {totalPoints > 0 && <span className="badge badge-success">{totalPoints} pkt</span>}
-            <button type="button" className="btn btn-secondary btn-sm" onClick={addAnswer}>
-              <Plus size={14} aria-hidden="true" /> Dodaj
-            </button>
-          </div>
+        {/* === Klucz odpowiedzi (open) / Warianty (closed) === */}
+        {taskType === 'open' ? (
+          <section id="sec-answers" className="card editor-section">
+            <div className="section-header">
+              <span className="section-no">3</span>
+              <h3>Klucz odpowiedzi</h3>
+              <span className="grow" />
+              {totalPoints > 0 && <span className="badge badge-success">{totalPoints} pkt</span>}
+              <button type="button" className="btn btn-secondary btn-sm" onClick={addAnswer}>
+                <Plus size={14} aria-hidden="true" /> Dodaj
+              </button>
+            </div>
 
-          {answerKey.length === 0 ? (
-            <p className="text-muted text-sm">Dodaj oczekiwane odpowiedzi i przypisz im punkty.</p>
-          ) : (
+            {answerKey.length === 0 ? (
+              <p className="text-muted text-sm">Dodaj oczekiwane odpowiedzi i przypisz im punkty.</p>
+            ) : (
+              <div className="param-table-wrap">
+                <table className="param-table">
+                  <thead>
+                    <tr>
+                      <th style={{ width: 36 }}>Lp.</th>
+                      <th>Odpowiedź</th>
+                      <th style={{ width: 90 }}>Punkty</th>
+                      <th>Wyjaśnienie</th>
+                      <th style={{ width: 36 }}><span className="sr-only">Usuń</span></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {answerKey.map((a, i) => (
+                      <tr key={a.id}>
+                        <td className="text-muted text-sm" style={{ textAlign: 'center' }}>{i + 1}</td>
+                        <td><input className="tbl-input" value={a.answer} onChange={(e) => updateAnswer(a.id, { answer: e.target.value })} placeholder="Poprawna odpowiedź" /></td>
+                        <td><input className="tbl-input" type="number" inputMode="decimal" value={a.points} onChange={(e) => updateAnswer(a.id, { points: parseFloat(e.target.value) || 0 })} /></td>
+                        <td><input className="tbl-input" value={a.explanation || ''} onChange={(e) => updateAnswer(a.id, { explanation: e.target.value })} placeholder="Opcjonalnie" /></td>
+                        <td>
+                          <button
+                            type="button"
+                            className="btn btn-danger-soft btn-icon"
+                            onClick={() => removeAnswer(a.id)}
+                            aria-label={`Usuń odpowiedź ${i + 1}`}
+                          >
+                            <Trash2 size={14} aria-hidden="true" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
+        ) : (
+          <section id="sec-choices" className="card editor-section">
+            <div className="section-header">
+              <span className="section-no">3</span>
+              <h3>Warianty odpowiedzi (ABCD)</h3>
+              <span className="grow" />
+              {totalPoints > 0 && <span className="badge badge-success">{totalPoints} pkt</span>}
+              <button
+                type="button"
+                className="btn btn-secondary btn-sm"
+                onClick={addChoice}
+                disabled={choices.length >= 6}
+                title={choices.length >= 6 ? 'Maks. 6 wariantów' : undefined}
+              >
+                <Plus size={14} aria-hidden="true" /> Dodaj
+              </button>
+            </div>
+
+            <p className="text-muted text-sm mb-1">
+              Min. 2, maks. 6 wariantów. W treści wariantu możesz użyć placeholderów <code>{'{{paramId}}'}</code> z parametrów lub liczb, które zostaną automatycznie wykryte i podstawione podczas losowania.
+            </p>
+
             <div className="param-table-wrap">
               <table className="param-table">
                 <thead>
                   <tr>
-                    <th style={{ width: 36 }}>Lp.</th>
-                    <th>Odpowiedź</th>
-                    <th style={{ width: 90 }}>Punkty</th>
+                    <th style={{ width: 28 }}><span className="sr-only">Kolejność</span></th>
+                    <th style={{ width: 36 }}>Lit.</th>
+                    <th>Treść wariantu</th>
+                    <th style={{ width: 90 }}>Poprawna</th>
+                    <th style={{ width: 80 }}>Punkty</th>
                     <th>Wyjaśnienie</th>
                     <th style={{ width: 36 }}><span className="sr-only">Usuń</span></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {answerKey.map((a, i) => (
-                    <tr key={a.id}>
-                      <td className="text-muted text-sm" style={{ textAlign: 'center' }}>{i + 1}</td>
-                      <td><input className="tbl-input" value={a.answer} onChange={(e) => updateAnswer(a.id, { answer: e.target.value })} placeholder="Poprawna odpowiedź" /></td>
-                      <td><input className="tbl-input" type="number" inputMode="decimal" value={a.points} onChange={(e) => updateAnswer(a.id, { points: parseFloat(e.target.value) || 0 })} /></td>
-                      <td><input className="tbl-input" value={a.explanation || ''} onChange={(e) => updateAnswer(a.id, { explanation: e.target.value })} placeholder="Opcjonalnie" /></td>
+                  {choices.map((c, i) => (
+                    <tr key={c.id}>
+                      <td>
+                        <button
+                          type="button"
+                          className="btn btn-ghost btn-icon"
+                          aria-label={`Przesuń wariant ${String.fromCharCode(97 + i)} w górę`}
+                          onClick={() => moveChoice(c.id, -1)}
+                          disabled={i === 0}
+                          style={{ padding: 4, minHeight: 24, width: 24 }}
+                        >
+                          <GripVertical size={12} aria-hidden="true" />
+                        </button>
+                      </td>
+                      <td className="text-muted text-sm" style={{ textAlign: 'center', fontWeight: 600 }}>
+                        {String.fromCharCode(97 + i)})
+                      </td>
+                      <td>
+                        <input
+                          className="tbl-input"
+                          value={c.content}
+                          onChange={(e) => updateChoice(c.id, { content: e.target.value })}
+                          placeholder="Treść wariantu"
+                        />
+                      </td>
+                      <td style={{ textAlign: 'center' }}>
+                        <input
+                          type="checkbox"
+                          checked={c.isCorrect}
+                          onChange={(e) => {
+                            const next = e.target.checked;
+                            updateChoice(c.id, {
+                              isCorrect: next,
+                              points: next ? (c.points && c.points > 0 ? c.points : 1) : 0,
+                            });
+                          }}
+                          aria-label={`Wariant ${String.fromCharCode(97 + i)} jest poprawny`}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="tbl-input"
+                          type="number"
+                          inputMode="decimal"
+                          value={c.points ?? (c.isCorrect ? 1 : 0)}
+                          onChange={(e) => updateChoice(c.id, { points: parseFloat(e.target.value) || 0 })}
+                        />
+                      </td>
+                      <td>
+                        <input
+                          className="tbl-input"
+                          value={c.explanation || ''}
+                          onChange={(e) => updateChoice(c.id, { explanation: e.target.value })}
+                          placeholder="Opcjonalnie"
+                        />
+                      </td>
                       <td>
                         <button
                           type="button"
                           className="btn btn-danger-soft btn-icon"
-                          onClick={() => removeAnswer(a.id)}
-                          aria-label={`Usuń odpowiedź ${i + 1}`}
+                          onClick={() => removeChoice(c.id)}
+                          disabled={choices.length <= 2}
+                          aria-label={`Usuń wariant ${String.fromCharCode(97 + i)}`}
                         >
                           <Trash2 size={14} aria-hidden="true" />
                         </button>
@@ -441,8 +625,26 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                 </tbody>
               </table>
             </div>
-          )}
-        </section>
+
+            <div className="flex items-center gap-1 mt-1">
+              <input
+                id="shuffle-choices"
+                type="checkbox"
+                checked={shuffleChoices}
+                onChange={(e) => setShuffleChoicesD(e.target.checked)}
+              />
+              <label htmlFor="shuffle-choices" className="text-sm" style={{ margin: 0, cursor: 'pointer' }}>
+                Losuj kolejność wariantów podczas generowania
+              </label>
+            </div>
+
+            {!hasAnyCorrectChoice && choices.length > 0 && (
+              <p className="field-error mt-1" role="alert">
+                Zaznacz co najmniej jeden wariant jako poprawny.
+              </p>
+            )}
+          </section>
+        )}
 
         {/* === Kryteria === */}
         <section id="sec-spec" className="card editor-section">
@@ -525,6 +727,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
         title={title}
         content={content}
         parameters={parameters}
+        choices={taskType === 'closed' ? choices : undefined}
         onOpenFull={() => setShowFullPreview(true)}
         onCopyWord={handleCopyWord}
       />
@@ -538,7 +741,18 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                 <X size={16} aria-hidden="true" /> Zamknij
               </button>
             </div>
-            <div className="preview-box prose">{renderParameterized(content, parameters)}</div>
+            <div className="preview-box prose">
+              {renderParameterized(content, parameters)}
+              {taskType === 'closed' && choices.length > 0 && (
+                <ol style={{ marginTop: 12, paddingLeft: 0, listStyle: 'none' }}>
+                  {choices.map((c, i) => (
+                    <li key={c.id} style={{ marginTop: 4 }}>
+                      <strong>{String.fromCharCode(97 + i)})</strong> {renderParameterized(c.content, parameters)}
+                    </li>
+                  ))}
+                </ol>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -554,7 +768,18 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
             </div>
             <div className="sheet-body">
               {title && <strong className="text-sm">{title}</strong>}
-              <div className="preview-box mt-1">{renderParameterized(content, parameters) || 'Brak treści.'}</div>
+              <div className="preview-box mt-1">
+                {renderParameterized(content, parameters) || 'Brak treści.'}
+                {taskType === 'closed' && choices.length > 0 && (
+                  <ol style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+                    {choices.map((c, i) => (
+                      <li key={c.id} style={{ marginTop: 2 }}>
+                        <strong>{String.fromCharCode(97 + i)})</strong> {renderParameterized(c.content, parameters)}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </div>
             </div>
           </div>
         </>

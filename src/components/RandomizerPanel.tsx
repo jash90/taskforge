@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { RefreshCw, Copy, CheckCircle, ArrowLeft, Download } from 'lucide-react';
-import type { Task, RandomizedTask } from '../types';
-import { randomizeParameter, renderParameterized, applyParameters } from '../utils/parameters';
+import type { Task, RandomizedTask, TaskChoice } from '../types';
+import { randomizeParameter, renderParameterized, applyParameters, shuffleArray } from '../utils/parameters';
 import { downloadFile } from '../utils/export';
 import { toast } from '../hooks/useToast';
 
@@ -31,11 +31,23 @@ export default function RandomizerPanel({ task, onClose }: Props) {
     const next: RandomizedTask[] = [];
     for (let i = 0; i < count; i++) {
       const randomized = task.parameters.map((p) => randomizeParameter(p));
+
+      let renderedChoices: TaskChoice[] | undefined;
+      if (task.taskType === 'closed' && task.choices && task.choices.length > 0) {
+        const applied = task.choices.map((c) => ({
+          ...c,
+          content: renderParameterized(applyParameters(c.content, task.parameters), randomized),
+        }));
+        renderedChoices = task.shuffleChoices ? shuffleArray(applied) : applied;
+      }
+
       next.push({
         originalTaskId: task.id,
         title: task.title,
         content: renderParameterized(applyParameters(task.content, task.parameters), randomized),
         parameters: randomized,
+        choices: renderedChoices,
+        taskType: task.taskType,
       });
     }
     setInstances(next);
@@ -44,9 +56,20 @@ export default function RandomizerPanel({ task, onClose }: Props) {
     }
   }, [task, count]);
 
+  const formatChoicesText = (choices?: TaskChoice[]): string => {
+    if (!choices || choices.length === 0) return '';
+    const lines = choices.map((c, i) => `${String.fromCharCode(97 + i)}) ${c.content}`);
+    const correct = choices
+      .map((c, i) => (c.isCorrect ? String.fromCharCode(97 + i) : null))
+      .filter(Boolean)
+      .join(', ');
+    return '\n\n' + lines.join('\n') + (correct ? `\n\nPoprawna: ${correct})` : '');
+  };
+
   const copyInstance = async (idx: number) => {
     const inst = instances[idx];
-    await navigator.clipboard.writeText(`${inst.title}\n\n${inst.content}`);
+    const choicesText = formatChoicesText(inst.choices);
+    await navigator.clipboard.writeText(`${inst.title}\n\n${inst.content}${choicesText}`);
     setCopiedIdx(idx);
     setTimeout(() => setCopiedIdx(null), 1500);
   };
@@ -62,13 +85,26 @@ export default function RandomizerPanel({ task, onClose }: Props) {
           title: inst.title,
           content: inst.content,
           parameters: inst.parameters.map((p) => ({ name: p.name, value: p.value, unit: p.unit ?? '' })),
+          ...(inst.choices && inst.choices.length > 0
+            ? {
+                choices: inst.choices.map((c, ci) => ({
+                  letter: String.fromCharCode(97 + ci),
+                  content: c.content,
+                  isCorrect: c.isCorrect,
+                  points: c.points ?? (c.isCorrect ? 1 : 0),
+                  explanation: c.explanation ?? '',
+                })),
+              }
+            : {}),
         })),
         null, 2,
       );
       downloadFile(json, `${filenameBase}_warianty.json`, 'application/json');
     } else if (exportFormat === 'csv') {
       const allKeys = Array.from(new Set(instances.flatMap((i) => i.parameters.map((p) => p.name))));
-      const header = ['Wariant', 'Tytuł', ...allKeys, 'Treść'].map(csvCell).join(',');
+      const hasChoices = instances.some((i) => i.choices && i.choices.length > 0);
+      const choiceCols = hasChoices ? ['a', 'b', 'c', 'd', 'e', 'f'] : [];
+      const header = ['Wariant', 'Tytuł', ...allKeys, 'Treść', ...choiceCols.map((l) => l + ')'), ...(hasChoices ? ['Poprawna'] : [])].map(csvCell).join(',');
       const rows = instances.map((inst, i) => {
         const row: string[] = [String(i + 1), inst.title];
         for (const key of allKeys) {
@@ -76,6 +112,16 @@ export default function RandomizerPanel({ task, onClose }: Props) {
           row.push(p ? `${formatValue(p.value)}${p.unit ? ' ' + p.unit : ''}` : '');
         }
         row.push(inst.content.replace(/\n/g, ' '));
+        if (hasChoices) {
+          for (let ci = 0; ci < choiceCols.length; ci++) {
+            row.push(inst.choices?.[ci]?.content.replace(/\n/g, ' ') ?? '');
+          }
+          const correct = (inst.choices ?? [])
+            .map((c, ci) => (c.isCorrect ? String.fromCharCode(97 + ci) : null))
+            .filter(Boolean)
+            .join('|');
+          row.push(correct);
+        }
         return row.map(csvCell).join(',');
       });
       // Add UTF-8 BOM for Excel compatibility
@@ -85,7 +131,7 @@ export default function RandomizerPanel({ task, onClose }: Props) {
         const params = inst.parameters
           .map((p) => `${p.name}: ${formatValue(p.value)}${p.unit ? ' ' + p.unit : ''}`)
           .join('; ');
-        return `=== Wariant ${i + 1} ===\n${inst.content}\nParametry: ${params}\n`;
+        return `=== Wariant ${i + 1} ===\n${inst.content}${formatChoicesText(inst.choices)}\nParametry: ${params}\n`;
       }).join('\n');
       downloadFile(`${task.title}\n\n${lines}`, `${filenameBase}_warianty.txt`, 'text/plain;charset=utf-8');
     }
@@ -188,7 +234,21 @@ export default function RandomizerPanel({ task, onClose }: Props) {
                     : <><Copy size={14} aria-hidden="true" /> Kopiuj</>}
                 </button>
               </div>
-              <div className="preview-box">{inst.content}</div>
+              <div className="preview-box">
+                {inst.content}
+                {inst.choices && inst.choices.length > 0 && (
+                  <ol style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+                    {inst.choices.map((c, ci) => (
+                      <li key={c.id} style={{ marginTop: 2 }}>
+                        <strong>{String.fromCharCode(97 + ci)})</strong> {c.content}
+                        {c.isCorrect && (
+                          <span className="badge badge-success" style={{ marginLeft: 6, fontSize: '0.7em' }}>poprawna</span>
+                        )}
+                      </li>
+                    ))}
+                  </ol>
+                )}
+              </div>
             </div>
           ))}
         </div>

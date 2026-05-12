@@ -2,6 +2,14 @@ import type { Task, Test, ProgramPoint, Category } from '../types';
 import { isMENCurriculum, parseMENCurriculum } from '../db/menParser';
 import { isNestedCategoryFile, parseNestedCategories } from '../db/categoryParser';
 
+/** Computes total points for a task, accounting for closed (ABCD) type. */
+export function taskPoints(t: Task): number {
+  if (t.taskType === 'closed' && t.choices && t.choices.length > 0) {
+    return t.choices.reduce((s, c) => s + (c.isCorrect ? (c.points ?? 1) : (c.points ?? 0)), 0);
+  }
+  return t.answerKey.reduce((s, a) => s + a.points, 0);
+}
+
 export function exportTasksToJSON(
   tasks: Task[],
   tests: Test[],
@@ -123,6 +131,19 @@ th { background: #eee; font-weight: bold; }
   <h2>Treść zadania</h2>
   <p>${formatContent(task.content)}</p>
 
+  ${task.taskType === 'closed' && task.choices && task.choices.length > 0 ? `
+  <h2>Warianty odpowiedzi</h2>
+  <ol style="list-style:none; padding-left: 0;">
+    ${task.choices.map((c, i) => `
+      <li style="margin: 4pt 0;">
+        <strong>${String.fromCharCode(97 + i)})</strong> ${escapeHtml(c.content)}
+        ${c.isCorrect ? ' <span style="background:#dcfce7; padding:1pt 4pt; font-size:10pt;">poprawna</span>' : ''}
+      </li>
+    `).join('')}
+  </ol>
+  ${task.shuffleChoices ? '<p style="font-size:10pt; color:#666;">Kolejność wariantów może być losowana podczas generowania.</p>' : ''}
+  ` : ''}
+
   ${task.parameters.length > 0 ? `
   <h2>Parametry</h2>
   <table>
@@ -188,7 +209,7 @@ export function downloadFile(content: string, filename: string, mime: string) {
 }
 
 export function generateTestDoc(testTitle: string, tasks: Task[]): string {
-  const totalPoints = tasks.reduce((sum, t) => sum + t.answerKey.reduce((s, a) => s + a.points, 0), 0);
+  const totalPoints = tasks.reduce((sum, t) => sum + taskPoints(t), 0);
 
   const html = `
 <html>
@@ -216,7 +237,8 @@ h2 { font-size: 13pt; margin-top: 16pt; }
   </div>
 
   ${tasks.map((t, idx) => {
-    const pts = t.answerKey.reduce((s, a) => s + a.points, 0);
+    const isClosed = t.taskType === 'closed' && t.choices && t.choices.length > 0;
+    const pts = taskPoints(t);
     return `
     <div class="task">
       <div class="task-header">
@@ -225,9 +247,13 @@ h2 { font-size: 13pt; margin-top: 16pt; }
       </div>
       <div class="task-body">
         <p>${formatContent(t.content)}</p>
-        ${t.answerKey.length > 1 ? t.answerKey.map((_a, i) => `
-          <div>${String.fromCharCode(97 + i)}) ______________________________________</div>
-        `).join('') : '<div class="answer-box"></div>'}
+        ${isClosed
+          ? t.choices!.map((c, i) => `
+            <div>○ <strong>${String.fromCharCode(97 + i)})</strong> ${escapeHtml(c.content)}</div>
+          `).join('')
+          : (t.answerKey.length > 1 ? t.answerKey.map((_a, i) => `
+            <div>${String.fromCharCode(97 + i)}) ______________________________________</div>
+          `).join('') : '<div class="answer-box"></div>')}
       </div>
     </div>
     `;
@@ -243,7 +269,7 @@ h2 { font-size: 13pt; margin-top: 16pt; }
 }
 
 export function generateTestAnswerKey(testTitle: string, tasks: Task[]): string {
-  const totalPoints = tasks.reduce((sum, t) => sum + t.answerKey.reduce((s, a) => s + a.points, 0), 0);
+  const totalPoints = tasks.reduce((sum, t) => sum + taskPoints(t), 0);
 
   const html = `
 <html>
@@ -262,14 +288,31 @@ th { background: #eee; font-weight: bold; }
   <h1>Klucz odpowiedzi – ${escapeHtml(testTitle)}</h1>
   <table>
     <tr><th>Zadanie</th><th>Odpowiedź / Odpowiedzi</th><th>Punkty</th><th>Wyjaśnienie</th></tr>
-    ${tasks.map((t, ti) => t.answerKey.map((a, ai) => `
+    ${tasks.map((t, ti) => {
+      if (t.taskType === 'closed' && t.choices && t.choices.length > 0) {
+        const correctLetters = t.choices
+          .map((c, ci) => (c.isCorrect ? String.fromCharCode(97 + ci) : null))
+          .filter(Boolean)
+          .join(', ');
+        const explanation = t.choices.find((c) => c.isCorrect)?.explanation || '';
+        return `
+      <tr>
+        <td>${ti + 1}</td>
+        <td><strong>${correctLetters || '—'}</strong></td>
+        <td>${taskPoints(t)}</td>
+        <td>${escapeHtml(explanation)}</td>
+      </tr>
+        `;
+      }
+      return t.answerKey.map((a, ai) => `
       <tr>
         <td>${ti + 1}${String.fromCharCode(97 + ai)}</td>
         <td>${escapeHtml(a.answer)}</td>
         <td>${a.points}</td>
         <td>${a.explanation ? escapeHtml(a.explanation) : '—'}</td>
       </tr>
-    `).join('')).join('')}
+      `).join('');
+    }).join('')}
   </table>
   <div class="total">Razem punktów: ${totalPoints}</div>
 </body>
