@@ -57,6 +57,8 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [drafts, setDrafts] = useState<DraftTask[]>([]);
+  /** How many of the N parallel requests have finished (success or fail). */
+  const [progressDone, setProgressDone] = useState(0);
   const abortRef = useRef<AbortController | null>(null);
 
   const togglePP = (id: string) => {
@@ -93,19 +95,25 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
     });
   }, [categories, selectedCategories]);
 
-  const buildUserPrompt = (): string => {
+  /** Build a prompt asking for a SINGLE task. The index/total hint nudges
+   *  the model to vary the angle so parallel requests don't all return
+   *  the same boilerplate problem. */
+  const buildUserPromptForSingle = (index: number, total: number): string => {
     const parts: string[] = [];
-    parts.push(`Wygeneruj ${count} ${count === 1 ? 'zadanie edukacyjne' : count < 5 ? 'zadania edukacyjne' : 'zadań edukacyjnych'}.`);
+    parts.push('Wygeneruj JEDNO zadanie edukacyjne.');
+    if (total > 1) {
+      parts.push(`To zadanie ${index + 1} z ${total} w tej serii — postaraj się, aby było wyraźnie różne od typowego ujęcia tematu (inny przykład liczbowy, inny scenariusz, inne pojęcie kluczowe).`);
+    }
     parts.push(`Przedmiot: ${subject}.`);
     parts.push(`Poziom: ${level === 'podstawowa' ? 'szkoła podstawowa' : 'liceum / technikum'}, klasa ${klasa}.`);
     parts.push(`Trudność: ${difficulty}.`);
     if (withParameters) {
-      parts.push(`Każde zadanie powinno zawierać liczby i jednostki w treści (np. "20 km/h", "3 godziny", "100 zł"), żeby można było je sparametryzować.`);
+      parts.push('Zadanie powinno zawierać liczby i jednostki w treści (np. "20 km/h", "3 godziny", "100 zł"), żeby można było je sparametryzować.');
     }
 
     if (ppDetailed.length > 0) {
       parts.push('');
-      parts.push('Zadania mają realizować NASTĘPUJĄCE punkty podstawy programowej:');
+      parts.push('Zadanie ma realizować któryś z NASTĘPUJĄCYCH punktów podstawy programowej:');
       for (const p of ppDetailed) {
         parts.push(`- [${p.code}] ${p.description}`);
       }
@@ -113,7 +121,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
 
     if (categoryPathsForPrompt.length > 0) {
       parts.push('');
-      parts.push('Zadania mają dotyczyć NASTĘPUJĄCYCH kategorii (hierarchicznych):');
+      parts.push('Zadanie ma dotyczyć jednej z NASTĘPUJĄCYCH kategorii (hierarchicznych):');
       for (const c of categoryPathsForPrompt) {
         parts.push(`- ${c.path}`);
       }
@@ -127,29 +135,29 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
     parts.push('');
     parts.push('Zwróć WYŁĄCZNIE poprawny JSON o strukturze:');
     parts.push('{');
-    parts.push('  "tasks": [');
-    parts.push('    {');
-    parts.push('      "title": "krótki tytuł zadania",');
-    parts.push('      "content": "treść zadania w jednym akapicie z liczbami i jednostkami",');
-    parts.push('      "answerKey": [');
-    parts.push('        { "answer": "poprawna odpowiedź z jednostką", "points": 2, "explanation": "krótkie uzasadnienie" }');
-    parts.push('      ],');
-    parts.push('      "specification": {');
-    parts.push('        "method": "metoda rozwiązania krok po kroku",');
-    parts.push('        "answer": "ostateczna odpowiedź",');
-    parts.push('        "conclusions": "wnioski lub komentarz (opcjonalnie)"');
-    parts.push('      },');
-    parts.push('      "tags": ["3-6 krótkich tagów"]');
-    parts.push('    }');
-    parts.push('  ]');
+    parts.push('  "task": {');
+    parts.push('    "title": "krótki tytuł zadania",');
+    parts.push('    "content": "treść zadania w jednym akapicie z liczbami i jednostkami",');
+    parts.push('    "answerKey": [');
+    parts.push('      { "answer": "poprawna odpowiedź z jednostką", "points": 2, "explanation": "krótkie uzasadnienie" }');
+    parts.push('    ],');
+    parts.push('    "specification": {');
+    parts.push('      "method": "metoda rozwiązania krok po kroku",');
+    parts.push('      "answer": "ostateczna odpowiedź",');
+    parts.push('      "conclusions": "wnioski lub komentarz (opcjonalnie)"');
+    parts.push('    },');
+    parts.push('    "tags": ["3-6 krótkich tagów"]');
+    parts.push('  }');
     parts.push('}');
     parts.push('');
     parts.push('Bez markdown, bez bloków kodu, bez komentarzy. Tylko czysty JSON.');
     return parts.join('\n');
   };
 
-  const parseDrafts = (raw: string): DraftTask[] => {
-    // Strip ```json fences if model added them despite the instruction.
+  /** Parse a model response that contains a single task. Accepts both
+   *  the new `{ "task": {...} }` shape (asked for in the prompt) and the
+   *  legacy `{ "tasks": [{...}] }` array — picks the first element if so. */
+  const parseSingleDraft = (raw: string, index: number): DraftTask => {
     let cleaned = raw.trim();
     if (cleaned.startsWith('```')) {
       cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/```\s*$/i, '').trim();
@@ -157,35 +165,37 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
     let parsed: unknown;
     try {
       parsed = JSON.parse(cleaned);
-    } catch (err) {
-      // Try extracting first {...} block
+    } catch {
       const match = cleaned.match(/\{[\s\S]*\}/);
       if (!match) throw new Error('Model nie zwrócił JSON.');
       parsed = JSON.parse(match[0]);
     }
-    const root = parsed as { tasks?: unknown };
-    if (!Array.isArray(root?.tasks)) {
-      throw new Error('Brak tablicy "tasks" w odpowiedzi.');
+    const root = parsed as { task?: unknown; tasks?: unknown };
+    let raw_task: unknown;
+    if (root.task && typeof root.task === 'object') {
+      raw_task = root.task;
+    } else if (Array.isArray(root.tasks) && root.tasks.length > 0) {
+      raw_task = root.tasks[0];
+    } else {
+      throw new Error('Brak pola "task" w odpowiedzi.');
     }
-    return root.tasks.map((t, i) => {
-      const x = t as Partial<DraftTask> & Record<string, unknown>;
-      return {
-        id: `draft-${Date.now()}-${i}`,
-        title: typeof x.title === 'string' ? x.title : `Zadanie ${i + 1}`,
-        content: typeof x.content === 'string' ? x.content : '',
-        answerKey: Array.isArray(x.answerKey) ? x.answerKey.map((a) => ({
-          answer: typeof (a as { answer?: unknown }).answer === 'string' ? (a as { answer: string }).answer : '',
-          points: Number((a as { points?: unknown }).points) || 1,
-          explanation: typeof (a as { explanation?: unknown }).explanation === 'string' ? (a as { explanation: string }).explanation : undefined,
-        })) : [],
-        specification: x.specification && typeof x.specification === 'object' ? {
-          method: (x.specification as { method?: string }).method,
-          answer: (x.specification as { answer?: string }).answer,
-          conclusions: (x.specification as { conclusions?: string }).conclusions,
-        } : undefined,
-        tags: Array.isArray(x.tags) ? (x.tags as string[]).filter((t) => typeof t === 'string') : [],
-      } satisfies DraftTask;
-    });
+    const x = raw_task as Partial<DraftTask> & Record<string, unknown>;
+    return {
+      id: `draft-${Date.now()}-${index}`,
+      title: typeof x.title === 'string' ? x.title : `Zadanie ${index + 1}`,
+      content: typeof x.content === 'string' ? x.content : '',
+      answerKey: Array.isArray(x.answerKey) ? x.answerKey.map((a) => ({
+        answer: typeof (a as { answer?: unknown }).answer === 'string' ? (a as { answer: string }).answer : '',
+        points: Number((a as { points?: unknown }).points) || 1,
+        explanation: typeof (a as { explanation?: unknown }).explanation === 'string' ? (a as { explanation: string }).explanation : undefined,
+      })) : [],
+      specification: x.specification && typeof x.specification === 'object' ? {
+        method: (x.specification as { method?: string }).method,
+        answer: (x.specification as { answer?: string }).answer,
+        conclusions: (x.specification as { conclusions?: string }).conclusions,
+      } : undefined,
+      tags: Array.isArray(x.tags) ? (x.tags as string[]).filter((t) => typeof t === 'string') : [],
+    } satisfies DraftTask;
   };
 
   const handleGenerate = async () => {
@@ -202,37 +212,69 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
     setGenerating(true);
     setError(null);
     setDrafts([]);
+    setProgressDone(0);
     abortRef.current = new AbortController();
-    try {
-      const systemPrompt = settings.aiSystemPrompt?.trim() || DEFAULT_SYSTEM_PROMPT_FALLBACK;
-      const userPrompt = buildUserPrompt();
-      const result = await generateChat({
-        apiKey: settings.openrouterApiKey,
-        model: settings.openrouterModel,
-        systemPrompt,
-        userPrompt,
-        jsonMode: true,
-        signal: abortRef.current.signal,
+    const systemPrompt = settings.aiSystemPrompt?.trim() || DEFAULT_SYSTEM_PROMPT_FALLBACK;
+    const failures: string[] = [];
+
+    // Fire N requests in parallel — one task per request. Tasks land in the
+    // drafts list as they finish (Promise.allSettled lets us tolerate
+    // individual failures without losing the rest of the batch). The
+    // shared AbortController cancels them all on user-clicked Anuluj.
+    const results = await Promise.allSettled(
+      Array.from({ length: count }, async (_, i) => {
+        try {
+          const userPrompt = buildUserPromptForSingle(i, count);
+          const result = await generateChat({
+            apiKey: settings.openrouterApiKey!,
+            model: settings.openrouterModel,
+            systemPrompt,
+            userPrompt,
+            jsonMode: true,
+            // Cap each task's output so total cost scales roughly the same
+            // as the old single-request batch (where avg per-task was
+            // around 1.5k tokens). Headroom for answer key + method.
+            maxTokens: 1500,
+            signal: abortRef.current!.signal,
+          });
+          const draft = parseSingleDraft(result.content, i);
+          setDrafts((prev) => [...prev, draft]);
+          return result.model;
+        } catch (err) {
+          if ((err as Error).name !== 'AbortError') {
+            failures.push(`Zadanie ${i + 1}: ${err instanceof Error ? err.message : String(err)}`);
+          }
+          throw err;
+        } finally {
+          setProgressDone((n) => n + 1);
+        }
+      }),
+    );
+
+    const okCount = results.filter((r) => r.status === 'fulfilled').length;
+    const aborted = results.some((r) => r.status === 'rejected' && (r.reason as Error)?.name === 'AbortError');
+
+    if (aborted) {
+      toast.info({ title: 'Anulowano generowanie', description: okCount > 0 ? `Zachowano ${okCount} ukończonych zadań.` : undefined });
+    } else if (okCount === 0) {
+      const msg = failures[0] || 'Model nie zwrócił żadnego zadania.';
+      setError(failures.join('\n'));
+      toast.error({ title: 'Błąd generowania', description: msg });
+    } else if (failures.length > 0) {
+      setError(failures.join('\n'));
+      toast.info({
+        title: `Wygenerowano ${okCount} z ${count}`,
+        description: `${failures.length} ${failures.length === 1 ? 'zadanie nie powiodło się' : 'zadań nie powiodło się'}.`,
       });
-      const parsed = parseDrafts(result.content);
-      if (parsed.length === 0) throw new Error('Model nie zwrócił żadnego zadania.');
-      setDrafts(parsed);
+    } else {
+      const modelName = results.find((r) => r.status === 'fulfilled')?.value as string | undefined;
       toast.success({
-        title: `Wygenerowano ${parsed.length} ${parsed.length === 1 ? 'zadanie' : parsed.length < 5 ? 'zadania' : 'zadań'}`,
-        description: result.model,
+        title: `Wygenerowano ${okCount} ${okCount === 1 ? 'zadanie' : okCount < 5 ? 'zadania' : 'zadań'}`,
+        description: modelName,
       });
-    } catch (err) {
-      if ((err as Error).name === 'AbortError') {
-        toast.info({ title: 'Anulowano generowanie' });
-      } else {
-        const msg = err instanceof Error ? err.message : String(err);
-        setError(msg);
-        toast.error({ title: 'Błąd generowania', description: msg });
-      }
-    } finally {
-      setGenerating(false);
-      abortRef.current = null;
     }
+    setGenerating(false);
+    abortRef.current = null;
   };
 
   const handleCancel = () => {
@@ -504,7 +546,10 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
         )}
         {generating && (
           <span className="flex items-center gap-1 text-muted text-sm">
-            <Loader2 size={14} aria-hidden="true" className="spinner" /> Model myśli…
+            <Loader2 size={14} aria-hidden="true" className="spinner" />
+            {count > 1
+              ? `Wygenerowano ${progressDone} z ${count}…`
+              : 'Model myśli…'}
           </span>
         )}
       </div>
