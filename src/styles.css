@@ -1846,6 +1846,117 @@ tr:hover td { background: var(--surface-2); }
   border: 0;
 }
 
+/* Extra typography utilities */
+.text-2xl { font-size: var(--text-2xl); }
+.text-3xl { font-size: var(--text-3xl); }
+.text-base { font-size: var(--text-base); }
+.font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+
+/* Token-color utilities for icons / accents */
+.color-accent  { color: var(--accent); }
+.color-danger  { color: var(--danger); }
+.color-success { color: var(--success); }
+.color-info    { color: var(--info); }
+.color-warning { color: var(--warning); }
+
+/* Truncation */
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Tekst align */
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+/* Common flex helpers */
+.ml-auto  { margin-left: auto; }
+.mr-auto  { margin-right: auto; }
+.shrink-0 { flex-shrink: 0; }
+.flex-1   { flex: 1 1 auto; }
+.hidden   { display: none !important; }
+
+/* Pixel-perfect spacers (half-step of the --space scale) */
+.mt-half  { margin-top: 4px; }
+.mb-half  { margin-bottom: 4px; }
+.mt-quart { margin-top: 2px; }
+
+/* Inline icon helpers — for icons that need to sit inside a sentence
+   (next to text) rather than being block-level. */
+.icon-inline { display: inline; vertical-align: middle; }
+.icon-16     { width: 16px; height: 16px; }
+
+/* Form-group fixed widths used in filter / picker rows.
+   Pairs with `min-width: 0` so the child input/select can shrink. */
+.flex-140 { flex: 0 1 140px; min-width: 0; }
+.flex-160 { flex: 0 1 160px; min-width: 0; }
+.flex-180 { flex: 0 1 180px; min-width: 0; }
+.flex-200 { flex: 0 1 200px; min-width: 0; }
+.flex-240 { flex: 0 1 240px; min-width: 0; }
+
+/* Max-width caps used by full-page sections (settings, modals, hero blocks) */
+.max-w-440 { max-width: 440px; }
+.max-w-480 { max-width: 480px; }
+.max-w-720 { max-width: 720px; }
+.max-w-880 { max-width: 880px; }
+.max-w-920 { max-width: 920px; }
+.w-full    { width: 100%; }
+
+/* Vertical stack column commonly used inside list rows (title + meta) */
+.col-tight {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+/* Table cell widths used by TaskEditor's parameter / answer-key tables.
+   Pixel-precise so columns line up cleanly across rows. */
+.col-w-28  { width: 28px; }
+.col-w-36  { width: 36px; }
+.col-w-80  { width: 80px; }
+.col-w-90  { width: 90px; }
+.col-w-120 { width: 120px; }
+
+/* List reset (used by ordered/unordered lists rendered as plain blocks) */
+.list-reset { padding-left: 0; list-style: none; }
+
+/* Form-control labels overriding the uppercase tracked styling that
+   .form-group label gets by default — used for inline checkbox labels
+   and pagination "Na stronę" labels. */
+.label-plain { text-transform: none; letter-spacing: 0; font-size: var(--text-sm); }
+
+/* Section-headers in pickers / modals (small ALL-CAPS) */
+.uppercase-tracked { text-transform: uppercase; letter-spacing: 0.04em; }
+
+/* Badge variants */
+.badge-on-primary {
+  background: rgba(255, 255, 255, 0.25);
+  color: var(--accent-fg);
+}
+.badge-soft {
+  background: var(--surface-2);
+  color: var(--text-muted);
+}
+
+/* Inline action badge that wraps a clickable element — used for
+   removable filter chips in pickers (X icon next to label). */
+.badge-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+/* Tall scrollable list with paint containment.
+   `contain: paint` prevents the overflowing children from inflating
+   html.scrollHeight (Chromium quirk that previously left the sticky
+   bottom-nav stranded on the Testy page when the picker held 20+ rows). */
+.list-scroll-tall {
+  max-height: 360px;
+  overflow-y: auto;
+  contain: paint;
+}
+
 /* desktop-only / mobile-only: hide the element below/above 720px without
    forcing a display value otherwise (so .btn keeps its inline-flex,
    div keeps its block, etc.). */
