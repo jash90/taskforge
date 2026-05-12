@@ -175,6 +175,14 @@ html, body, #root {
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* The app should never scroll horizontally at the document level —
+     every place that legitimately needs horizontal scroll (e.g. the
+     parameters table) has its own .param-table-wrap with overflow-x:
+     auto. `overflow-x: clip` (stricter than `hidden`, doesn't create
+     a scroll container) prevents intrinsic-width descendants from
+     bleeding onto the page even when the chain has `display: contents`
+     wrappers that flatten the overflow hierarchy. */
+  overflow-x: clip;
 }
 
 body {
@@ -543,6 +551,11 @@ kbd {
 /* Main content */
 .app-main {
   overflow-y: auto;
+  /* Belt + braces against page-level horizontal scroll: keep main's x-axis
+     explicitly clipped so any intrinsic-width descendant (e.g. the 640px
+     .param-table) cannot bleed past the viewport. The owning
+     .param-table-wrap still scrolls internally. */
+  overflow-x: hidden;
   padding: var(--space-6);
   scroll-behavior: smooth;
 }
@@ -827,7 +840,13 @@ tr:hover td { background: var(--surface-2); }
   -webkit-overflow-scrolling: touch;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border);
+  /* The table inside is min-width: 640px and almost always overflows on
+     phones. Keep the swipe-to-scroll behaviour but hide the native bar —
+     it sits on top of the row dividers and looks broken in dark mode. */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.param-table-wrap::-webkit-scrollbar { display: none; }
 
 .param-table {
   width: 100%;
@@ -1433,6 +1452,12 @@ tr:hover td { background: var(--surface-2); }
 
 .editor-section {
   scroll-margin-top: var(--space-6);
+  /* Flex column items default to min-width: auto, which lets intrinsic
+     content (the 640px .param-table) expand the section and push the
+     whole page sideways even though .param-table-wrap has overflow-x:
+     auto. Setting min-width: 0 lets the section shrink to its parent,
+     so the table-wrap's internal scroll absorbs the overflow. */
+  min-width: 0;
 }
 
 .editor-toolbar {
