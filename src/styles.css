@@ -451,7 +451,8 @@ kbd {
    button overflows. Collapse it to an icon-only square to keep header tidy. */
 @media (max-width: 720px) {
   :root[data-font-scale-key="lg"] .header-tools .btn-primary,
-  :root[data-font-scale-key="xl"] .header-tools .btn-primary {
+  :root[data-font-scale-key="xl"] .header-tools .btn-primary,
+  :root[data-font-scale-key="2xl"] .header-tools .btn-primary {
     padding: 0;
     width: 40px;
     min-width: 40px;
@@ -459,8 +460,21 @@ kbd {
     gap: 0;
   }
   :root[data-font-scale-key="lg"] .header-tools .btn-primary .btn-label,
-  :root[data-font-scale-key="xl"] .header-tools .btn-primary .btn-label {
+  :root[data-font-scale-key="xl"] .header-tools .btn-primary .btn-label,
+  :root[data-font-scale-key="2xl"] .header-tools .btn-primary .btn-label {
     display: none;
+  }
+
+  /* At 2xl scale (>=170%) the bottom-nav labels collide with each other —
+     "Podstawa programowa" alone wraps to 3 lines per slot. Drop the
+     labels and let the icons speak for themselves; aria-current still
+     marks the active tab via color. */
+  :root[data-font-scale-key="2xl"] .bottom-nav-item > span {
+    display: none;
+  }
+  :root[data-font-scale-key="2xl"] .bottom-nav-item svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -556,10 +570,13 @@ kbd {
 /* Main content */
 .app-main {
   /* The whole page scrolls vertically now (no fixed-height .app-container),
-     so main no longer needs its own scroll context. The html/body
-     overflow-x: clip already protects against horizontal page scroll, and
-     adding overflow-x: hidden here would make .save-bar's `position:
-     sticky` pin to main's bottom instead of the viewport bottom. */
+     so main does not need its own scroll context. But descendants like
+     .param-table (min-width: 640px) can still bleed past the viewport
+     because .app-main is wider-content-friendly. Use `overflow-x: clip`
+     — unlike `hidden`, clip does NOT establish a containing block for
+     `position: sticky`, so .save-bar still pins to the viewport bottom
+     instead of getting trapped at main's bottom. */
+  overflow-x: clip;
   padding: var(--space-6);
   scroll-behavior: smooth;
 }

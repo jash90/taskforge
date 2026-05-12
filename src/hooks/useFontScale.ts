@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'taskforge.fontScale';
 
-export const FONT_SCALE_MIN = 0.85;
-export const FONT_SCALE_MAX = 1.4;
+export const FONT_SCALE_MIN = 0.5;
+export const FONT_SCALE_MAX = 2.0;
 export const FONT_SCALE_STEP = 0.05;
 export const FONT_SCALE_DEFAULT = 1.0;
 
@@ -14,10 +14,11 @@ export interface FontScalePreset {
 }
 
 export const FONT_SCALE_PRESETS: FontScalePreset[] = [
-  { value: 0.9,  label: 'Małe',         short: 'A−'  },
+  { value: 0.5,  label: 'Bardzo małe',  short: 'A−−' },
+  { value: 0.75, label: 'Małe',         short: 'A−'  },
   { value: 1.0,  label: 'Średnie',      short: 'A'   },
-  { value: 1.15, label: 'Duże',         short: 'A+'  },
-  { value: 1.3,  label: 'Bardzo duże',  short: 'A++' },
+  { value: 1.5,  label: 'Duże',         short: 'A+'  },
+  { value: 2.0,  label: 'Bardzo duże',  short: 'A++' },
 ];
 
 const LEGACY_ENUM_MAP: Record<string, number> = {
@@ -50,14 +51,17 @@ const apply = (n: number) => {
   document.documentElement.dataset.fontScale = String(v);
 };
 
-/** Returns the matching preset key (sm/md/lg/xl) for a given numeric scale,
- *  or empty string for in-between values. Used by CSS hooks like `[data-font-scale-key="xl"]`. */
+/** Returns a coarse "tier" key for a given numeric scale, used by CSS hooks
+ *  like `[data-font-scale-key="2xl"]` to collapse / restyle elements that
+ *  would otherwise overflow the viewport at large scales. */
 const presetKey = (n: number): string => {
   const v = formatScale(n);
+  if (v <= 0.6)  return 'xs';
   if (v <= 0.95) return 'sm';
-  if (v < 1.07)  return 'md';
-  if (v < 1.22)  return 'lg';
-  return 'xl';
+  if (v < 1.1)   return 'md';
+  if (v < 1.4)   return 'lg';
+  if (v < 1.7)   return 'xl';
+  return '2xl';
 };
 
 export function useFontScale() {
