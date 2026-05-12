@@ -221,20 +221,29 @@ export async function generateTestDocx(testTitle: string, tasks: Task[]): Promis
   const totalPoints = tasks.reduce((sum, t) => sum + taskPoints(t), 0);
   const children: Paragraph[] = [];
 
-  // Title + meta header
+  // Identification block FIRST — this is what students need to fill in.
+  // Each field on its own line so there's enough room to actually write.
   children.push(new Paragraph({
-    heading: HeadingLevel.HEADING_1,
+    children: [new TextRun({ text: 'Imię i nazwisko: ____________________________________________________', size: 22 })],
+    spacing: { after: 200 },
+  }));
+  children.push(new Paragraph({
+    children: [new TextRun({ text: 'Data: ____________________      Klasa: ____________________', size: 22 })],
+    spacing: { after: 360 },
+  }));
+
+  // Title — smaller, plain weight, no border. Just a label, not the focus.
+  children.push(new Paragraph({
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: testTitle, bold: true, size: 32 })],
-    spacing: { after: 120 },
+    children: [new TextRun({ text: testTitle, size: 24 })],
+    spacing: { after: 80 },
   }));
   children.push(new Paragraph({
     alignment: AlignmentType.CENTER,
     children: [new TextRun({
       text: `Liczba zadań: ${tasks.length}   |   Maksymalna liczba punktów: ${totalPoints}`,
-      size: 20, color: '555555',
+      size: 18, color: '888888',
     })],
-    border: { bottom: { color: '333333', size: 8, style: BorderStyle.SINGLE, space: 8 } },
     spacing: { after: 360 },
   }));
 
@@ -298,16 +307,6 @@ export async function generateTestDocx(testTitle: string, tasks: Task[]): Promis
       }));
     }
   });
-
-  // Footer
-  children.push(new Paragraph({
-    children: [new TextRun({
-      text: 'Imię i nazwisko: ________________________________   Data: ________________   Klasa: ________________',
-      size: 20, color: '555555',
-    })],
-    border: { top: { color: 'cccccc', size: 4, style: BorderStyle.SINGLE, space: 8 } },
-    spacing: { before: 480 },
-  }));
 
   const doc = new Document({
     sections: [{
