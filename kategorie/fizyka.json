@@ -49,9 +49,7 @@
         },
         {
           "nazwa": "Wektory i skalary",
-          "podpunkty": [
-            "Rozróżnianie wielkości wektorowych i skalarnych"
-          ]
+          "podpunkty": ["Rozróżnianie wielkości wektorowych i skalarnych"]
         },
         {
           "nazwa": "Praca z danymi",
@@ -347,10 +345,7 @@
         },
         {
           "nazwa": "Statyka bryły sztywnej",
-          "podpunkty": [
-            "Warunki statyki bryły sztywnej",
-            "Moment siły i jego jednostka"
-          ]
+          "podpunkty": ["Warunki statyki bryły sztywnej", "Moment siły i jego jednostka"]
         },
         {
           "nazwa": "Dynamika ruchu obrotowego",
@@ -688,11 +683,7 @@
         },
         {
           "nazwa": "Rezonans mechaniczny",
-          "podpunkty": [
-            "Pojęcie rezonansu",
-            "Przykłady zjawiska rezonansu",
-            "Przykłady rezonansu"
-          ]
+          "podpunkty": ["Pojęcie rezonansu", "Przykłady zjawiska rezonansu", "Przykłady rezonansu"]
         },
         {
           "nazwa": "Rozchodzenie się fal",
@@ -825,9 +816,7 @@
         },
         {
           "nazwa": "Zjawiska optyczne w przyrodzie",
-          "podpunkty": [
-            "Przykłady zjawisk optycznych (tęcza, halo, miraż)"
-          ]
+          "podpunkty": ["Przykłady zjawisk optycznych (tęcza, halo, miraż)"]
         }
       ]
     },
@@ -1008,11 +997,7 @@
         },
         {
           "nazwa": "Opór i prawo Ohma",
-          "podpunkty": [
-            "Pojęcie oporu elektrycznego",
-            "Jednostka oporu (om)",
-            "Związek U = I·R"
-          ]
+          "podpunkty": ["Pojęcie oporu elektrycznego", "Jednostka oporu (om)", "Związek U = I·R"]
         },
         {
           "nazwa": "Praca i moc prądu",
@@ -1061,10 +1046,7 @@
         },
         {
           "nazwa": "Zachowanie ładunku",
-          "podpunkty": [
-            "Zasada zachowania ładunku elektrycznego",
-            "Ładunek dodatni i ujemny"
-          ]
+          "podpunkty": ["Zasada zachowania ładunku elektrycznego", "Ładunek dodatni i ujemny"]
         },
         {
           "nazwa": "Prawo Coulomba",
@@ -1214,10 +1196,7 @@
         },
         {
           "nazwa": "Źródła napięcia",
-          "podpunkty": [
-            "Opór wewnętrzny źródła",
-            "Siła elektromotoryczna"
-          ]
+          "podpunkty": ["Opór wewnętrzny źródła", "Siła elektromotoryczna"]
         },
         {
           "nazwa": "Moc i ciepło Joule'a-Lenza",
@@ -1270,9 +1249,7 @@
         },
         {
           "nazwa": "Silnik elektryczny",
-          "podpunkty": [
-            "Oddziaływanie magnetyczne jako podstawa silnika elektrycznego"
-          ]
+          "podpunkty": ["Oddziaływanie magnetyczne jako podstawa silnika elektrycznego"]
         },
         {
           "nazwa": "Wymagania doświadczalne",
@@ -1304,9 +1281,7 @@
         },
         {
           "nazwa": "Pole magnetyczne Ziemi",
-          "podpunkty": [
-            "Rola jako osłona przed wiatrem słonecznym"
-          ]
+          "podpunkty": ["Rola jako osłona przed wiatrem słonecznym"]
         },
         {
           "nazwa": "Indukcja elektromagnetyczna",
@@ -1351,10 +1326,7 @@
         },
         {
           "nazwa": "Ferromagnetyki",
-          "podpunkty": [
-            "Właściwości ferromagnetyków",
-            "Zastosowania ferromagnetyków"
-          ]
+          "podpunkty": ["Właściwości ferromagnetyków", "Zastosowania ferromagnetyków"]
         },
         {
           "nazwa": "Fale elektromagnetyczne",
@@ -1386,11 +1358,7 @@
         },
         {
           "nazwa": "Widma gazów",
-          "podpunkty": [
-            "Widma emisyjne",
-            "Widma absorpcyjne",
-            "Jakościowe pochodzenie widm"
-          ]
+          "podpunkty": ["Widma emisyjne", "Widma absorpcyjne", "Jakościowe pochodzenie widm"]
         },
         {
           "nazwa": "Model atomu",
@@ -1435,9 +1403,7 @@
         },
         {
           "nazwa": "Wymagania doświadczalne",
-          "podpunkty": [
-            "Obserwacja widm atomowych za pomocą siatki dyfrakcyjnej"
-          ]
+          "podpunkty": ["Obserwacja widm atomowych za pomocą siatki dyfrakcyjnej"]
         }
       ]
     },
@@ -1514,11 +1480,7 @@
         },
         {
           "nazwa": "Ewolucja gwiazd",
-          "podpunkty": [
-            "Elementy ewolucji gwiazd",
-            "Supernowe",
-            "Czarne dziury"
-          ]
+          "podpunkty": ["Elementy ewolucji gwiazd", "Supernowe", "Czarne dziury"]
         },
         {
           "nazwa": "Szczególna teoria względności",
