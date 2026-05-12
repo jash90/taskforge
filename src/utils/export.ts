@@ -1,3 +1,7 @@
+import {
+  Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
+  AlignmentType, BorderStyle, WidthType, HeadingLevel, PageOrientation,
+} from 'docx';
 import type { Task, Test, ProgramPoint, Category } from '../types';
 import { isMENCurriculum, parseMENCurriculum } from '../db/menParser';
 import { isNestedCategoryFile, parseNestedCategories } from '../db/categoryParser';
@@ -198,6 +202,10 @@ function formatContent(content: string): string {
 
 export function downloadFile(content: string, filename: string, mime: string) {
   const blob = new Blob([content], { type: mime });
+  downloadBlob(blob, filename);
+}
+
+export function downloadBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -208,115 +216,188 @@ export function downloadFile(content: string, filename: string, mime: string) {
   URL.revokeObjectURL(url);
 }
 
-export function generateTestDoc(testTitle: string, tasks: Task[]): string {
+/** Generates a real .docx file (OOXML zip) for the test sheet. */
+export async function generateTestDocx(testTitle: string, tasks: Task[]): Promise<Blob> {
   const totalPoints = tasks.reduce((sum, t) => sum + taskPoints(t), 0);
+  const children: Paragraph[] = [];
 
-  const html = `
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
-body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.5; max-width: 800px; margin: 0 auto; padding: 24pt; }
-.header { text-align: center; border-bottom: 2pt solid #333; padding-bottom: 12pt; margin-bottom: 20pt; }
-h1 { font-size: 16pt; margin: 4pt 0; }
-h2 { font-size: 13pt; margin-top: 16pt; }
-.meta { font-size: 10pt; color: #444; }
-.task { margin-bottom: 16pt; page-break-inside: avoid; }
-.task-header { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 0.5pt solid #ccc; padding-bottom: 2pt; margin-bottom: 4pt; }
-.task-title { font-weight: bold; font-size: 12pt; }
-.task-points { font-size: 10pt; color: #555; }
-.task-body { margin-left: 12pt; }
-.answer-box { border: 1pt solid #999; min-height: 40pt; margin-top: 6pt; padding: 4pt; }
-.footer { margin-top: 24pt; font-size: 10pt; color: #555; border-top: 1pt solid #ccc; padding-top: 8pt; }
-</style>
-</head>
-<body>
-  <div class="header">
-    <h1>${escapeHtml(testTitle)}</h1>
-    <div class="meta">Liczba zadań: ${tasks.length} | Maksymalna liczba punktów: ${totalPoints}</div>
-  </div>
+  // Title + meta header
+  children.push(new Paragraph({
+    heading: HeadingLevel.HEADING_1,
+    alignment: AlignmentType.CENTER,
+    children: [new TextRun({ text: testTitle, bold: true, size: 32 })],
+    spacing: { after: 120 },
+  }));
+  children.push(new Paragraph({
+    alignment: AlignmentType.CENTER,
+    children: [new TextRun({
+      text: `Liczba zadań: ${tasks.length}   |   Maksymalna liczba punktów: ${totalPoints}`,
+      size: 20, color: '555555',
+    })],
+    border: { bottom: { color: '333333', size: 8, style: BorderStyle.SINGLE, space: 8 } },
+    spacing: { after: 360 },
+  }));
 
-  ${tasks.map((t, idx) => {
-    const isClosed = t.taskType === 'closed' && t.choices && t.choices.length > 0;
+  // Tasks
+  tasks.forEach((t, idx) => {
     const pts = taskPoints(t);
-    return `
-    <div class="task">
-      <div class="task-header">
-        <span class="task-title">Zadanie ${idx + 1}</span>
-        <span class="task-points">${pts} pkt</span>
-      </div>
-      <div class="task-body">
-        <p>${formatContent(t.content)}</p>
-        ${isClosed
-          ? t.choices!.map((c, i) => `
-            <div>○ <strong>${String.fromCharCode(97 + i)})</strong> ${escapeHtml(c.content)}</div>
-          `).join('')
-          : (t.answerKey.length > 1 ? t.answerKey.map((_a, i) => `
-            <div>${String.fromCharCode(97 + i)}) ______________________________________</div>
-          `).join('') : '<div class="answer-box"></div>')}
-      </div>
-    </div>
-    `;
-  }).join('')}
+    const isClosed = t.taskType === 'closed' && t.choices && t.choices.length > 0;
 
-  <div class="footer">
-    Imię i nazwisko: ________________________________  Data: ________________  Klasa: ________________
-  </div>
-</body>
-</html>`;
+    children.push(new Paragraph({
+      children: [
+        new TextRun({ text: `Zadanie ${idx + 1}`, bold: true, size: 24 }),
+        new TextRun({ text: `\t${pts} pkt`, size: 20, color: '555555' }),
+      ],
+      tabStops: [{ type: 'right', position: 9000 }],
+      border: { bottom: { color: 'cccccc', size: 4, style: BorderStyle.SINGLE, space: 2 } },
+      spacing: { before: 240, after: 120 },
+      keepNext: true,
+    }));
 
-  return html;
+    children.push(new Paragraph({
+      children: [new TextRun({ text: t.content, size: 22 })],
+      indent: { left: 240 },
+      spacing: { after: 120 },
+    }));
+
+    if (isClosed) {
+      t.choices!.forEach((c, i) => {
+        children.push(new Paragraph({
+          children: [
+            new TextRun({ text: '○  ', size: 24 }),
+            new TextRun({ text: `${String.fromCharCode(97 + i)}) `, bold: true, size: 22 }),
+            new TextRun({ text: c.content, size: 22 }),
+          ],
+          indent: { left: 480 },
+          spacing: { after: 80 },
+        }));
+      });
+    } else if (t.answerKey.length > 1) {
+      t.answerKey.forEach((_a, i) => {
+        children.push(new Paragraph({
+          children: [new TextRun({
+            text: `${String.fromCharCode(97 + i)}) ______________________________________`,
+            size: 22,
+          })],
+          indent: { left: 240 },
+          spacing: { after: 80 },
+        }));
+      });
+    } else {
+      // Empty answer box: three blank lines with a bottom border
+      children.push(new Paragraph({
+        children: [new TextRun({ text: '', size: 22 })],
+        indent: { left: 240 },
+        spacing: { after: 240 },
+      }));
+      children.push(new Paragraph({
+        children: [new TextRun({ text: '', size: 22 })],
+        indent: { left: 240 },
+        border: { bottom: { color: '999999', size: 4, style: BorderStyle.SINGLE, space: 2 } },
+        spacing: { after: 240 },
+      }));
+    }
+  });
+
+  // Footer
+  children.push(new Paragraph({
+    children: [new TextRun({
+      text: 'Imię i nazwisko: ________________________________   Data: ________________   Klasa: ________________',
+      size: 20, color: '555555',
+    })],
+    border: { top: { color: 'cccccc', size: 4, style: BorderStyle.SINGLE, space: 8 } },
+    spacing: { before: 480 },
+  }));
+
+  const doc = new Document({
+    sections: [{
+      properties: { page: { size: { orientation: PageOrientation.PORTRAIT } } },
+      children,
+    }],
+    styles: {
+      default: { document: { run: { font: 'Times New Roman' } } },
+    },
+  });
+
+  return await Packer.toBlob(doc);
 }
 
-export function generateTestAnswerKey(testTitle: string, tasks: Task[]): string {
+/** Generates a real .docx file with the answer key table. */
+export async function generateTestAnswerKeyDocx(testTitle: string, tasks: Task[]): Promise<Blob> {
   const totalPoints = tasks.reduce((sum, t) => sum + taskPoints(t), 0);
 
-  const html = `
-<html>
-<head>
-<meta charset="UTF-8">
-<style>
-body { font-family: 'Times New Roman', serif; font-size: 12pt; line-height: 1.5; max-width: 800px; margin: 0 auto; padding: 24pt; }
-h1 { font-size: 16pt; text-align: center; }
-table { border-collapse: collapse; width: 100%; margin: 12pt 0; }
-td, th { border: 1pt solid #333; padding: 6pt; text-align: left; }
-th { background: #eee; font-weight: bold; }
-.total { font-weight: bold; text-align: right; margin-top: 12pt; }
-</style>
-</head>
-<body>
-  <h1>Klucz odpowiedzi – ${escapeHtml(testTitle)}</h1>
-  <table>
-    <tr><th>Zadanie</th><th>Odpowiedź / Odpowiedzi</th><th>Punkty</th><th>Wyjaśnienie</th></tr>
-    ${tasks.map((t, ti) => {
-      if (t.taskType === 'closed' && t.choices && t.choices.length > 0) {
-        const correctLetters = t.choices
-          .map((c, ci) => (c.isCorrect ? String.fromCharCode(97 + ci) : null))
-          .filter(Boolean)
-          .join(', ');
-        const explanation = t.choices.find((c) => c.isCorrect)?.explanation || '';
-        return `
-      <tr>
-        <td>${ti + 1}</td>
-        <td><strong>${correctLetters || '—'}</strong></td>
-        <td>${taskPoints(t)}</td>
-        <td>${escapeHtml(explanation)}</td>
-      </tr>
-        `;
-      }
-      return t.answerKey.map((a, ai) => `
-      <tr>
-        <td>${ti + 1}${String.fromCharCode(97 + ai)}</td>
-        <td>${escapeHtml(a.answer)}</td>
-        <td>${a.points}</td>
-        <td>${a.explanation ? escapeHtml(a.explanation) : '—'}</td>
-      </tr>
-      `).join('');
-    }).join('')}
-  </table>
-  <div class="total">Razem punktów: ${totalPoints}</div>
-</body>
-</html>`;
+  const cell = (text: string, opts?: { bold?: boolean; shading?: string }) =>
+    new TableCell({
+      shading: opts?.shading ? { fill: opts.shading } : undefined,
+      children: [new Paragraph({
+        children: [new TextRun({ text, bold: !!opts?.bold, size: 20 })],
+      })],
+    });
 
-  return html;
+  const headerRow = new TableRow({
+    tableHeader: true,
+    children: ['Zadanie', 'Odpowiedź / Odpowiedzi', 'Punkty', 'Wyjaśnienie'].map((t) =>
+      cell(t, { bold: true, shading: 'eeeeee' })
+    ),
+  });
+
+  const dataRows: TableRow[] = [];
+  tasks.forEach((t, ti) => {
+    if (t.taskType === 'closed' && t.choices && t.choices.length > 0) {
+      const correctLetters = t.choices
+        .map((c, ci) => (c.isCorrect ? String.fromCharCode(97 + ci) : null))
+        .filter(Boolean)
+        .join(', ');
+      const explanation = t.choices.find((c) => c.isCorrect)?.explanation || '';
+      dataRows.push(new TableRow({
+        children: [
+          cell(String(ti + 1)),
+          cell(correctLetters || '—', { bold: true }),
+          cell(String(taskPoints(t))),
+          cell(explanation),
+        ],
+      }));
+    } else {
+      t.answerKey.forEach((a, ai) => {
+        dataRows.push(new TableRow({
+          children: [
+            cell(`${ti + 1}${String.fromCharCode(97 + ai)}`),
+            cell(a.answer),
+            cell(String(a.points)),
+            cell(a.explanation || '—'),
+          ],
+        }));
+      });
+    }
+  });
+
+  const table = new Table({
+    rows: [headerRow, ...dataRows],
+    width: { size: 100, type: WidthType.PERCENTAGE },
+  });
+
+  const doc = new Document({
+    sections: [{
+      properties: { page: { size: { orientation: PageOrientation.PORTRAIT } } },
+      children: [
+        new Paragraph({
+          heading: HeadingLevel.HEADING_1,
+          alignment: AlignmentType.CENTER,
+          children: [new TextRun({ text: `Klucz odpowiedzi – ${testTitle}`, bold: true, size: 32 })],
+          spacing: { after: 240 },
+        }),
+        table,
+        new Paragraph({
+          alignment: AlignmentType.RIGHT,
+          children: [new TextRun({ text: `Razem punktów: ${totalPoints}`, bold: true, size: 22 })],
+          spacing: { before: 240 },
+        }),
+      ],
+    }],
+    styles: {
+      default: { document: { run: { font: 'Times New Roman' } } },
+    },
+  });
+
+  return await Packer.toBlob(doc);
 }

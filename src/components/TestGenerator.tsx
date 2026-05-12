@@ -7,7 +7,7 @@ import {
 import db from '../db';
 import type { Task, Test } from '../types';
 import { randomizeParameter, renderParameterized } from '../utils/parameters';
-import { generateTestDoc, generateTestAnswerKey, downloadFile, taskPoints } from '../utils/export';
+import { generateTestDocx, generateTestAnswerKeyDocx, downloadBlob, taskPoints } from '../utils/export';
 import { buildTree, descendantIds, findNode, pathLabel } from '../utils/categoryTree';
 import OverflowMenu from './OverflowMenu';
 import ConfirmDialog from './ConfirmDialog';
@@ -179,16 +179,24 @@ export default function TestGenerator() {
     });
   };
 
-  const exportTest = (test: Test, withKey: boolean) => {
+  const exportTest = async (test: Test, withKey: boolean) => {
     const testTasks = (tasks || []).filter((t) => test.tasks.includes(t.id));
-    if (withKey) {
-      const html = generateTestAnswerKey(test.title, testTasks);
-      downloadFile(html, `${SAFE_FILENAME(test.title)}_klucz.doc.html`, 'text/html');
-      toast.success({ title: 'Pobrano klucz odpowiedzi', description: test.title });
-    } else {
-      const html = generateTestDoc(test.title, testTasks);
-      downloadFile(html, `${SAFE_FILENAME(test.title)}_test.doc.html`, 'text/html');
-      toast.success({ title: 'Pobrano test', description: test.title });
+    const base = SAFE_FILENAME(test.title);
+    try {
+      if (withKey) {
+        const blob = await generateTestAnswerKeyDocx(test.title, testTasks);
+        downloadBlob(blob, `${base}_klucz.docx`);
+        toast.success({ title: 'Pobrano klucz odpowiedzi', description: test.title });
+      } else {
+        const blob = await generateTestDocx(test.title, testTasks);
+        downloadBlob(blob, `${base}_test.docx`);
+        toast.success({ title: 'Pobrano test', description: test.title });
+      }
+    } catch (err) {
+      toast.error({
+        title: 'Nie udało się wyeksportować',
+        description: err instanceof Error ? err.message : String(err),
+      });
     }
   };
 
