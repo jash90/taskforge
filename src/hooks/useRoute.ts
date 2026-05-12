@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 
 export type Tab =
   | 'tasks' | 'editor' | 'ai' | 'randomizer' | 'tests'
-  | 'program' | 'categories' | 'export' | 'settings';
+  | 'program' | 'categories' | 'export' | 'settings' | 'download';
 
 /** Hash routing — works on Capacitor (file://), Vercel, and static hosts
  *  with no rewrite rules. Maps each tab to a human-readable URL fragment. */
@@ -16,6 +16,7 @@ export const TAB_TO_HASH: Record<Tab, string> = {
   categories: '/kategorie',
   export:     '/eksport',
   settings:   '/ustawienia',
+  download:   '/pobierz',
 };
 
 const HASH_TO_TAB: Record<string, Tab> = Object.fromEntries(
