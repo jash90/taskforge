@@ -2007,6 +2007,19 @@ tr:hover td { background: var(--surface-2); }
 /* Padding helpers */
 .pl-px-6 { padding-left: 6px; }
 
+/* Mid-size card-title for grouped section headers */
+.card-title-md { font-size: var(--text-md); margin-bottom: var(--space-3); }
+
+/* Bordered list row with transparent background (no surface fill).
+   Used for the grouped ProgramBaseViewer entries. */
+.list-row-outlined {
+  background: transparent;
+  border: 1px solid var(--border);
+}
+
+/* Long-text cells in narrow tables */
+.col-max-w-400 { max-width: 400px; }
+
 /* Max-width caps used by full-page sections (settings, modals, hero blocks) */
 .max-w-440 { max-width: 440px; }
 .max-w-480 { max-width: 480px; }
