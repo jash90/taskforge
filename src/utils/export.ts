@@ -1,6 +1,7 @@
 import {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   AlignmentType, BorderStyle, WidthType, HeadingLevel, PageOrientation,
+  Math as DocxMath, MathFraction, MathRun,
 } from 'docx';
 import type { Task, Test, ProgramPoint, Category } from '../types';
 import { isMENCurriculum, parseMENCurriculum } from '../db/menParser';
@@ -216,6 +217,49 @@ export function downloadBlob(blob: Blob, filename: string) {
   URL.revokeObjectURL(url);
 }
 
+// Auto-detect inline fraction patterns in plain text and split it into
+// segments suitable for a docx Paragraph's children array. Conservative
+// to avoid false positives like "Eksport/Import":
+//   * pure numeric fractions like "3/4" or "1,5/2"
+//   * short token fractions where both sides are up to 4 alphanumeric
+//     characters plus optional trailing superscript digit (covers
+//     km/h, m/s, kg/m, kg/m superscript 2, etc.).
+// Longer words on either side stay as plain text.
+type TextSegment =
+  | { kind: 'text'; value: string }
+  | { kind: 'frac'; num: string; denom: string };
+
+const FRAC_RE = /(?:(?<=^|[\s(])|^)(\d+(?:[.,]\d+)?\s*\/\s*\d+(?:[.,]\d+)?|[A-Za-zµΩ°][A-Za-zµΩ°²³¹]{0,3}\/[A-Za-zµΩ°][A-Za-zµΩ°²³¹]{0,3})(?=[\s.,;:!?)]|$)/g;
+
+function splitTextWithFractions(text: string): TextSegment[] {
+  const out: TextSegment[] = [];
+  let last = 0;
+  for (const m of text.matchAll(FRAC_RE)) {
+    const [token] = m;
+    const idx = m.index!;
+    if (idx > last) out.push({ kind: 'text', value: text.slice(last, idx) });
+    const [num, denom] = token.split('/').map((s) => s.trim());
+    out.push({ kind: 'frac', num, denom });
+    last = idx + token.length;
+  }
+  if (last < text.length) out.push({ kind: 'text', value: text.slice(last) });
+  return out;
+}
+
+/** Build a Paragraph children array from plain text, rendering detected
+ *  fractions inline as docx Math equations. */
+function richRuns(text: string, size = 22): (TextRun | DocxMath)[] {
+  return splitTextWithFractions(text).map((seg) => {
+    if (seg.kind === 'text') return new TextRun({ text: seg.value, size });
+    return new DocxMath({
+      children: [new MathFraction({
+        numerator:   [new MathRun(seg.num)],
+        denominator: [new MathRun(seg.denom)],
+      })],
+    });
+  });
+}
+
 /** Generates a real .docx file (OOXML zip) for the test sheet. */
 export async function generateTestDocx(testTitle: string, tasks: Task[]): Promise<Blob> {
   const totalPoints = tasks.reduce((sum, t) => sum + taskPoints(t), 0);
@@ -264,7 +308,7 @@ export async function generateTestDocx(testTitle: string, tasks: Task[]): Promis
     }));
 
     children.push(new Paragraph({
-      children: [new TextRun({ text: t.content, size: 22 })],
+      children: richRuns(t.content, 22),
       indent: { left: 240 },
       spacing: { after: 120 },
     }));
@@ -275,7 +319,7 @@ export async function generateTestDocx(testTitle: string, tasks: Task[]): Promis
           children: [
             new TextRun({ text: '○  ', size: 24 }),
             new TextRun({ text: `${String.fromCharCode(97 + i)}) `, bold: true, size: 22 }),
-            new TextRun({ text: c.content, size: 22 }),
+            ...richRuns(c.content, 22),
           ],
           indent: { left: 480 },
           spacing: { after: 80 },
@@ -325,11 +369,13 @@ export async function generateTestDocx(testTitle: string, tasks: Task[]): Promis
 export async function generateTestAnswerKeyDocx(testTitle: string, tasks: Task[]): Promise<Blob> {
   const totalPoints = tasks.reduce((sum, t) => sum + taskPoints(t), 0);
 
-  const cell = (text: string, opts?: { bold?: boolean; shading?: string }) =>
+  const cell = (text: string, opts?: { bold?: boolean; shading?: string; rich?: boolean }) =>
     new TableCell({
       shading: opts?.shading ? { fill: opts.shading } : undefined,
       children: [new Paragraph({
-        children: [new TextRun({ text, bold: !!opts?.bold, size: 20 })],
+        children: opts?.rich
+          ? richRuns(text, 20)
+          : [new TextRun({ text, bold: !!opts?.bold, size: 20 })],
       })],
     });
 
@@ -353,7 +399,7 @@ export async function generateTestAnswerKeyDocx(testTitle: string, tasks: Task[]
           cell(String(ti + 1)),
           cell(correctLetters || '—', { bold: true }),
           cell(String(taskPoints(t))),
-          cell(explanation),
+          cell(explanation, { rich: true }),
         ],
       }));
     } else {
@@ -361,9 +407,9 @@ export async function generateTestAnswerKeyDocx(testTitle: string, tasks: Task[]
         dataRows.push(new TableRow({
           children: [
             cell(`${ti + 1}${String.fromCharCode(97 + ai)}`),
-            cell(a.answer),
+            cell(a.answer, { rich: true }),
             cell(String(a.points)),
-            cell(a.explanation || '—'),
+            cell(a.explanation || '—', { rich: true }),
           ],
         }));
       });
