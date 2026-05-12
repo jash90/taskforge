@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import {
   BookOpen, Pencil, FileText, Database, GraduationCap,
   Shuffle, Upload, Plus, Command, MoreHorizontal, FolderTree,
-  Settings as SettingsIcon, Sparkles, Download as DownloadIcon,
+  Settings as SettingsIcon, Sparkles, Download as DownloadIcon, ArrowDownToLine,
 } from 'lucide-react';
 // Lazy-loaded so each tab's module-level code only runs once that tab is
 // first opened. Once mounted, the route stays in the DOM (display:none when
@@ -222,6 +222,16 @@ export default function App() {
             <Command size={12} aria-hidden="true" />
             <kbd>K</kbd>
           </button>
+          <a
+            href="https://github.com/jash90/taskforge/releases/latest"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost btn-sm"
+            aria-label="Pobierz aplikację"
+            title="Pobierz instalator"
+          >
+            <ArrowDownToLine size={16} />
+          </a>
           <FontSizeToggle />
           <ThemeToggle />
           <button
