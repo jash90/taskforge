@@ -1,19 +1,22 @@
-import { useCallback, useEffect, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   BookOpen, Pencil, FileText, Database, GraduationCap,
   Shuffle, Upload, Plus, Command, MoreHorizontal, FolderTree,
   Settings as SettingsIcon, Sparkles,
 } from 'lucide-react';
-import TaskList from './components/TaskList';
-import TaskEditor from './components/TaskEditor';
-import TestGenerator from './components/TestGenerator';
-import ProgramBaseViewer from './components/ProgramBaseViewer';
-import ExportImport from './components/ExportImport';
-import RandomizerPanel from './components/RandomizerPanel';
-import CategoryManager from './components/CategoryManager';
-import Settings from './components/Settings';
-import AITaskGenerator from './components/AITaskGenerator';
+// Lazy-loaded so each tab's module-level code only runs once that tab is
+// first opened. Once mounted, the route stays in the DOM (display:none when
+// inactive) so its state survives navigation — see KeepAlive below.
+const TaskList         = lazy(() => import('./components/TaskList'));
+const TaskEditor       = lazy(() => import('./components/TaskEditor'));
+const TestGenerator    = lazy(() => import('./components/TestGenerator'));
+const ProgramBaseViewer = lazy(() => import('./components/ProgramBaseViewer'));
+const ExportImport     = lazy(() => import('./components/ExportImport'));
+const RandomizerPanel  = lazy(() => import('./components/RandomizerPanel'));
+const CategoryManager  = lazy(() => import('./components/CategoryManager'));
+const Settings         = lazy(() => import('./components/Settings'));
+const AITaskGenerator  = lazy(() => import('./components/AITaskGenerator'));
 import ThemeToggle from './components/ThemeToggle';
 import FontSizeToggle from './components/FontSizeToggle';
 import Toaster from './components/Toaster';
@@ -51,10 +54,46 @@ const TAB_LABELS: Record<Tab, string> = TABS.reduce((acc, t) => {
   return acc;
 }, {} as Record<Tab, string>);
 
+function RouteFallback() {
+  return (
+    <div className="empty-state" aria-busy="true">
+      <div className="skeleton skeleton-card" style={{ maxWidth: 480, width: '100%' }} />
+    </div>
+  );
+}
+
+/** Wraps a route so it is mounted only once visited, and kept mounted
+ *  (hidden via display:none) afterwards. This preserves the route's local
+ *  state — scroll position, draft input, filters — across navigation.
+ *
+ *  Each route has its OWN Suspense boundary so the first-time lazy load of
+ *  any one route does not unmount its already-mounted siblings (which would
+ *  defeat the whole keep-alive). */
+function KeepAlive({ active, visited, children }: { active: boolean; visited: boolean; children: React.ReactNode }) {
+  if (!visited) return null;
+  return (
+    <div style={{ display: active ? 'contents' : 'none' }} aria-hidden={active ? undefined : true}>
+      <Suspense fallback={<RouteFallback />}>{children}</Suspense>
+    </div>
+  );
+}
+
 export default function App() {
   const { tab: activeTab, setTab: setActiveTab } = useRoute();
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  // Tabs the user has visited at least once. We mount their components on
+  // first activation and then keep them in the tree (hidden when inactive).
+  const [visited, setVisited] = useState<Set<Tab>>(() => new Set([activeTab]));
+  useEffect(() => {
+    if (visited.has(activeTab)) return;
+    setVisited((prev) => {
+      if (prev.has(activeTab)) return prev;
+      const next = new Set(prev);
+      next.add(activeTab);
+      return next;
+    });
+  }, [activeTab, visited]);
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const { cycle: cycleTheme } = useTheme();
@@ -184,29 +223,41 @@ export default function App() {
       </nav>
 
       <main id="main" className="app-main" key={refreshKey}>
-        {activeTab === 'tasks' && (
+        <KeepAlive active={activeTab === 'tasks'} visited={visited.has('tasks')}>
           <TaskList
             onEdit={(task) => { setEditingTask(task); setActiveTab('editor'); }}
             onRandomize={goRandomize}
             onNew={goNewTask}
           />
-        )}
-        {activeTab === 'editor' && (
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'editor'} visited={visited.has('editor')}>
           <TaskEditor
             task={editingTask}
             onSaved={() => { refresh(); setActiveTab('tasks'); setEditingTask(null); }}
             onCancel={() => { setActiveTab('tasks'); setEditingTask(null); }}
           />
-        )}
-        {activeTab === 'randomizer' && (
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'randomizer'} visited={visited.has('randomizer')}>
           <RandomizerPanel task={editingTask} onClose={() => { setActiveTab('tasks'); setEditingTask(null); }} />
-        )}
-        {activeTab === 'tests' && <TestGenerator />}
-        {activeTab === 'program' && <ProgramBaseViewer />}
-        {activeTab === 'categories' && <CategoryManager />}
-        {activeTab === 'ai' && <AITaskGenerator onOpenSettings={() => setActiveTab('settings')} />}
-        {activeTab === 'settings' && <Settings />}
-        {activeTab === 'export' && <ExportImport onImport={refresh} />}
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'tests'} visited={visited.has('tests')}>
+          <TestGenerator />
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'program'} visited={visited.has('program')}>
+          <ProgramBaseViewer />
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'categories'} visited={visited.has('categories')}>
+          <CategoryManager />
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'ai'} visited={visited.has('ai')}>
+          <AITaskGenerator onOpenSettings={() => setActiveTab('settings')} />
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'settings'} visited={visited.has('settings')}>
+          <Settings />
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'export'} visited={visited.has('export')}>
+          <ExportImport onImport={refresh} />
+        </KeepAlive>
       </main>
 
       <nav className="app-bottom-nav" aria-label="Nawigacja mobilna">
