@@ -153,7 +153,7 @@ export default function RandomizerPanel({ task, onClose }: Props) {
     <div>
       <div className="flex justify-between items-center mb-2">
         <div>
-          <h2 className="card-title mb-0" style={{ fontSize: 'var(--text-2xl)' }}>Losowanie wariantów</h2>
+          <h2 className="card-title mb-0 text-2xl">Losowanie wariantów</h2>
           <div className="text-muted text-sm">{task.title}</div>
         </div>
         <button type="button" className="btn btn-secondary" onClick={onClose}>
@@ -162,8 +162,8 @@ export default function RandomizerPanel({ task, onClose }: Props) {
       </div>
 
       <div className="card mb-2">
-        <div className="form-row" style={{ alignItems: 'end', marginBottom: 0 }}>
-          <div className="form-group mb-0" style={{ flex: '0 1 160px' }}>
+        <div className="form-row items-end mb-0">
+          <div className="form-group mb-0 flex-160">
             <label htmlFor="rand-count">Liczba wariantów</label>
             <input
               id="rand-count"
@@ -175,7 +175,7 @@ export default function RandomizerPanel({ task, onClose }: Props) {
               onChange={(e) => setCount(Math.min(50, Math.max(1, parseInt(e.target.value) || 1)))}
             />
           </div>
-          <div className="form-group mb-0" style={{ flex: '0 1 160px' }}>
+          <div className="form-group mb-0 flex-160">
             <label htmlFor="rand-format">Format eksportu</label>
             <select id="rand-format" value={exportFormat} onChange={(e) => setExportFormat(e.target.value as ExportFormat)}>
               <option value="txt">Tekst (.txt)</option>
@@ -216,8 +216,8 @@ export default function RandomizerPanel({ task, onClose }: Props) {
         <div className={`grid-variants ${instances.length >= 12 ? 'dense' : ''}`}>
           {instances.map((inst, i) => (
             <div key={i} className="card card-tight">
-              <div className="flex justify-between items-center mb-1" style={{ gap: 'var(--space-3)' }}>
-                <div className="flex items-center gap-1 wrap" style={{ minWidth: 0 }}>
+              <div className="flex justify-between items-center mb-1 gap-1">
+                <div className="flex items-center gap-1 wrap min-w-0">
                   <span className="badge badge-primary">Wariant {i + 1}</span>
                   <span className="text-muted text-xs">
                     {inst.parameters.map((p) => `${p.name}: ${formatValue(p.value)}${p.unit ? ' ' + p.unit : ''}`).join(' · ')}
@@ -237,12 +237,12 @@ export default function RandomizerPanel({ task, onClose }: Props) {
               <div className="preview-box">
                 {inst.content}
                 {inst.choices && inst.choices.length > 0 && (
-                  <ol style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+                  <ol className="preview-list is-tight">
                     {inst.choices.map((c, ci) => (
-                      <li key={c.id} style={{ marginTop: 2 }}>
+                      <li key={c.id}>
                         <strong>{String.fromCharCode(97 + ci)})</strong> {c.content}
                         {c.isCorrect && (
-                          <span className="badge badge-success" style={{ marginLeft: 6, fontSize: '0.7em' }}>poprawna</span>
+                          <span className="badge badge-success ml-px-6 text-tiny">poprawna</span>
                         )}
                       </li>
                     ))}

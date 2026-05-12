@@ -1919,6 +1919,9 @@ tr:hover td { background: var(--surface-2); }
 .mr-half  { margin-right: 4px; }
 .mr-px-6  { margin-right: 6px; }
 
+/* Smaller-than-base font scale for tertiary inline markers */
+.text-tiny { font-size: 0.7em; }
+
 /* Half / quart gap variants */
 .gap-half  { gap: 4px; }                /* --space-1 */
 .gap-tight { gap: 6px; }                /* --space-2 */
