@@ -3,7 +3,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import {
   BookOpen, Pencil, FileText, Database, GraduationCap,
   Shuffle, Upload, Plus, Command, MoreHorizontal, FolderTree,
-  Settings as SettingsIcon, Sparkles,
+  Settings as SettingsIcon, Sparkles, Download as DownloadIcon,
 } from 'lucide-react';
 // Lazy-loaded so each tab's module-level code only runs once that tab is
 // first opened. Once mounted, the route stays in the DOM (display:none when
@@ -17,6 +17,7 @@ const RandomizerPanel  = lazy(() => import('./components/RandomizerPanel'));
 const CategoryManager  = lazy(() => import('./components/CategoryManager'));
 const Settings         = lazy(() => import('./components/Settings'));
 const AITaskGenerator  = lazy(() => import('./components/AITaskGenerator'));
+const DownloadPage      = lazy(() => import('./components/DownloadPage'));
 import ThemeToggle from './components/ThemeToggle';
 import FontSizeToggle from './components/FontSizeToggle';
 import Toaster from './components/Toaster';
@@ -42,6 +43,7 @@ const TABS: TabDef[] = [
   { id: 'program',    label: 'Podstawa programowa', icon: <GraduationCap size={18} />, group: 'library',   inBottom: true },
   { id: 'categories', label: 'Kategorie',           icon: <FolderTree size={18} />,    group: 'library',   inBottom: false },
   { id: 'export',     label: 'Eksport / Import',    icon: <Upload size={18} />,        group: 'library',   inBottom: false },
+  { id: 'download',   label: 'Pobierz',             icon: <DownloadIcon size={18} />,  group: 'library',   inBottom: false },
   { id: 'settings',   label: 'Ustawienia',          icon: <SettingsIcon size={18} />,  group: 'library',   inBottom: false },
   { id: 'editor',     label: 'Edytor',              icon: <Pencil size={18} />,        group: 'workspace', inBottom: true },
   { id: 'ai',         label: 'Generuj AI',          icon: <Sparkles size={18} />,      group: 'workspace', inBottom: false },
@@ -292,6 +294,9 @@ export default function App() {
         </KeepAlive>
         <KeepAlive active={activeTab === 'ai'} visited={visited.has('ai')}>
           <AITaskGenerator onOpenSettings={() => setActiveTab('settings')} />
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'download'} visited={visited.has('download')}>
+          <DownloadPage />
         </KeepAlive>
         <KeepAlive active={activeTab === 'settings'} visited={visited.has('settings')}>
           <Settings />

@@ -76,6 +76,7 @@ export default function CommandPalette({
       { id: 'nav-categories', group: 'Nawigacja', label: 'Przejdź do kategorii',        hint: 'g c', icon: <FolderTree size={16} />,    run: () => onNavigate('categories') },
       { id: 'nav-ai',      group: 'Nawigacja', label: 'Generuj zadania AI',             hint: 'g a', icon: <Sparkles size={16} />,       run: () => onNavigate('ai') },
       { id: 'nav-export',  group: 'Nawigacja', label: 'Przejdź do eksport / import',    hint: 'g x', icon: <Upload size={16} />,         run: () => onNavigate('export') },
+      { id: 'nav-download', group: 'Nawigacja', label: 'Pobierz aplikację',              hint: 'g d', icon: <Download size={16} />,       run: () => onNavigate('download') },
       { id: 'nav-settings', group: 'Nawigacja', label: 'Ustawienia',                    hint: 'g u', icon: <SettingsIcon size={16} />,   run: () => onNavigate('settings') },
     ];
     const acts: PaletteCommand[] = [
