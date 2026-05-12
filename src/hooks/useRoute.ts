@@ -83,10 +83,13 @@ export function useRoute() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  /** Navigate to a tab with an optional parameter (e.g. task id). */
-  const setRoute = useCallback((tab: Tab, param?: string) => {
+  /** Navigate to a tab with an optional parameter (e.g. task id).
+   *  When `replace` is true, rewrites the current history entry instead of
+   *  pushing a new one — useful when normalising bad URLs so the user can
+   *  press Back without landing on the broken state again. */
+  const setRoute = useCallback((tab: Tab, param?: string, options?: { replace?: boolean }) => {
     const next: RouteState = param ? { tab, param } : { tab };
-    writeHash(next);
+    writeHash(next, options?.replace ?? false);
     setState((prev) => (sameRoute(prev, next) ? prev : next));
   }, []);
 

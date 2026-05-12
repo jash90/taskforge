@@ -121,9 +121,23 @@ export default function App() {
       return;
     }
     if (editingTask?.id === routeParam) return;
-    const found = (tasksAll || []).find((t) => t.id === routeParam) ?? null;
-    setEditingTask(found);
-  }, [activeTab, routeParam, tasksAll, editingTask]);
+    // Wait until Dexie has actually loaded before deciding the id is bogus.
+    if (!tasksAll) return;
+    const found = tasksAll.find((t) => t.id === routeParam) ?? null;
+    if (found) {
+      setEditingTask(found);
+      return;
+    }
+    // ID in the URL points to nothing in the DB — likely a stale bookmark,
+    // a deleted task, or a typo. Strip the bogus id (history.replaceState so
+    // we don't add a junk entry) and tell the user; the route stays on the
+    // same tab so the editor / randomizer just falls back to its empty state.
+    toast.info({
+      title: 'Nie znaleziono zadania',
+      description: `ID „${routeParam}" nie istnieje w bazie. Otworzono pusty ekran.`,
+    });
+    setRoute(activeTab, undefined, { replace: true });
+  }, [activeTab, routeParam, tasksAll, editingTask, setRoute]);
 
   const refresh = useCallback(() => setRefreshKey((k) => k + 1), []);
 
