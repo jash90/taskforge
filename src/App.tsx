@@ -19,13 +19,12 @@ import FontSizeToggle from './components/FontSizeToggle';
 import Toaster from './components/Toaster';
 import CommandPalette from './components/CommandPalette';
 import { useTheme } from './hooks/useTheme';
+import { useRoute, type Tab } from './hooks/useRoute';
 import { useShortcuts, useSequenceShortcuts } from './hooks/useShortcuts';
 import { toast } from './hooks/useToast';
 import { exportTasksToJSON, downloadFile } from './utils/export';
 import db from './db';
 import type { Task } from './types';
-
-type Tab = 'tasks' | 'editor' | 'ai' | 'randomizer' | 'tests' | 'program' | 'categories' | 'export' | 'settings';
 
 interface TabDef {
   id: Tab;
@@ -53,7 +52,7 @@ const TAB_LABELS: Record<Tab, string> = TABS.reduce((acc, t) => {
 }, {} as Record<Tab, string>);
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('tasks');
+  const { tab: activeTab, setTab: setActiveTab } = useRoute();
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
   const [paletteOpen, setPaletteOpen] = useState(false);
