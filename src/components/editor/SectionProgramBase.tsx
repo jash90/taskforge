@@ -229,7 +229,6 @@ export default function SectionProgramBase({
                   </span>
                   {pp.zakres && <span className="text-faint text-xs">{pp.zakres}</span>}
                 </span>
-                <span aria-hidden="true" className="text-faint">{checked ? '✓' : ''}</span>
               </label>
             );
           })}

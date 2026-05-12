@@ -233,17 +233,18 @@ input:focus-visible, textarea:focus-visible, select:focus-visible,
 
 /* ── App shell ──────────────────────────────────────────────── */
 .app-container {
-  display: grid;
-  grid-template-rows: auto auto 1fr;
+  display: flex;
+  flex-direction: column;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
 }
+.app-container > .app-main { flex: 1 1 auto; min-height: 0; }
 
 @media (max-width: 720px) {
-  .app-container {
-    grid-template-rows: auto 1fr auto;
-  }
+  /* On mobile the bottom-nav sits below main. Order so the nav appears
+     at the visual bottom even though it is the last DOM child. */
+  .app-container .app-bottom-nav { order: 99; }
 }
 
 /* Header */
@@ -524,10 +525,10 @@ kbd {
 }
 
 .bottom-nav-row {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  display: flex;
   height: var(--bottom-nav-height);
 }
+.bottom-nav-row > * { flex: 1 1 0; min-width: 0; }
 
 .bottom-nav-item {
   display: inline-flex;
@@ -718,11 +719,12 @@ input.invalid, textarea.invalid, select.invalid {
 }
 
 .form-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-5);
   margin-bottom: var(--space-5);
 }
+.form-row > * { flex: 1 1 180px; min-width: 0; }
 
 .form-group { margin-bottom: var(--space-5); }
 
@@ -940,15 +942,15 @@ tr:hover td { background: var(--surface-2); }
 
 /* ── Lists ──────────────────────────────────────────────────── */
 .task-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-4);
 }
 
 .task-item {
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  align-items: flex-start;
   gap: var(--space-5);
-  align-items: start;
   padding: var(--space-5);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -957,6 +959,9 @@ tr:hover td { background: var(--surface-2); }
               box-shadow var(--dur-fast) var(--ease-out),
               background var(--dur-fast) var(--ease-out);
 }
+/* First child (content) grows, last child (actions) stays at intrinsic width. */
+.task-item > :first-child { flex: 1 1 auto; min-width: 0; }
+.task-item > :last-child { flex: 0 0 auto; }
 .task-item:hover {
   border-color: var(--border-strong);
   box-shadow: var(--shadow);
@@ -989,10 +994,9 @@ tr:hover td { background: var(--surface-2); }
 
 /* Selectable list row (horizontal) */
 .list-row {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: var(--space-4);
+  display: flex;
   align-items: center;
+  gap: var(--space-4);
   padding: var(--space-3) var(--space-4);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1000,6 +1004,16 @@ tr:hover td { background: var(--surface-2); }
   cursor: pointer;
   transition: border-color var(--dur-fast) var(--ease-out),
               background var(--dur-fast) var(--ease-out);
+}
+/* Middle slot grows, leading icon/checkbox and trailing chevron stay at
+   intrinsic width. Children that don't conform (e.g. checkbox + label-only)
+   still work — flex defaults to flex: 0 1 auto. */
+.list-row > :nth-child(2) { flex: 1 1 auto; min-width: 0; }
+@media (max-width: 720px) {
+  .list-row {
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3);
+  }
 }
 .list-row:hover { border-color: var(--border-strong); background: var(--surface-2); }
 .list-row.selected { border-color: var(--accent); background: var(--accent-soft); }
@@ -1018,30 +1032,29 @@ tr:hover td { background: var(--surface-2); }
 
 .prose { max-width: var(--max-prose); line-height: var(--leading-loose); }
 
-/* ── Grids ──────────────────────────────────────────────────── */
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-5); align-items: start; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-5); }
-.grid-variants { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+/* ── Layout utilities (flex-based, no grid) ─────────────────── */
+.grid-2 { display: flex; flex-wrap: wrap; gap: var(--space-5); align-items: flex-start; }
+.grid-2 > * { flex: 1 1 calc(50% - var(--space-5)); min-width: 0; }
+.grid-3 { display: flex; flex-wrap: wrap; gap: var(--space-5); }
+.grid-3 > * { flex: 1 1 calc(33.333% - var(--space-5)); min-width: 0; }
+.grid-variants { display: flex; flex-direction: column; gap: var(--space-4); }
 @media (min-width: 1100px) {
-  .grid-variants.dense { grid-template-columns: 1fr 1fr; }
+  .grid-variants.dense { flex-direction: row; flex-wrap: wrap; }
+  .grid-variants.dense > * { flex: 1 1 calc(50% - var(--space-4)); min-width: 0; }
 }
 @media (max-width: 900px) {
-  .grid-2, .grid-3 { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
+  .grid-2 > *, .grid-3 > * { flex-basis: 100%; }
   /* Podstawa-programowa controls: keep the two level buttons side by side
-     and put Klasa+Szukaj on one row instead of stacking everything. */
-  .form-row.pp-controls {
-    grid-template-columns: 80px 1fr;
-    gap: var(--space-3);
-  }
+     and put Klasa + Szukaj on one row. Flex-based — no grid. */
+  .form-row.pp-controls { gap: var(--space-3); }
   .form-row.pp-controls .level-toggle {
-    grid-column: 1 / -1;
+    flex: 1 1 100%;
     display: flex;
     gap: 4px;
   }
-  .form-row.pp-controls .level-toggle .btn { flex: 1; }
-  .form-row.pp-controls .pp-class-field { grid-column: 1; }
-  .form-row.pp-controls .pp-search-field { grid-column: 2; }
+  .form-row.pp-controls .level-toggle .btn { flex: 1 1 0; }
+  .form-row.pp-controls .pp-class-field { flex: 0 1 80px; }
+  .form-row.pp-controls .pp-search-field { flex: 1 1 auto; }
 }
 
 /* ── Overlay / Dialog ───────────────────────────────────────── */
@@ -1390,18 +1403,21 @@ tr:hover td { background: var(--surface-2); }
   to   { opacity: 1; transform: translateY(0)    scale(1); }
 }
 
-/* ── Editor (3-column) ──────────────────────────────────────── */
+/* ── Editor (3-column on desktop, stacked on mobile) ────────── */
 .editor-shell {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: var(--space-6);
 }
 
 @media (min-width: 1024px) {
   .editor-shell {
-    grid-template-columns: var(--rail-width) minmax(0, 1fr) var(--preview-width);
-    align-items: start;
+    flex-direction: row;
+    align-items: flex-start;
   }
+  .editor-shell > .editor-rail { flex: 0 0 var(--rail-width); }
+  .editor-shell > .editor-pane { flex: 1 1 auto; min-width: 0; }
+  .editor-shell > .editor-preview { flex: 0 0 var(--preview-width); }
 }
 
 .editor-rail {
@@ -1418,8 +1434,7 @@ tr:hover td { background: var(--surface-2); }
   box-shadow: var(--shadow-sm);
 }
 .rail-item {
-  display: grid;
-  grid-template-columns: 12px 1fr;
+  display: flex;
   align-items: center;
   gap: var(--space-3);
   padding: 8px 10px;
@@ -1435,6 +1450,8 @@ tr:hover td { background: var(--surface-2); }
   transition: background var(--dur-fast) var(--ease-out),
               color var(--dur-fast) var(--ease-out);
 }
+.rail-item > .rail-dot { flex: 0 0 12px; }
+.rail-item > :not(.rail-dot) { flex: 1 1 auto; min-width: 0; }
 .rail-item:hover { background: var(--surface-2); color: var(--text); }
 .rail-item.active {
   background: var(--accent-soft);
@@ -1459,7 +1476,8 @@ tr:hover td { background: var(--surface-2); }
     padding: var(--space-2);
     gap: 4px;
   }
-  .rail-item { grid-template-columns: 12px auto; white-space: nowrap; }
+  .rail-item { white-space: nowrap; }
+  .rail-item > :not(.rail-dot) { flex: 0 0 auto; }
 }
 
 .editor-pane { min-width: 0; display: flex; flex-direction: column; gap: var(--space-5); }
