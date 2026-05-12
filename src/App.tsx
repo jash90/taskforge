@@ -153,9 +153,14 @@ export default function App() {
   }, [tasksAll, testsAll, programPointsAll, categoriesAll]);
 
   useShortcuts([
-    { combo: 'mod+k', allowInInputs: true, handler: () => setPaletteOpen((v) => !v) },
-    { combo: 'mod+n', allowInInputs: false, handler: goNewTask },
-    { combo: '?',    allowInInputs: false, handler: () => setPaletteOpen(true) },
+    { combo: 'mod+k',   allowInInputs: true,  handler: () => setPaletteOpen((v) => !v) },
+    { combo: 'mod+n',   allowInInputs: false, handler: goNewTask },
+    // The help shortcut "?" is produced by Shift+/ on most layouts. Per
+    // spec, e.key should be "?", but some platforms (and Playwright)
+    // report e.key="/" with shiftKey=true. Bind both forms so the shortcut
+    // works regardless of how the browser surfaces the keypress.
+    { combo: '?',       allowInInputs: false, handler: () => setPaletteOpen(true) },
+    { combo: 'shift+/', allowInInputs: false, handler: () => setPaletteOpen(true) },
   ]);
 
   useSequenceShortcuts([
