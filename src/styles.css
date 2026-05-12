@@ -235,9 +235,7 @@ input:focus-visible, textarea:focus-visible, select:focus-visible,
 .app-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  height: 100dvh;
-  overflow: hidden;
+  min-height: 100vh;
 }
 .app-container > .app-main { flex: 1 1 auto; min-height: 0; }
 
@@ -522,6 +520,12 @@ kbd {
   background: var(--surface);
   border-top: 1px solid var(--border);
   padding-bottom: env(safe-area-inset-bottom, 0);
+  /* Sticky against the viewport so it stays visible while the page
+     scrolls underneath. (Container no longer sets a fixed height, so
+     without this the bar would just sit at the bottom of the document.) */
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
 }
 
 .bottom-nav-row {
@@ -551,12 +555,11 @@ kbd {
 
 /* Main content */
 .app-main {
-  overflow-y: auto;
-  /* Belt + braces against page-level horizontal scroll: keep main's x-axis
-     explicitly clipped so any intrinsic-width descendant (e.g. the 640px
-     .param-table) cannot bleed past the viewport. The owning
-     .param-table-wrap still scrolls internally. */
-  overflow-x: hidden;
+  /* The whole page scrolls vertically now (no fixed-height .app-container),
+     so main no longer needs its own scroll context. The html/body
+     overflow-x: clip already protects against horizontal page scroll, and
+     adding overflow-x: hidden here would make .save-bar's `position:
+     sticky` pin to main's bottom instead of the viewport bottom. */
   padding: var(--space-6);
   scroll-behavior: smooth;
 }
@@ -1564,6 +1567,13 @@ tr:hover td { background: var(--surface-2); }
   box-shadow: var(--shadow);
   backdrop-filter: blur(8px);
   z-index: 10;
+}
+@media (max-width: 720px) {
+  /* The mobile bottom-nav is sticky at bottom: 0 too — offset the save
+     bar above it so they don't overlap. */
+  .save-bar {
+    bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0));
+  }
 }
 .save-bar .save-status {
   display: inline-flex;
