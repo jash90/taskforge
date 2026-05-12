@@ -1589,9 +1589,10 @@ tr:hover td { background: var(--surface-2); }
 }
 @media (max-width: 720px) {
   /* The mobile bottom-nav is sticky at bottom: 0 too — offset the save
-     bar above it so they don't overlap. */
+     bar above it AND leave a small gap so they don't look glued
+     together. */
   .save-bar {
-    bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0));
+    bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0) + var(--space-3));
   }
 }
 .save-bar .save-status {
