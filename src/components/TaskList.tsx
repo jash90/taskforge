@@ -160,7 +160,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
       {/* Toolbar */}
       <div className="card mb-2">
         <div className="flex gap-1 wrap items-center">
-          <div className="form-group mb-0" style={{ flex: '1 1 240px', minWidth: 200 }}>
+          <div className="form-group mb-0 flex-grow-min200">
             <label htmlFor="task-search" className="sr-only">Szukaj zadań</label>
             <div className="search-input">
               <Search size={14} aria-hidden="true" />
@@ -172,14 +172,14 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
               />
             </div>
           </div>
-          <div className="form-group mb-0 desktop-only" style={{ flex: '0 1 200px', minWidth: 160 }}>
+          <div className="form-group mb-0 desktop-only flex-shrink-min160">
             <label htmlFor="filter-subject" className="sr-only">Przedmiot</label>
             <select id="filter-subject" value={filterSubject} onChange={(e) => setFilterSubject(e.target.value)}>
               <option value="">Wszystkie przedmioty</option>
               {subjects.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
-          <div className="form-group mb-0 desktop-only" style={{ flex: '0 1 200px', minWidth: 160 }}>
+          <div className="form-group mb-0 desktop-only flex-shrink-min160">
             <label htmlFor="filter-level" className="sr-only">Poziom</label>
             <select
               id="filter-level"
@@ -193,42 +193,39 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
           </div>
           <button
             type="button"
-            className={`btn ${filterCategoryIds.length > 0 ? 'btn-primary' : 'btn-secondary'} desktop-only`}
+            className={`btn ${filterCategoryIds.length > 0 ? 'btn-primary' : 'btn-secondary'} desktop-only shrink-0`}
             onClick={() => setCategoryPickerOpen(true)}
             aria-haspopup="dialog"
-            style={{ flex: '0 0 auto' }}
           >
             <FolderTree size={14} aria-hidden="true" />
             Kategorie
             {filterCategoryIds.length > 0 && (
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.25)', color: 'var(--accent-fg)' }}>
+              <span className="badge badge-on-primary">
                 {filterCategoryIds.length}
               </span>
             )}
           </button>
           <button
             type="button"
-            className="btn btn-secondary mobile-only"
+            className="btn btn-secondary mobile-only shrink-0"
             onClick={() => setFilterSheet(true)}
-            style={{ flex: '0 0 auto' }}
           >
             <Filter size={14} aria-hidden="true" /> Filtry {filterCount > 0 && <span className="badge badge-primary">{filterCount}</span>}
           </button>
           {(filterCount > 0 || query) && (
-            <button type="button" className="btn btn-ghost btn-sm" onClick={clearFilters} style={{ flex: '0 0 auto' }}>
+            <button type="button" className="btn btn-ghost btn-sm shrink-0" onClick={clearFilters}>
               <X size={12} aria-hidden="true" /> Wyczyść
             </button>
           )}
         </div>
         {filterCategoryIds.length > 0 && (
-          <div className="flex gap-1 wrap" style={{ marginTop: 'var(--space-3)', alignItems: 'center' }}>
+          <div className="flex gap-1 wrap items-center mt-1">
             <span className="text-xs text-muted">Kategorie:</span>
             {filterCategoriesDetailed.map((cat) => (
               <button
                 key={cat.id}
                 type="button"
-                className="badge badge-primary"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer', border: 'none' }}
+                className="badge badge-primary badge-action"
                 onClick={() => removeCategoryFilter(cat.id)}
                 title={pathLabel(categories || [], cat.id)}
                 aria-label={`Usuń filtr ${cat.name}`}
@@ -243,7 +240,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
 
       {/* Bulk action bar */}
       {selected.size > 0 && (
-        <div className="card mb-2" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--space-4)', padding: 'var(--space-3) var(--space-5)' }}>
+        <div className="card card-row mb-2">
           <span className="text-sm font-semibold">
             Wybrano <strong>{selected.size}</strong> {selected.size === 1 ? 'zadanie' : selected.size < 5 ? 'zadania' : 'zadań'}
           </span>
@@ -283,7 +280,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
         </div>
       ) : (
         <>
-          <div className="flex items-center gap-1 mb-1" style={{ paddingLeft: 6 }}>
+          <div className="flex items-center gap-1 mb-1 pl-px-6">
             <button
               type="button"
               className="btn btn-ghost btn-sm"
@@ -304,7 +301,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
               const isSelected = selected.has(task.id);
               return (
                 <article key={task.id} className={`task-item ${isSelected ? 'selected' : ''}`}>
-                  <div style={{ display: 'flex', gap: 'var(--space-4)', minWidth: 0 }}>
+                  <div className="flex gap-mid min-w-0">
                     <label className="task-checkbox" aria-label={`Zaznacz ${task.title}`}>
                       <input
                         type="checkbox"
@@ -312,13 +309,12 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
                         onChange={() => toggleSelect(task.id)}
                       />
                     </label>
-                    <div style={{ minWidth: 0, flex: 1 }}>
+                    <div className="grow">
                       <div className="flex items-center gap-1 wrap">
                         <strong>{task.title}</strong>
                         {task.aiGenerated && (
                           <span
-                            className="badge"
-                            style={{ background: 'var(--info-bg)', color: 'var(--info)', display: 'inline-flex', alignItems: 'center', gap: 3 }}
+                            className="badge badge-ai"
                             title={task.aiModel ? `Wygenerowane przez ${task.aiModel}` : 'Wygenerowane przez AI'}
                           >
                             <Sparkles size={10} aria-hidden="true" /> AI
@@ -405,7 +401,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
                   <FolderTree size={14} aria-hidden="true" />
                   Wybierz kategorie
                   {filterCategoryIds.length > 0 && (
-                    <span className="badge" style={{ background: 'rgba(255,255,255,0.25)', color: 'var(--accent-fg)' }}>
+                    <span className="badge badge-on-primary">
                       {filterCategoryIds.length}
                     </span>
                   )}
@@ -427,8 +423,7 @@ export default function TaskList({ onEdit, onRandomize, onNew }: Props) {
       {categoryPickerOpen && (
         <div className="overlay" onMouseDown={() => setCategoryPickerOpen(false)} role="presentation">
           <div
-            className="overlay-content"
-            style={{ maxWidth: 720 }}
+            className="overlay-content max-w-720"
             onMouseDown={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"

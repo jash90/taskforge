@@ -1896,8 +1896,9 @@ tr:hover td { background: var(--surface-2); }
 .mr-half  { margin-right: 4px; }
 
 /* Half / quart gap variants */
-.gap-half  { gap: 4px; }       /* --space-1 */
-.gap-tight { gap: 6px; }       /* --space-2 */
+.gap-half  { gap: 4px; }                /* --space-1 */
+.gap-tight { gap: 6px; }                /* --space-2 */
+.gap-mid   { gap: var(--space-4); }     /* 12px — between .gap-1 (8) and .gap-2 (16) */
 
 /* min-width utility */
 .min-w-0 { min-width: 0; }
@@ -1961,6 +1962,23 @@ tr:hover td { background: var(--surface-2); }
 .flex-180 { flex: 0 1 180px; min-width: 0; }
 .flex-200 { flex: 0 1 200px; min-width: 0; }
 .flex-240 { flex: 0 1 240px; min-width: 0; }
+
+/* Variants where the form-group needs a different min-width than 0. */
+.flex-grow-min200    { flex: 1 1 240px; min-width: 200px; }
+.flex-shrink-min160  { flex: 0 1 200px; min-width: 160px; }
+
+/* Card with horizontal layout & tight padding — used by the TaskList
+   bulk-actions banner ("Zaznaczono N · Usuń"). */
+.card-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-5);
+}
+
+/* Padding helpers */
+.pl-px-6 { padding-left: 6px; }
 
 /* Max-width caps used by full-page sections (settings, modals, hero blocks) */
 .max-w-440 { max-width: 440px; }
