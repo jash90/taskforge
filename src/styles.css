@@ -1907,7 +1907,7 @@ tr:hover td { background: var(--surface-2); }
 .mb-half  { margin-bottom: 4px; }
 .mt-quart { margin-top: 2px; }
 
-/* Margin left/right scale (matches existing .mt-*/.mb-* numbering — 1=8px, 2=16px, 3=24px). */
+/* Margin left/right scale (matches existing mt and mb numbering — 1=8px, 2=16px, 3=24px). */
 .ml-1     { margin-left: var(--space-3); }
 .ml-2     { margin-left: var(--space-5); }
 .ml-3     { margin-left: var(--space-6); }
