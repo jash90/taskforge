@@ -217,7 +217,7 @@ export default function CategoryManager() {
   return (
     <div>
       <div className="card mb-2">
-        <div className="form-row" style={{ marginBottom: 0 }}>
+        <div className="form-row mb-0">
           <div className="form-group mb-0 grow">
             <label htmlFor="cat-search" className="sr-only">Szukaj</label>
             <div className="search-input">
@@ -240,7 +240,7 @@ export default function CategoryManager() {
             ref={importRef}
             type="file"
             accept=".json,application/json"
-            style={{ display: 'none' }}
+            className="hidden"
             onChange={(e) => { const f = e.target.files?.[0]; if (f) void handleImportFile(f); }}
           />
           <button type="button" className="btn btn-secondary btn-sm" onClick={() => importRef.current?.click()}>
@@ -262,9 +262,9 @@ export default function CategoryManager() {
 
       {/* Inline new-root form */}
       {addParentId === null && (
-        <div className="card mb-2" style={{ borderColor: 'var(--accent)', borderWidth: 2 }}>
+        <div className="card card-accent-emphasized mb-2">
           <div className="flex items-center gap-1 wrap">
-            <FolderPlus size={16} style={{ color: 'var(--accent)' }} aria-hidden="true" />
+            <FolderPlus size={16} className="color-accent" aria-hidden="true" />
             <strong className="text-sm">Nowa kategoria główna</strong>
           </div>
           <div className="flex gap-1 wrap mt-1">
@@ -274,7 +274,7 @@ export default function CategoryManager() {
               onChange={(e) => setNewName(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') void saveAdd(); if (e.key === 'Escape') cancelAdd(); }}
               placeholder="np. Mechanika, Algebra, Lektury obowiązkowe…"
-              style={{ flex: 1, minWidth: 220 }}
+              className="flex-1-min220"
             />
             <button type="button" className="btn btn-primary" onClick={saveAdd}>
               <Check size={14} aria-hidden="true" /> Dodaj
@@ -318,13 +318,13 @@ export default function CategoryManager() {
                 const count = usage.get(n.id) ?? 0;
                 if (editingId === n.id) {
                   return (
-                    <div className="flex gap-1" style={{ flex: 1 }}>
+                    <div className="flex gap-1 flex-1">
                       <input
                         autoFocus
                         value={editingName}
                         onChange={(e) => setEditingName(e.target.value)}
                         onKeyDown={(e) => { if (e.key === 'Enter') void saveEdit(); if (e.key === 'Escape') cancelEdit(); }}
-                        style={{ flex: 1 }}
+                        className="flex-1"
                       />
                       <button type="button" className="btn btn-primary btn-sm" onClick={saveEdit}>
                         <Check size={14} aria-hidden="true" />
@@ -338,7 +338,7 @@ export default function CategoryManager() {
                 return (
                   <div className="category-row-actions">
                     {count > 0 && (
-                      <span className="text-faint text-xs" style={{ marginRight: 6 }}>
+                      <span className="text-faint text-xs mr-px-6">
                         {count} {count === 1 ? 'zadanie' : (count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 12 || count % 100 > 14)) ? 'zadania' : 'zadań'}
                       </span>
                     )}
@@ -362,11 +362,10 @@ export default function CategoryManager() {
                     </button>
                     <button
                       type="button"
-                      className="btn btn-ghost btn-icon"
+                      className="btn btn-ghost btn-icon color-danger"
                       onClick={() => requestDelete(n)}
                       aria-label={`Usuń ${n.name}`}
                       title="Usuń"
-                      style={{ color: 'var(--danger)' }}
                     >
                       <Trash2 size={14} aria-hidden="true" />
                     </button>
@@ -376,14 +375,8 @@ export default function CategoryManager() {
               renderAfterRow={(n) =>
                 addParentId === n.id ? (
                   <div
-                    style={{
-                      marginLeft: `calc(${(n.depth + 1) * 18}px + var(--space-3))`,
-                      padding: 'var(--space-3)',
-                      background: 'var(--accent-soft)',
-                      borderRadius: 'var(--radius-sm)',
-                      marginTop: 4,
-                      marginBottom: 4,
-                    }}
+                    className="subcategory-form"
+                    data-depth={Math.min(n.depth + 1, 8)}
                   >
                     <div className="flex gap-1 wrap">
                       <input
@@ -392,7 +385,7 @@ export default function CategoryManager() {
                         onChange={(e) => setNewName(e.target.value)}
                         onKeyDown={(e) => { if (e.key === 'Enter') void saveAdd(); if (e.key === 'Escape') cancelAdd(); }}
                         placeholder={`Podkategoria w „${n.name}"…`}
-                        style={{ flex: 1, minWidth: 200 }}
+                        className="flex-1-min200"
                       />
                       <button type="button" className="btn btn-primary btn-sm" onClick={saveAdd}>
                         <Check size={14} aria-hidden="true" /> Dodaj

@@ -1917,6 +1917,7 @@ tr:hover td { background: var(--surface-2); }
 .mr-2     { margin-right: var(--space-5); }
 .mr-3     { margin-right: var(--space-6); }
 .mr-half  { margin-right: 4px; }
+.mr-px-6  { margin-right: 6px; }
 
 /* Half / quart gap variants */
 .gap-half  { gap: 4px; }                /* --space-1 */
@@ -1948,6 +1949,10 @@ tr:hover td { background: var(--surface-2); }
 .card-danger  { background: var(--danger-bg);  border-color: var(--danger);  color: var(--danger); }
 .card-success { background: var(--success-bg); border-color: var(--success); }
 .card-accent  { background: var(--accent-soft); border-color: var(--accent); }
+.card-accent-emphasized {
+  border-color: var(--accent);
+  border-width: 2px;
+}
 
 /* Input wrapper for password-style fields with an in-field action
    button (e.g. Settings API key with show/hide toggle). */
@@ -1993,6 +1998,32 @@ tr:hover td { background: var(--surface-2); }
 /* Variants where the form-group needs a different min-width than 0. */
 .flex-grow-min200    { flex: 1 1 240px; min-width: 200px; }
 .flex-shrink-min160  { flex: 0 1 200px; min-width: 160px; }
+
+/* Flex item that grows freely but enforces a minimum width — used by
+   inline rename / add forms inside the category tree. */
+.flex-1-min220 { flex: 1; min-width: 220px; }
+.flex-1-min200 { flex: 1; min-width: 200px; }
+.flex-1        { flex: 1; }
+
+/* Inline subcategory form indented by depth. Depth comes from a
+   `data-depth` attribute on the wrapping element (capped at 8 — the
+   tree practically never goes deeper). */
+.subcategory-form {
+  padding: var(--space-3);
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.subcategory-form[data-depth="0"] { margin-left: calc(0px  + var(--space-3)); }
+.subcategory-form[data-depth="1"] { margin-left: calc(18px + var(--space-3)); }
+.subcategory-form[data-depth="2"] { margin-left: calc(36px + var(--space-3)); }
+.subcategory-form[data-depth="3"] { margin-left: calc(54px + var(--space-3)); }
+.subcategory-form[data-depth="4"] { margin-left: calc(72px + var(--space-3)); }
+.subcategory-form[data-depth="5"] { margin-left: calc(90px + var(--space-3)); }
+.subcategory-form[data-depth="6"] { margin-left: calc(108px + var(--space-3)); }
+.subcategory-form[data-depth="7"] { margin-left: calc(126px + var(--space-3)); }
+.subcategory-form[data-depth="8"] { margin-left: calc(144px + var(--space-3)); }
 
 /* Card with horizontal layout & tight padding — used by the TaskList
    bulk-actions banner ("Zaznaczono N · Usuń"). */
