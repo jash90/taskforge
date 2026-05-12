@@ -1,0 +1,8 @@
+android/
+capacitor/
+dist/
+ios/
+node_modules/
+src-tauri/target/
+.vercel/
+CLAUDE.md
