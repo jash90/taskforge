@@ -14,6 +14,7 @@ import {
   FolderTree,
   Settings as SettingsIcon,
   Sparkles,
+  ArrowDownToLine,
 } from 'lucide-react'
 // Lazy-loaded so each tab's module-level code only runs once that tab is
 // first opened. Once mounted, the route stays in the DOM (display:none when
@@ -44,6 +45,9 @@ const Settings = lazy(() =>
 )
 const AITaskGenerator = lazy(() =>
   import('@features/ai-generation').then((module) => ({ default: module.AITaskGenerator })),
+)
+const DownloadPage = lazy(() =>
+  import('@features/download').then((module) => ({ default: module.DownloadPage })),
 )
 import CommandPalette from '@app/components/CommandPalette'
 import { downloadFile, exportTasksToJSON } from '@features/export-import'
@@ -91,6 +95,13 @@ const TABS: TabDef[] = [
     id: 'export',
     label: 'Eksport / Import',
     icon: <Upload size={18} />,
+    group: 'library',
+    inBottom: false,
+  },
+  {
+    id: 'download',
+    label: 'Pobierz',
+    icon: <ArrowDownToLine size={18} />,
     group: 'library',
     inBottom: false,
   },
@@ -333,6 +344,16 @@ export default function App() {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <a
+            href="https://github.com/jash90/taskforge/releases/latest"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-ghost btn-sm"
+            aria-label="Pobierz aplikację"
+            title="Pobierz instalator"
+          >
+            <ArrowDownToLine size={16} />
+          </a>
           <button
             type="button"
             className="inline-flex cursor-pointer items-center gap-2 rounded-sm border border-border bg-surface-2 px-3 py-2 text-xs font-semibold text-muted transition-colors duration-fast ease-out hover:bg-surface-3 hover:text-text [@media(hover:none)]:hidden"
@@ -434,6 +455,9 @@ export default function App() {
         </KeepAlive>
         <KeepAlive active={activeTab === 'ai'} visited={visited.has('ai')}>
           <AITaskGenerator onOpenSettings={() => setActiveTab('settings')} />
+        </KeepAlive>
+        <KeepAlive active={activeTab === 'download'} visited={visited.has('download')}>
+          <DownloadPage />
         </KeepAlive>
         <KeepAlive active={activeTab === 'settings'} visited={visited.has('settings')}>
           <Settings />

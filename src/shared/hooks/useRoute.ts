@@ -10,6 +10,7 @@ export type Tab =
   | 'categories'
   | 'export'
   | 'settings'
+  | 'download'
 
 /** Hash routing — works on Capacitor (file://), Vercel, and static hosts
  *  with no rewrite rules. Maps each tab to a human-readable URL fragment. */
@@ -23,6 +24,7 @@ export const TAB_TO_HASH: Record<Tab, string> = {
   categories: '/kategorie',
   export: '/eksport',
   settings: '/ustawienia',
+  download: '/pobierz',
 }
 
 const HASH_TO_TAB: Record<string, Tab> = Object.fromEntries(
@@ -42,8 +44,6 @@ const parseHash = (): RouteState => {
   if (typeof window === 'undefined') return { tab: DEFAULT_TAB }
   const raw = window.location.hash.replace(/^#/, '')
   if (!raw) return { tab: DEFAULT_TAB }
-  // Split into "/slug" + optional "/extra". The slug includes its leading "/"
-  // (see TAB_TO_HASH values) so we rebuild it before the second-slash split.
   const idx = raw.indexOf('/', 1)
   const slug = idx === -1 ? raw : raw.slice(0, idx)
   const tab = HASH_TO_TAB[slug]
@@ -63,7 +63,6 @@ const writeHash = (state: RouteState, replace = false) => {
   if (replace) {
     const url = window.location.pathname + window.location.search + target
     window.history.replaceState(null, '', url)
-    // replaceState doesn't fire hashchange — caller must sync state itself.
   } else {
     window.location.hash = target
   }
@@ -75,8 +74,6 @@ export function useRoute() {
   const [state, setState] = useState<RouteState>(parseHash)
 
   useEffect(() => {
-    // Normalize the initial URL: if we landed on '/' or an unknown hash,
-    // rewrite it to the canonical hash for the current state.
     const raw = window.location.hash.replace(/^#/, '')
     if (raw !== buildHash(state).slice(1)) writeHash(state, true)
 
@@ -86,21 +83,15 @@ export function useRoute() {
     }
     window.addEventListener('hashchange', onHashChange)
     return () => window.removeEventListener('hashchange', onHashChange)
-    // Intentionally only run on mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  /** Navigate to a tab with an optional parameter (e.g. task id).
-   *  When `replace` is true, rewrites the current history entry instead of
-   *  pushing a new one — useful when normalising bad URLs so the user can
-   *  press Back without landing on the broken state again. */
   const setRoute = useCallback((tab: Tab, param?: string, options?: { replace?: boolean }) => {
     const next: RouteState = param ? { tab, param } : { tab }
     writeHash(next, options?.replace ?? false)
     setState((prev) => (sameRoute(prev, next) ? prev : next))
   }, [])
 
-  /** Convenience: navigate to a tab without a parameter. */
   const setTab = useCallback((tab: Tab) => setRoute(tab), [setRoute])
 
   return { tab: state.tab, param: state.param, setTab, setRoute }
