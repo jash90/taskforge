@@ -216,6 +216,11 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
     abortRef.current = new AbortController();
     const systemPrompt = settings.aiSystemPrompt?.trim() || DEFAULT_SYSTEM_PROMPT_FALLBACK;
     const failures: string[] = [];
+    // Collected locally — we only `setDrafts` ONCE at the end so the user
+    // sees the full batch appear in one go instead of cards popping in
+    // one by one. The slot index keeps original task order even though
+    // requests finish in arbitrary completion order.
+    const collected: (DraftTask | null)[] = new Array(count).fill(null);
 
     // Run a single task with one retry on transient failures: empty body
     // or `finish_reason: 'length'` (response cut off mid-JSON). The
@@ -242,8 +247,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
             lastErr = new Error('Odpowiedź obcięta — ponawiam z większym limitem.');
             continue;
           }
-          const draft = parseSingleDraft(result.content, i);
-          setDrafts((prev) => [...prev, draft]);
+          collected[i] = parseSingleDraft(result.content, i);
           return result.model;
         } catch (err) {
           lastErr = err;
@@ -281,6 +285,10 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
         }
       }),
     );
+
+    // Reveal the whole batch at once (drops nulls from failed slots so the
+    // surviving tasks keep their original prompt order).
+    setDrafts(collected.filter((d): d is DraftTask => d !== null));
 
     const okCount = results.filter((r) => r.status === 'fulfilled').length;
     const aborted = results.some((r) => r.status === 'rejected' && (r.reason as Error)?.name === 'AbortError');
@@ -579,7 +587,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
           <span className="flex items-center gap-1 text-muted text-sm">
             <Loader2 size={14} aria-hidden="true" className="spinner" />
             {count > 1
-              ? `${progressDone}/${count} ukończonych${drafts.length < progressDone ? ` (${drafts.length} udanych)` : ''} — model może odpowiadać do 90 s na zadanie`
+              ? `${progressDone}/${count} ukończonych — model może odpowiadać do 90 s na zadanie`
               : 'Model myśli (do 90 s)…'}
           </span>
         )}
