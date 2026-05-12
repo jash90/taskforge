@@ -82,23 +82,25 @@ export default function SectionProgramBase({
 
   return (
     <div>
-      <div className="form-row">
-        {(['podstawowa', 'ponadpodstawowa'] as const).map((lvl) => (
-          <button
-            key={lvl}
-            type="button"
-            className={`btn btn-sm ${level === lvl ? 'btn-primary' : 'btn-secondary'}`}
-            onClick={() => onLevelChange(lvl)}
-            aria-pressed={level === lvl}
-          >
-            {LEVEL_LABEL[lvl]}
-          </button>
-        ))}
-        <div className="form-group mb-0">
+      <div className="form-row pp-controls">
+        <div className="level-toggle" role="group" aria-label="Poziom edukacyjny">
+          {(['podstawowa', 'ponadpodstawowa'] as const).map((lvl) => (
+            <button
+              key={lvl}
+              type="button"
+              className={`btn btn-sm ${level === lvl ? 'btn-primary' : 'btn-secondary'}`}
+              onClick={() => onLevelChange(lvl)}
+              aria-pressed={level === lvl}
+            >
+              {LEVEL_LABEL[lvl]}
+            </button>
+          ))}
+        </div>
+        <div className="form-group mb-0 pp-class-field">
           <label htmlFor="pp-class">Klasa</label>
           <input id="pp-class" value={cls} onChange={(e) => onClassChange(e.target.value)} placeholder="np. 7" />
         </div>
-        <div className="form-group mb-0 grow">
+        <div className="form-group mb-0 grow pp-search-field">
           <label htmlFor="pp-search">Szukaj</label>
           <div className="search-input">
             <Search size={14} aria-hidden="true" />
