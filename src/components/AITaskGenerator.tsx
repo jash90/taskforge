@@ -370,22 +370,18 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
   const hasKey = !!settings.openrouterApiKey;
 
   return (
-    <div style={{ maxWidth: 980 }}>
+    <div className="max-w-980">
       <div className="flex items-center gap-1 mb-3">
-        <Sparkles size={26} aria-hidden="true" style={{ color: 'var(--accent)' }} />
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-2xl)', fontWeight: 600 }}>
+        <Sparkles size={26} aria-hidden="true" className="color-accent" />
+        <h1 className="page-h1">
           Generuj zadania AI
         </h1>
       </div>
 
       {!hasKey && (
-        <div
-          role="alert"
-          className="card mb-2"
-          style={{ background: 'var(--warning-bg)', borderColor: 'var(--warning)' }}
-        >
+        <div role="alert" className="card card-warning mb-2">
           <div className="flex items-center gap-1 mb-1">
-            <AlertTriangle size={16} aria-hidden="true" style={{ color: 'var(--warning)' }} />
+            <AlertTriangle size={16} aria-hidden="true" className="color-warning" />
             <strong>Brak klucza API OpenRouter</strong>
           </div>
           <p className="text-sm mb-2">
@@ -398,12 +394,12 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
       )}
 
       {/* Wybór modelu — przypomnienie */}
-      <div className="card mb-2 flex items-center justify-between" style={{ flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+      <div className="card mb-2 flex items-center justify-between wrap gap-1">
         <div className="flex items-center gap-1">
-          <Bot size={16} aria-hidden="true" style={{ color: 'var(--accent)' }} />
+          <Bot size={16} aria-hidden="true" className="color-accent" />
           <div>
             <div className="text-sm font-semibold">{settings.openrouterModelLabel || 'Domyślny model'}</div>
-            <div className="text-xs text-faint" style={{ fontFamily: 'ui-monospace, monospace' }}>{settings.openrouterModel}</div>
+            <div className="text-xs text-faint font-mono">{settings.openrouterModel}</div>
           </div>
         </div>
         <button type="button" className="btn btn-ghost btn-sm" onClick={onOpenSettings}>
@@ -430,7 +426,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
             <GraduationCap size={14} aria-hidden="true" />
             Podstawa programowa
             {selectedPP.size > 0 && (
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.25)', color: 'var(--accent-fg)' }}>{selectedPP.size}</span>
+              <span className="badge badge-on-primary">{selectedPP.size}</span>
             )}
           </button>
           <button
@@ -441,13 +437,13 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
             <FolderTree size={14} aria-hidden="true" />
             Kategorie
             {selectedCategories.length > 0 && (
-              <span className="badge" style={{ background: 'rgba(255,255,255,0.25)', color: 'var(--accent-fg)' }}>{selectedCategories.length}</span>
+              <span className="badge badge-on-primary">{selectedCategories.length}</span>
             )}
           </button>
         </div>
 
         {(ppDetailed.length > 0 || categoriesDetailed.length > 0) && (
-          <div className="flex gap-1 wrap" style={{ alignItems: 'center', marginTop: 'var(--space-3)' }}>
+          <div className="flex gap-1 wrap items-center mt-1">
             {ppDetailed.length > 0 && (
               <>
                 <span className="text-xs text-muted">Podstawa:</span>
@@ -455,8 +451,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
                   <button
                     key={pp.id}
                     type="button"
-                    className="badge badge-primary"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer', border: 'none' }}
+                    className="badge badge-primary badge-action"
                     onClick={() => togglePP(pp.id)}
                     title={pp.description}
                   >
@@ -468,13 +463,12 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
             )}
             {categoriesDetailed.length > 0 && (
               <>
-                <span className="text-xs text-muted" style={{ marginLeft: ppDetailed.length > 0 ? 'var(--space-3)' : 0 }}>Kategorie:</span>
+                <span className="text-xs text-muted" data-spaced={ppDetailed.length > 0 || undefined}>Kategorie:</span>
                 {categoriesDetailed.map((cat) => (
                   <button
                     key={cat.id}
                     type="button"
-                    className="badge badge-primary"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer', border: 'none' }}
+                    className="badge badge-primary badge-action"
                     onClick={() => removeCategory(cat.id)}
                     title={pathLabel(categories || [], cat.id)}
                   >
@@ -534,12 +528,12 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
             </select>
           </div>
         </div>
-        <label className="flex items-center gap-1" style={{ textTransform: 'none', letterSpacing: 0, fontSize: 'var(--text-sm)' }}>
+        <label className="flex items-center gap-1 label-plain">
           <input
             type="checkbox"
+            className="icon-16"
             checked={withParameters}
             onChange={(e) => setWithParameters(e.target.checked)}
-            style={{ width: 16, height: 16 }}
           />
           Każde zadanie ma zawierać liczby i jednostki (do późniejszej parametryzacji)
         </label>
@@ -596,8 +590,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
       {error && (
         <div
           role="alert"
-          className="card mb-2 flex items-center gap-1"
-          style={{ background: 'var(--danger-bg)', borderColor: 'var(--danger)', color: 'var(--danger)' }}
+          className="card card-danger mb-2 flex items-center gap-1"
         >
           <AlertTriangle size={16} aria-hidden="true" /> {error}
           <button type="button" className="btn btn-ghost btn-sm" onClick={handleGenerate}>
@@ -630,17 +623,13 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
             {drafts.map((d) => (
               <div
                 key={d.id}
-                className="card card-tight"
-                style={{ borderColor: d.saved ? 'var(--success)' : 'var(--border)', opacity: d.saved ? 0.7 : 1 }}
+                className={`card card-tight ai-draft-card${d.saved ? ' is-saved' : ''}`}
               >
-                <div className="flex justify-between items-center mb-1" style={{ gap: 'var(--space-3)', flexWrap: 'wrap' }}>
-                  <div style={{ minWidth: 0, flex: 1 }}>
+                <div className="flex justify-between items-center mb-1 wrap gap-1">
+                  <div className="grow">
                     <div className="flex items-center gap-1 wrap">
                       <strong>{d.title}</strong>
-                      <span
-                        className="badge"
-                        style={{ background: 'var(--info-bg)', color: 'var(--info)', display: 'inline-flex', alignItems: 'center', gap: 3 }}
-                      >
+                      <span className="badge badge-ai">
                         <Sparkles size={10} aria-hidden="true" /> AI
                       </span>
                       {d.saved && <span className="badge badge-success">zapisane</span>}
@@ -671,7 +660,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
                     {d.answerKey.map((a, i) => (
                       <span key={i}>
                         {i > 0 && ' · '}
-                        <span style={{ color: 'var(--accent)' }}>{a.answer}</span> ({a.points} pkt)
+                        <span className="color-accent">{a.answer}</span> ({a.points} pkt)
                       </span>
                     ))}
                   </div>
@@ -695,7 +684,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
       {/* Pickery */}
       {ppPickerOpen && (
         <div className="overlay" onMouseDown={() => setPpPickerOpen(false)} role="presentation">
-          <div className="overlay-content" style={{ maxWidth: 880 }} onMouseDown={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+          <div className="overlay-content max-w-880" onMouseDown={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
             <div className="flex justify-between items-center mb-2">
               <h2 className="card-title mb-0">Punkty podstawy programowej</h2>
               <button type="button" className="btn btn-ghost btn-sm" onClick={() => setPpPickerOpen(false)}>
@@ -720,7 +709,7 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
 
       {catPickerOpen && (
         <div className="overlay" onMouseDown={() => setCatPickerOpen(false)} role="presentation">
-          <div className="overlay-content" style={{ maxWidth: 720 }} onMouseDown={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+          <div className="overlay-content max-w-720" onMouseDown={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
             <div className="flex justify-between items-center mb-2">
               <h2 className="card-title mb-0">Kategorie</h2>
               <button type="button" className="btn btn-ghost btn-sm" onClick={() => setCatPickerOpen(false)}>
