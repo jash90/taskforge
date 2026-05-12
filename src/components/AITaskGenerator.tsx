@@ -217,36 +217,67 @@ export default function AITaskGenerator({ onOpenSettings }: Props) {
     const systemPrompt = settings.aiSystemPrompt?.trim() || DEFAULT_SYSTEM_PROMPT_FALLBACK;
     const failures: string[] = [];
 
-    // Fire N requests in parallel — one task per request. Tasks land in the
-    // drafts list as they finish (Promise.allSettled lets us tolerate
-    // individual failures without losing the rest of the batch). The
-    // shared AbortController cancels them all on user-clicked Anuluj.
-    const results = await Promise.allSettled(
-      Array.from({ length: count }, async (_, i) => {
+    // Run a single task with one retry on transient failures: empty body
+    // or `finish_reason: 'length'` (response cut off mid-JSON). The
+    // retry doubles maxTokens once to fit longer outputs.
+    const runOne = async (i: number): Promise<string> => {
+      const userPrompt = buildUserPromptForSingle(i, count);
+      let lastErr: unknown;
+      for (let attempt = 0; attempt < 2; attempt++) {
         try {
-          const userPrompt = buildUserPromptForSingle(i, count);
           const result = await generateChat({
             apiKey: settings.openrouterApiKey!,
             model: settings.openrouterModel,
             systemPrompt,
             userPrompt,
             jsonMode: true,
-            // Cap each task's output so total cost scales roughly the same
-            // as the old single-request batch (where avg per-task was
-            // around 1.5k tokens). Headroom for answer key + method.
-            maxTokens: 1500,
+            // 2500 tokens leaves comfortable room for a Polish task
+            // description + answer key + method explanation. First
+            // attempt uses 2500; retry bumps to 4000.
+            maxTokens: attempt === 0 ? 2500 : 4000,
             signal: abortRef.current!.signal,
           });
+          // If the model was truncated, try again with more headroom.
+          if (result.finishReason === 'length' && attempt === 0) {
+            lastErr = new Error('Odpowiedź obcięta — ponawiam z większym limitem.');
+            continue;
+          }
           const draft = parseSingleDraft(result.content, i);
           setDrafts((prev) => [...prev, draft]);
           return result.model;
         } catch (err) {
-          if ((err as Error).name !== 'AbortError') {
-            failures.push(`Zadanie ${i + 1}: ${err instanceof Error ? err.message : String(err)}`);
+          lastErr = err;
+          if ((err as Error).name === 'AbortError') throw err;
+          // Retry on parse / empty-body errors. Other HTTP errors also
+          // retry once — transient OpenRouter glitches are common.
+          if (attempt === 0) continue;
+        }
+      }
+      throw lastErr ?? new Error('Nie udało się wygenerować zadania.');
+    };
+
+    // Concurrency-limited worker pool. 10 simultaneous requests to a
+    // single OpenRouter model tend to trip provider rate limits and
+    // return empty bodies; 3 at a time is the sweet spot — still much
+    // faster than serial, but reliable across providers.
+    const CONCURRENCY = 3;
+    const results: PromiseSettledResult<string>[] = new Array(count);
+    let next = 0;
+    await Promise.all(
+      Array.from({ length: Math.min(CONCURRENCY, count) }, async () => {
+        while (true) {
+          const i = next++;
+          if (i >= count) return;
+          try {
+            results[i] = { status: 'fulfilled', value: await runOne(i) };
+          } catch (err) {
+            results[i] = { status: 'rejected', reason: err };
+            if ((err as Error).name !== 'AbortError') {
+              failures.push(`Zadanie ${i + 1}: ${err instanceof Error ? err.message : String(err)}`);
+            }
+          } finally {
+            setProgressDone((n) => n + 1);
           }
-          throw err;
-        } finally {
-          setProgressDone((n) => n + 1);
         }
       }),
     );
