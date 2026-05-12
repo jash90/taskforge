@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Download, Monitor, Apple, Loader2, AlertCircle, Globe } from 'lucide-react';
+import { Download, Monitor, Apple, Loader2, AlertCircle } from 'lucide-react';
 
 interface GitHubAsset {
   name: string;
