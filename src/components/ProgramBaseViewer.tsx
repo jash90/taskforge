@@ -222,7 +222,7 @@ export default function ProgramBaseViewer() {
     <div>
       {/* Filter card */}
       <div className="card mb-2">
-        <div className="form-row" style={{ marginBottom: 0 }}>
+        <div className="form-row mb-0">
           <div className="form-group mb-0 grow">
             <label htmlFor="pp-search-main" className="sr-only">Szukaj</label>
             <div className="search-input">
@@ -235,14 +235,14 @@ export default function ProgramBaseViewer() {
               />
             </div>
           </div>
-          <div className="form-group mb-0" style={{ flex: '0 1 200px' }}>
+          <div className="form-group mb-0 flex-200">
             <label htmlFor="pp-subject" className="sr-only">Przedmiot</label>
             <select id="pp-subject" value={subject} onChange={(e) => setSubject(e.target.value)}>
               <option value="">Wszystkie przedmioty</option>
               {subjects.map((s) => <option key={s} value={s}>{s}</option>)}
             </select>
           </div>
-          <div className="form-group mb-0" style={{ flex: '0 1 200px' }}>
+          <div className="form-group mb-0 flex-200">
             <label htmlFor="pp-level" className="sr-only">Poziom</label>
             <select id="pp-level" value={level} onChange={(e) => setLevel(e.target.value as ProgramPoint['level'] | '')}>
               <option value="">Wszystkie poziomy</option>
@@ -250,14 +250,14 @@ export default function ProgramBaseViewer() {
               <option value="ponadpodstawowa">Liceum / technikum</option>
             </select>
           </div>
-          <div className="form-group mb-0" style={{ flex: '0 1 160px' }}>
+          <div className="form-group mb-0 flex-160">
             <label htmlFor="pp-class-filter" className="sr-only">Klasa</label>
             <select id="pp-class-filter" value={cls} onChange={(e) => setCls(e.target.value)}>
               <option value="">Wszystkie klasy</option>
               {classes.map((c) => <option key={c} value={c}>Klasa {c}</option>)}
             </select>
           </div>
-          <div className="form-group mb-0" style={{ flex: '0 1 160px' }}>
+          <div className="form-group mb-0 flex-160">
             <label htmlFor="pp-zakres" className="sr-only">Zakres</label>
             <select id="pp-zakres" value={zakres} onChange={(e) => setZakres(e.target.value as '' | 'podstawowy' | 'rozszerzony')}>
               <option value="">Wszystkie zakresy</option>
@@ -266,7 +266,7 @@ export default function ProgramBaseViewer() {
             </select>
           </div>
         </div>
-        <div className="flex justify-between items-center mt-1" style={{ flexWrap: 'wrap', gap: 'var(--space-3)' }}>
+        <div className="flex justify-between items-center mt-1 wrap gap-1">
           <span className="text-sm text-muted">
             {filtered === undefined ? 'Ładowanie…' : <>Znaleziono <strong>{filtered.length}</strong> punktów</>}
           </span>
@@ -289,7 +289,7 @@ export default function ProgramBaseViewer() {
               ref={importRef}
               type="file"
               accept=".json,application/json"
-              style={{ display: 'none' }}
+              className="hidden"
               onChange={(e) => { const f = e.target.files?.[0]; if (f) void handleImportFile(f); }}
             />
             <button type="button" className="btn btn-secondary btn-sm" onClick={() => importRef.current?.click()}>
@@ -319,15 +319,15 @@ export default function ProgramBaseViewer() {
       ) : groupByDzial ? (
         grouped.map(([dzial, pts]) => (
           <div key={dzial} className="card mb-1">
-            <div className="card-title" style={{ fontSize: 'var(--text-md)', marginBottom: 'var(--space-3)' }}>
+            <div className="card-title card-title-md">
               {dzial}
               <small>{pts.length} {pts.length === 1 ? 'punkt' : pts.length < 5 ? 'punkty' : 'punktów'}</small>
             </div>
             <div className="task-list">
               {pts.map((pp) => (
-                <div key={pp.id} className="list-row" style={{ background: 'transparent', border: '1px solid var(--border)' }}>
+                <div key={pp.id} className="list-row list-row-outlined">
                   <span className="badge badge-info">{pp.code}</span>
-                  <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                  <span className="col-tight">
                     <span className="text-sm">{pp.description}</span>
                     <span className="text-faint text-xs">
                       Klasa {pp.class} · {pp.subject}{pp.zakres && ` · ${pp.zakres}`}
@@ -376,7 +376,7 @@ export default function ProgramBaseViewer() {
                 {pagedSlice.map((pp) => (
                   <tr key={pp.id}>
                     <td><span className="badge badge-info">{pp.code}</span></td>
-                    <td style={{ maxWidth: 400 }}>{pp.description}</td>
+                    <td className="col-max-w-400">{pp.description}</td>
                     <td className="text-sm">{pp.dzialNazwa || '—'}</td>
                     <td className="text-sm">{pp.level}</td>
                     <td className="text-sm">{pp.class}</td>
