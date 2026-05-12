@@ -1924,6 +1924,31 @@ tr:hover td { background: var(--surface-2); }
 .card-danger  { background: var(--danger-bg);  border-color: var(--danger);  color: var(--danger); }
 .card-success { background: var(--success-bg); border-color: var(--success); }
 
+/* Input wrapper for password-style fields with an in-field action
+   button (e.g. Settings API key with show/hide toggle). */
+.input-with-action {
+  position: relative;
+  flex: 1;
+  min-width: 240px;
+}
+.input-with-action > input { padding-right: 40px; }
+.input-with-action > .input-action {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* External-link icon inline marker (after the link text). */
+.icon-external-inline { display: inline; vertical-align: middle; }
+
+/* Prose-friendly textarea (body font, relaxed leading). */
+.textarea-prose { font-family: var(--font-body); line-height: 1.5; }
+
+/* Pixel margin helpers used in alert callouts and ad-hoc spacing. */
+.mt-px-4 { margin-top: 4px; }
+.mt-px-6 { margin-top: 6px; }
+
 /* Inline icon helpers — for icons that need to sit inside a sentence
    (next to text) rather than being block-level. */
 .icon-inline { display: inline; vertical-align: middle; }

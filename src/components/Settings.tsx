@@ -77,10 +77,10 @@ export default function Settings() {
   };
 
   return (
-    <div style={{ maxWidth: 920 }}>
+    <div className="max-w-920">
       <div className="flex items-center gap-1 mb-3">
-        <SettingsIcon size={26} aria-hidden="true" style={{ color: 'var(--accent)' }} />
-        <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--text-2xl)', fontWeight: 600 }}>Ustawienia</h1>
+        <SettingsIcon size={26} aria-hidden="true" className="color-accent" />
+        <h1 className="page-h1">Ustawienia</h1>
       </div>
 
       {/* OpenRouter — klucz */}
@@ -93,30 +93,29 @@ export default function Settings() {
           OpenRouter to bramka do setek modeli LLM (GPT, Claude, Gemini, Llama, DeepSeek, …) z jednym kluczem API.
           Klucz przechowywany jest <strong>wyłącznie lokalnie</strong> w przeglądarce (localStorage) i wysyłany tylko bezpośrednio do openrouter.ai.{' '}
           <a href="https://openrouter.ai/keys" target="_blank" rel="noreferrer">
-            Pobierz klucz <ExternalLink size={11} aria-hidden="true" style={{ display: 'inline', verticalAlign: 'middle' }} />
+            Pobierz klucz <ExternalLink size={11} aria-hidden="true" className="icon-external-inline" />
           </a>
         </p>
 
         <div className="form-group">
           <label htmlFor="or-key">Klucz API (sk-or-…)</label>
           <div className="flex gap-1 wrap">
-            <div style={{ position: 'relative', flex: 1, minWidth: 240 }}>
+            <div className="input-with-action">
               <input
                 id="or-key"
+                className="font-mono"
                 type={keyVisible ? 'text' : 'password'}
                 value={keyDraft}
                 onChange={(e) => { setKeyDraft(e.target.value); setKeyDirty(true); setKeyInfo(null); setKeyError(null); }}
                 placeholder="sk-or-v1-…"
                 autoComplete="off"
                 spellCheck={false}
-                style={{ fontFamily: 'ui-monospace, monospace', paddingRight: 40 }}
               />
               <button
                 type="button"
                 aria-label={keyVisible ? 'Ukryj klucz' : 'Pokaż klucz'}
                 onClick={() => setKeyVisible((v) => !v)}
-                className="btn btn-ghost btn-icon"
-                style={{ position: 'absolute', right: 4, top: '50%', transform: 'translateY(-50%)' }}
+                className="btn btn-ghost btn-icon input-action"
               >
                 {keyVisible ? <EyeOff size={14} aria-hidden="true" /> : <Eye size={14} aria-hidden="true" />}
               </button>
@@ -129,7 +128,7 @@ export default function Settings() {
               <Save size={14} aria-hidden="true" /> Zapisz klucz
             </button>
           </div>
-          <div className="text-xs text-faint" style={{ marginTop: 6 }}>
+          <div className="text-xs text-faint mt-px-6">
             {settings.openrouterApiKey
               ? <>Aktualnie zapisany klucz: <code>{maskKey(settings.openrouterApiKey)}</code></>
               : <>Brak zapisanego klucza — generowanie AI będzie nieaktywne.</>}
@@ -137,15 +136,12 @@ export default function Settings() {
         </div>
 
         {keyInfo && (
-          <div
-            className="card card-tight"
-            style={{ background: 'var(--success-bg)', borderColor: 'var(--success)', marginTop: 'var(--space-3)' }}
-          >
+          <div className="card card-tight card-success mt-1">
             <div className="flex items-center gap-1">
-              <Check size={14} aria-hidden="true" style={{ color: 'var(--success)' }} />
-              <strong className="text-sm" style={{ color: 'var(--success)' }}>Klucz aktywny</strong>
+              <Check size={14} aria-hidden="true" className="color-success" />
+              <strong className="text-sm color-success">Klucz aktywny</strong>
             </div>
-            <div className="text-sm" style={{ marginTop: 4 }}>
+            <div className="text-sm mt-px-4">
               {keyInfo.label && <>Etykieta: <strong>{keyInfo.label}</strong> · </>}
               {typeof keyInfo.limit === 'number'
                 ? <>Limit: ${keyInfo.limit.toFixed(2)} · Zużyto: ${(keyInfo.usage ?? 0).toFixed(4)} · Pozostało: <strong>${(keyInfo.limit - (keyInfo.usage ?? 0)).toFixed(2)}</strong></>
@@ -155,11 +151,7 @@ export default function Settings() {
         )}
 
         {keyError && (
-          <div
-            role="alert"
-            className="card card-tight flex items-center gap-1"
-            style={{ background: 'var(--danger-bg)', borderColor: 'var(--danger)', color: 'var(--danger)', marginTop: 'var(--space-3)' }}
-          >
+          <div role="alert" className="card card-tight card-danger flex items-center gap-1 mt-1">
             <AlertTriangle size={14} aria-hidden="true" />
             {keyError}
           </div>
@@ -177,7 +169,7 @@ export default function Settings() {
           Polecane modele (oznaczone gwiazdką) sprawdzają się dobrze do tworzenia treści po polsku.
         </p>
         <div className="flex items-center gap-1 mb-1">
-          <Bot size={14} aria-hidden="true" style={{ color: 'var(--text-muted)' }} />
+          <Bot size={14} aria-hidden="true" className="text-muted" />
           <span className="text-sm font-semibold">Aktualnie wybrany model</span>
         </div>
         <ModelPicker
@@ -196,7 +188,7 @@ export default function Settings() {
         <div className="section-header">
           <span className="section-no">3</span>
           <h3>Prompt systemowy</h3>
-          <span className="text-faint text-sm" style={{ marginLeft: 'auto' }}>opcjonalne</span>
+          <span className="text-faint text-sm ml-auto">opcjonalne</span>
         </div>
         <p className="text-muted text-sm mb-2 prose">
           Instrukcja systemowa wysyłana do modelu przed Twoim zapytaniem o wygenerowanie zadań.
@@ -206,11 +198,11 @@ export default function Settings() {
           <label htmlFor="ai-prompt">Treść instrukcji</label>
           <textarea
             id="ai-prompt"
+            className="textarea-prose"
             value={promptDraft}
             onChange={(e) => setPromptDraft(e.target.value)}
             rows={6}
             spellCheck={false}
-            style={{ fontFamily: 'var(--font-body)', lineHeight: 1.5 }}
           />
         </div>
         <div className="flex gap-1 mt-1">
@@ -226,7 +218,7 @@ export default function Settings() {
       {/* Reset wszystkich ustawień */}
       <section className="card">
         <div className="section-header">
-          <h3 style={{ fontSize: 'var(--text-md)' }}>Reset</h3>
+          <h3 className="text-md">Reset</h3>
         </div>
         <p className="text-muted text-sm mb-1">
           Usuwa zapisany klucz API, model i prompt z tego urządzenia. Nie wpływa na zadania ani kategorie.
@@ -249,8 +241,8 @@ export default function Settings() {
         </button>
       </section>
 
-      <p className="text-xs text-faint" style={{ marginTop: 'var(--space-5)' }}>
-        <Sparkles size={11} aria-hidden="true" style={{ display: 'inline', verticalAlign: 'middle', marginRight: 4 }} />
+      <p className="text-xs text-faint mt-2">
+        <Sparkles size={11} aria-hidden="true" className="icon-inline mr-half" />
         Zadania wygenerowane przez AI są oznaczane w bazie zadań — możesz je odróżnić od ręcznie utworzonych.
       </p>
     </div>
