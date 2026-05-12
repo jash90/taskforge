@@ -95,16 +95,9 @@ export default function CategoryPicker({ categories, selectedIds, onChange }: Pr
     <div>
       {/* Selected pinned summary */}
       {selectedDetailed.length > 0 && (
-        <div
-          className="card card-tight"
-          style={{
-            background: 'var(--accent-soft)',
-            borderColor: 'var(--accent)',
-            marginBottom: 'var(--space-3)',
-          }}
-        >
+        <div className="card card-tight card-accent mb-1">
           <div className="flex justify-between items-center mb-1">
-            <strong className="text-sm" style={{ color: 'var(--accent)' }}>
+            <strong className="text-sm color-accent">
               Wybrane kategorie ({selectedDetailed.length})
             </strong>
             <button type="button" className="btn btn-ghost btn-sm" onClick={() => onChange([])}>
@@ -116,8 +109,7 @@ export default function CategoryPicker({ categories, selectedIds, onChange }: Pr
               <button
                 key={cat.id}
                 type="button"
-                className="badge badge-primary"
-                style={{ display: 'inline-flex', alignItems: 'center', gap: 4, cursor: 'pointer', border: 'none' }}
+                className="badge badge-primary badge-action"
                 onClick={() => togglePick(cat.id)}
                 title={pathLabel(categories, cat.id)}
                 aria-label={`Usuń wybór kategorii ${cat.name}`}
@@ -148,15 +140,7 @@ export default function CategoryPicker({ categories, selectedIds, onChange }: Pr
       </div>
 
       {adding && (
-        <div
-          className="flex gap-1 wrap"
-          style={{
-            marginTop: 'var(--space-3)',
-            padding: 'var(--space-3)',
-            background: 'var(--accent-soft)',
-            borderRadius: 'var(--radius-sm)',
-          }}
-        >
+        <div className="flex gap-1 wrap inline-add-card">
           <input
             autoFocus
             value={newName}
@@ -166,7 +150,7 @@ export default function CategoryPicker({ categories, selectedIds, onChange }: Pr
               if (e.key === 'Escape') { setAdding(false); setNewName(''); }
             }}
             placeholder="Nazwa nowej kategorii głównej…"
-            style={{ flex: 1, minWidth: 200 }}
+            className="flex-1-min200"
           />
           <button type="button" className="btn btn-primary btn-sm" onClick={saveNewRoot}>
             <Check size={14} aria-hidden="true" /> Dodaj
@@ -177,19 +161,19 @@ export default function CategoryPicker({ categories, selectedIds, onChange }: Pr
         </div>
       )}
 
-      <p className="text-faint text-xs" style={{ marginTop: 'var(--space-3)', marginBottom: 'var(--space-2)' }}>
+      <p className="text-faint text-xs mt-1 mb-px-6">
         Bardziej rozbudowanym zarządzaniem (zmiany nazw, usuwanie, podkategorie) zajmiesz się w zakładce „Kategorie".
       </p>
 
       {tree.length === 0 ? (
-        <div className="empty-state" style={{ padding: 'var(--space-6) var(--space-4)' }}>
+        <div className="empty-state empty-state-padded-sm">
           <FolderTree size={32} aria-hidden="true" />
           <p className="text-sm">Nie utworzono jeszcze kategorii. Dodaj pierwszą powyżej lub w zakładce „Kategorie".</p>
         </div>
       ) : filteredTree.length === 0 ? (
         <p className="text-muted text-sm">Brak kategorii dla „{query}".</p>
       ) : (
-        <div style={{ maxHeight: 'min(48vh, 360px)', overflowY: 'auto', paddingRight: 4 }}>
+        <div className="list-scroll-vh-sm">
           {filteredTree.map((root) => (
             <CategoryTreeNode
               key={root.id}
@@ -201,10 +185,10 @@ export default function CategoryPicker({ categories, selectedIds, onChange }: Pr
               renderLeading={(n) => (
                 <input
                   type="checkbox"
+                  className="icon-16"
                   checked={selectedSet.has(n.id)}
                   onChange={() => togglePick(n.id)}
                   onClick={(e) => e.stopPropagation()}
-                  style={{ width: 16, height: 16 }}
                   aria-label={`Wybierz ${n.name}`}
                 />
               )}

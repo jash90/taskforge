@@ -1938,6 +1938,16 @@ tr:hover td { background: var(--surface-2); }
 
 /* Empty-state padded variant (used inside list panels) */
 .empty-state-padded { padding: var(--space-6); }
+.empty-state-padded-sm { padding: var(--space-6) var(--space-4); }
+
+/* Inline new-root-category form (CategoryPicker) — small padded panel
+   styled like a tinted card. */
+.inline-add-card {
+  margin-top: var(--space-3);
+  padding: var(--space-3);
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+}
 
 /* Page-level h1 — display-font, --text-2xl, semibold */
 .page-h1 {
@@ -2170,6 +2180,13 @@ tr:hover td { background: var(--surface-2); }
    where 60vh fits more content than a fixed 360px on large screens. */
 .list-scroll-vh {
   max-height: min(60vh, 480px);
+  overflow-y: auto;
+  padding-right: 4px;
+  contain: paint;
+}
+/* Smaller variant for in-card pickers (CategoryPicker inside editor). */
+.list-scroll-vh-sm {
+  max-height: min(48vh, 360px);
   overflow-y: auto;
   padding-right: 4px;
   contain: paint;
