@@ -289,7 +289,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
 
       <div className="editor-pane" ref={paneRef}>
         <div className="flex justify-between items-center mb-1">
-          <h2 className="card-title mb-0" style={{ fontSize: 'var(--text-2xl)' }}>
+          <h2 className="card-title mb-0 text-2xl">
             {task ? 'Edycja zadania' : 'Nowe zadanie'}
           </h2>
           {totalPoints > 0 && <span className="badge badge-success">{totalPoints} pkt łącznie</span>}
@@ -302,7 +302,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
             <h3>Treść zadania</h3>
           </div>
           <div className="form-group">
-            <label htmlFor="task-title">Tytuł <span style={{ color: 'var(--danger)' }} aria-hidden="true">*</span></label>
+            <label htmlFor="task-title">Tytuł <span className="color-danger" aria-hidden="true">*</span></label>
             <input
               id="task-title"
               className={errors.title ? 'invalid' : ''}
@@ -315,7 +315,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
             {errors.title && <div className="field-error" role="alert">Tytuł jest wymagany.</div>}
           </div>
           <div className="form-group mb-0">
-            <label htmlFor="task-content">Treść <span style={{ color: 'var(--danger)' }} aria-hidden="true">*</span></label>
+            <label htmlFor="task-content">Treść <span className="color-danger" aria-hidden="true">*</span></label>
             <textarea
               id="task-content"
               className={errors.content ? 'invalid' : ''}
@@ -387,15 +387,15 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
               <table className="param-table">
                 <thead>
                   <tr>
-                    <th style={{ width: 28 }}><span className="sr-only">Kolejność</span></th>
+                    <th className="col-w-28"><span className="sr-only">Kolejność</span></th>
                     <th>Nazwa</th>
-                    <th style={{ width: 120 }}>Typ</th>
-                    <th style={{ width: 80 }}>Min</th>
-                    <th style={{ width: 80 }}>Max</th>
-                    <th style={{ width: 80 }}>Krok</th>
-                    <th style={{ width: 90 }}>Jednostka</th>
-                    <th style={{ width: 90 }}>Wartość</th>
-                    <th style={{ width: 36 }}><span className="sr-only">Usuń</span></th>
+                    <th className="col-w-120">Typ</th>
+                    <th className="col-w-80">Min</th>
+                    <th className="col-w-80">Max</th>
+                    <th className="col-w-80">Krok</th>
+                    <th className="col-w-90">Jednostka</th>
+                    <th className="col-w-90">Wartość</th>
+                    <th className="col-w-36"><span className="sr-only">Usuń</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -406,11 +406,10 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                         <td>
                           <button
                             type="button"
-                            className="btn btn-ghost btn-icon"
+                            className="btn btn-ghost btn-icon btn-icon-xs"
                             aria-label={`Przesuń parametr ${p.name} w górę`}
                             onClick={() => moveParam(p.id, -1)}
                             disabled={idx === 0}
-                            style={{ padding: 4, minHeight: 24, width: 24 }}
                           >
                             <GripVertical size={12} aria-hidden="true" />
                           </button>
@@ -433,7 +432,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                             <td><input className="tbl-input" type="number" inputMode="decimal" value={p.step ?? ''} onChange={(e) => updateParam(p.id, { step: parseFloat(e.target.value) })} /></td>
                           </>
                         ) : (
-                          <td colSpan={3} className="text-muted text-sm" style={{ textAlign: 'center' }}>—</td>
+                          <td colSpan={3} className="text-muted text-sm text-center">—</td>
                         )}
                         <td><input className="tbl-input" value={p.unit || ''} onChange={(e) => updateParam(p.id, { unit: e.target.value })} placeholder="np. km/h" /></td>
                         <td>
@@ -486,17 +485,17 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                 <table className="param-table">
                   <thead>
                     <tr>
-                      <th style={{ width: 36 }}>Lp.</th>
+                      <th className="col-w-36">Lp.</th>
                       <th>Odpowiedź</th>
-                      <th style={{ width: 90 }}>Punkty</th>
+                      <th className="col-w-90">Punkty</th>
                       <th>Wyjaśnienie</th>
-                      <th style={{ width: 36 }}><span className="sr-only">Usuń</span></th>
+                      <th className="col-w-36"><span className="sr-only">Usuń</span></th>
                     </tr>
                   </thead>
                   <tbody>
                     {answerKey.map((a, i) => (
                       <tr key={a.id}>
-                        <td className="text-muted text-sm" style={{ textAlign: 'center' }}>{i + 1}</td>
+                        <td className="text-muted text-sm text-center">{i + 1}</td>
                         <td><input className="tbl-input" value={a.answer} onChange={(e) => updateAnswer(a.id, { answer: e.target.value })} placeholder="Poprawna odpowiedź" /></td>
                         <td><input className="tbl-input" type="number" inputMode="decimal" value={a.points} onChange={(e) => updateAnswer(a.id, { points: parseFloat(e.target.value) || 0 })} /></td>
                         <td><input className="tbl-input" value={a.explanation || ''} onChange={(e) => updateAnswer(a.id, { explanation: e.target.value })} placeholder="Opcjonalnie" /></td>
@@ -543,13 +542,13 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
               <table className="param-table">
                 <thead>
                   <tr>
-                    <th style={{ width: 28 }}><span className="sr-only">Kolejność</span></th>
-                    <th style={{ width: 36 }}>Lit.</th>
+                    <th className="col-w-28"><span className="sr-only">Kolejność</span></th>
+                    <th className="col-w-36">Lit.</th>
                     <th>Treść wariantu</th>
-                    <th style={{ width: 90 }}>Poprawna</th>
-                    <th style={{ width: 80 }}>Punkty</th>
+                    <th className="col-w-90">Poprawna</th>
+                    <th className="col-w-80">Punkty</th>
                     <th>Wyjaśnienie</th>
-                    <th style={{ width: 36 }}><span className="sr-only">Usuń</span></th>
+                    <th className="col-w-36"><span className="sr-only">Usuń</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -558,16 +557,15 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                       <td>
                         <button
                           type="button"
-                          className="btn btn-ghost btn-icon"
+                          className="btn btn-ghost btn-icon btn-icon-xs"
                           aria-label={`Przesuń wariant ${String.fromCharCode(97 + i)} w górę`}
                           onClick={() => moveChoice(c.id, -1)}
                           disabled={i === 0}
-                          style={{ padding: 4, minHeight: 24, width: 24 }}
                         >
                           <GripVertical size={12} aria-hidden="true" />
                         </button>
                       </td>
-                      <td className="text-muted text-sm" style={{ textAlign: 'center', fontWeight: 600 }}>
+                      <td className="text-muted text-sm text-center font-semibold">
                         {String.fromCharCode(97 + i)})
                       </td>
                       <td>
@@ -578,7 +576,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                           placeholder="Treść wariantu"
                         />
                       </td>
-                      <td style={{ textAlign: 'center' }}>
+                      <td className="text-center">
                         <input
                           type="checkbox"
                           checked={c.isCorrect}
@@ -633,7 +631,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
                 checked={shuffleChoices}
                 onChange={(e) => setShuffleChoicesD(e.target.checked)}
               />
-              <label htmlFor="shuffle-choices" className="text-sm" style={{ margin: 0, cursor: 'pointer' }}>
+              <label htmlFor="shuffle-choices" className="text-sm label-inline">
                 Losuj kolejność wariantów podczas generowania
               </label>
             </div>
@@ -681,7 +679,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
           <div className="section-header">
             <span className="section-no">5</span>
             <h3>Podstawa programowa</h3>
-            <span className="text-faint text-sm" style={{ marginLeft: 'auto' }}>opcjonalne</span>
+            <span className="text-faint text-sm ml-auto">opcjonalne</span>
           </div>
           <SectionProgramBase
             level={level}
@@ -699,7 +697,7 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
           <div className="section-header">
             <span className="section-no">6</span>
             <h3>Kategorie</h3>
-            <span className="text-faint text-sm" style={{ marginLeft: 'auto' }}>opcjonalne</span>
+            <span className="text-faint text-sm ml-auto">opcjonalne</span>
           </div>
           <CategoryPicker
             categories={categories || []}
@@ -744,9 +742,9 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
             <div className="preview-box prose">
               {renderParameterized(content, parameters)}
               {taskType === 'closed' && choices.length > 0 && (
-                <ol style={{ marginTop: 12, paddingLeft: 0, listStyle: 'none' }}>
+                <ol className="preview-list">
                   {choices.map((c, i) => (
-                    <li key={c.id} style={{ marginTop: 4 }}>
+                    <li key={c.id}>
                       <strong>{String.fromCharCode(97 + i)})</strong> {renderParameterized(c.content, parameters)}
                     </li>
                   ))}
@@ -771,9 +769,9 @@ export default function TaskEditor({ task, onSaved, onCancel }: Props) {
               <div className="preview-box mt-1">
                 {renderParameterized(content, parameters) || 'Brak treści.'}
                 {taskType === 'closed' && choices.length > 0 && (
-                  <ol style={{ marginTop: 8, paddingLeft: 0, listStyle: 'none' }}>
+                  <ol className="preview-list is-tight">
                     {choices.map((c, i) => (
-                      <li key={c.id} style={{ marginTop: 2 }}>
+                      <li key={c.id}>
                         <strong>{String.fromCharCode(97 + i)})</strong> {renderParameterized(c.content, parameters)}
                       </li>
                     ))}
