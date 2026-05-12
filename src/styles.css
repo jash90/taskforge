@@ -2064,6 +2064,32 @@ tr:hover td { background: var(--surface-2); }
 /* Long-text cells in narrow tables */
 .col-max-w-400 { max-width: 400px; }
 
+/* Pagination container (sits below content, surface card with rounded
+   border and standard gaps). */
+.pagination-bar {
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-top: var(--space-4);
+}
+
+/* Inline select inside a label (e.g. "Na stronę: 10") — auto width,
+   compact padding, sm font. */
+.select-inline {
+  width: auto;
+  padding: 4px 28px 4px 8px;
+  font-size: var(--text-sm);
+}
+
+/* Gap-character ("…") in the pagination range */
+.pagination-gap { padding: 0 4px; }
+
+/* Pagination page-number button — ensures consistent min-width
+   regardless of digit count. */
+.btn-page { min-width: 30px; }
+
 /* Inline-status banner (info-colored padded block, used inline within
    content). Smaller than a full card. */
 .info-banner {

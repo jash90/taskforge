@@ -50,30 +50,20 @@ export default function Pagination({
   const range = pageRange(safePage, totalPages);
 
   return (
-    <div
-      className="flex items-center justify-between wrap"
-      style={{
-        gap: 'var(--space-3)',
-        padding: 'var(--space-3) var(--space-4)',
-        background: 'var(--surface)',
-        border: '1px solid var(--border)',
-        borderRadius: 'var(--radius)',
-        marginTop: 'var(--space-4)',
-      }}
-    >
-      <div className="flex items-center gap-1 wrap" style={{ minWidth: 0 }}>
+    <div className="flex items-center justify-between wrap pagination-bar">
+      <div className="flex items-center gap-1 wrap min-w-0">
         <span className="text-sm text-muted">
           {total === 0
             ? `0 ${polishCount(0, itemNouns)}`
             : <>Wyświetlam <strong>{start}</strong>–<strong>{end}</strong> z <strong>{total}</strong> {polishCount(total, itemNouns)}</>}
         </span>
         <span className="text-faint" aria-hidden="true">·</span>
-        <label className="flex items-center gap-1 mb-0" style={{ textTransform: 'none', letterSpacing: 0, fontSize: 'var(--text-sm)', color: 'var(--text-muted)' }}>
+        <label className="flex items-center gap-1 mb-0 label-plain text-muted">
           Na stronę
           <select
             value={pageSize}
             onChange={(e) => onPageSizeChange(parseInt(e.target.value))}
-            style={{ width: 'auto', padding: '4px 28px 4px 8px', fontSize: 'var(--text-sm)' }}
+            className="select-inline"
             aria-label="Rozmiar strony"
           >
             {pageSizeOptions.map((opt) => (
@@ -105,14 +95,13 @@ export default function Pagination({
           </button>
           {range.map((n, i) =>
             n === 'gap' ? (
-              <span key={`gap-${i}`} className="text-faint" style={{ padding: '0 4px' }}>…</span>
+              <span key={`gap-${i}`} className="text-faint pagination-gap">…</span>
             ) : (
               <button
                 key={n}
                 type="button"
-                className={`btn btn-sm ${n === safePage ? 'btn-primary' : 'btn-ghost'}`}
+                className={`btn btn-sm btn-page ${n === safePage ? 'btn-primary' : 'btn-ghost'}`}
                 onClick={() => onPageChange(n)}
-                style={{ minWidth: 30 }}
                 aria-current={n === safePage ? 'page' : undefined}
                 aria-label={`Strona ${n}`}
               >
