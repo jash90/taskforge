@@ -465,13 +465,15 @@ kbd {
     display: none;
   }
 
-  /* At 2xl scale (>=170%) the bottom-nav labels collide with each other —
-     "Podstawa programowa" alone wraps to 3 lines per slot. Drop the
-     labels and let the icons speak for themselves; aria-current still
-     marks the active tab via color. */
+  /* From xl scale (>=140%) the bottom-nav labels start to collide in
+     their 78px-wide slots — "Podstawa programowa" already wraps to
+     three lines. Drop the labels and bump the icons; the active tab
+     stays distinguishable via accent color (and the aria-current). */
+  :root[data-font-scale-key="xl"] .bottom-nav-item > span,
   :root[data-font-scale-key="2xl"] .bottom-nav-item > span {
     display: none;
   }
+  :root[data-font-scale-key="xl"] .bottom-nav-item svg,
   :root[data-font-scale-key="2xl"] .bottom-nav-item svg {
     width: 24px;
     height: 24px;
