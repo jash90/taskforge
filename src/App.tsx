@@ -213,15 +213,6 @@ export default function App() {
           </div>
         </div>
         <div className="header-tools">
-          <button
-            type="button"
-            className="kbd-hint"
-            onClick={() => setPaletteOpen(true)}
-            aria-label="Otwórz paletę poleceń"
-          >
-            <Command size={12} aria-hidden="true" />
-            <kbd>K</kbd>
-          </button>
           <a
             href="https://github.com/jash90/taskforge/releases/latest"
             target="_blank"
@@ -232,6 +223,15 @@ export default function App() {
           >
             <ArrowDownToLine size={16} />
           </a>
+          <button
+            type="button"
+            className="kbd-hint"
+            onClick={() => setPaletteOpen(true)}
+            aria-label="Otwórz paletę poleceń"
+          >
+            <Command size={12} aria-hidden="true" />
+            <kbd>K</kbd>
+          </button>
           <FontSizeToggle />
           <ThemeToggle />
           <button
