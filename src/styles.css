@@ -1665,6 +1665,29 @@ tr:hover td { background: var(--surface-2); }
 .model-row-meta { display: flex; gap: var(--space-3); flex-wrap: wrap; align-items: center; }
 .model-row-desc { margin-top: var(--space-2); max-width: 80ch; }
 
+/* Modal layout for the ModelPicker (header + scroll list + footer
+   divided by borders). Overrides `.overlay-content`'s default
+   padding so the scroll area can touch the modal edges. */
+.modal-no-padding { padding: 0; }
+.modal-section-padded {
+  padding: var(--space-5) var(--space-6) var(--space-3);
+}
+.modal-bordered-list {
+  border-top: 1px solid var(--border);
+  max-height: min(60vh, 540px);
+  overflow-y: auto;
+}
+.modal-state {
+  padding: var(--space-6);
+  color: var(--text-muted);
+}
+.modal-state-error { color: var(--danger); }
+.modal-state-center { text-align: center; }
+.modal-footer-bordered {
+  padding: var(--space-3) var(--space-6);
+  border-top: 1px solid var(--border);
+}
+
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 .spinner { animation: spin 1s linear infinite; }
 @media (prefers-reduced-motion: reduce) {

@@ -122,7 +122,7 @@ export default function ModelPicker({ apiKey, selectedModel, onSelect, selectedL
         onClick={() => setOpen(true)}
         aria-haspopup="dialog"
       >
-        <Bot size={18} aria-hidden="true" style={{ color: 'var(--accent)' }} />
+        <Bot size={18} aria-hidden="true" className="color-accent" />
         <div className="model-picker-trigger-body">
           <span className="model-picker-trigger-name">
             {selectedFromList?.name ?? selectedLabel ?? selectedModel}
@@ -135,14 +135,13 @@ export default function ModelPicker({ apiKey, selectedModel, onSelect, selectedL
       {open && (
         <div className="overlay" onMouseDown={() => setOpen(false)} role="presentation">
           <div
-            className="overlay-content"
-            style={{ maxWidth: 880, padding: 0 }}
+            className="overlay-content max-w-880 modal-no-padding"
             onMouseDown={(e) => e.stopPropagation()}
             role="dialog"
             aria-modal="true"
             aria-labelledby="model-picker-title"
           >
-            <div style={{ padding: 'var(--space-5) var(--space-6) var(--space-3)' }}>
+            <div className="modal-section-padded">
               <div className="flex justify-between items-center mb-2">
                 <h2 id="model-picker-title" className="card-title mb-0">Wybierz model OpenRouter</h2>
                 <button type="button" className="btn btn-ghost btn-sm" onClick={() => setOpen(false)}>
@@ -173,7 +172,7 @@ export default function ModelPicker({ apiKey, selectedModel, onSelect, selectedL
                 </button>
               </div>
 
-              <div className="flex gap-1 wrap" style={{ marginTop: 'var(--space-3)' }}>
+              <div className="flex gap-1 wrap mt-1">
                 {(Object.keys(FILTER_LABELS) as FilterMode[]).map((f) => (
                   <button
                     key={f}
@@ -188,26 +187,22 @@ export default function ModelPicker({ apiKey, selectedModel, onSelect, selectedL
               </div>
             </div>
 
-            <div style={{ borderTop: '1px solid var(--border)', maxHeight: 'min(60vh, 540px)', overflowY: 'auto' }}>
+            <div className="modal-bordered-list">
               {loading && (
-                <div className="flex items-center gap-1" style={{ padding: 'var(--space-6)', color: 'var(--text-muted)' }}>
+                <div className="flex items-center gap-1 modal-state">
                   <Loader2 size={16} aria-hidden="true" className="spinner" />
                   Pobieram listę modeli…
                 </div>
               )}
               {error && (
-                <div
-                  role="alert"
-                  className="flex items-center gap-1"
-                  style={{ padding: 'var(--space-6)', color: 'var(--danger)' }}
-                >
+                <div role="alert" className="flex items-center gap-1 modal-state modal-state-error">
                   <AlertTriangle size={16} aria-hidden="true" />
                   {error}
                   <button type="button" className="btn btn-ghost btn-sm" onClick={() => void load()}>Spróbuj ponownie</button>
                 </div>
               )}
               {!loading && !error && filtered.length === 0 && (
-                <div style={{ padding: 'var(--space-6)', color: 'var(--text-muted)', textAlign: 'center' }}>
+                <div className="modal-state modal-state-center">
                   Brak modeli dla wybranych filtrów.
                 </div>
               )}
@@ -227,9 +222,9 @@ export default function ModelPicker({ apiKey, selectedModel, onSelect, selectedL
                     onClick={() => handlePick(m)}
                   >
                     <div className="model-row-head">
-                      {recommended && <Star size={14} aria-label="Polecany" style={{ color: 'var(--accent)' }} />}
+                      {recommended && <Star size={14} aria-label="Polecany" className="color-accent" />}
                       <span className="model-row-name">{m.name}</span>
-                      <span className="badge" style={{ background: 'var(--surface-2)', color: 'var(--text-muted)' }}>
+                      <span className="badge badge-soft">
                         {provider}
                       </span>
                       {free && <span className="badge badge-success">free</span>}
@@ -263,10 +258,7 @@ export default function ModelPicker({ apiKey, selectedModel, onSelect, selectedL
               })}
             </div>
 
-            <div
-              className="flex justify-between items-center"
-              style={{ padding: 'var(--space-3) var(--space-6)', borderTop: '1px solid var(--border)' }}
-            >
+            <div className="flex justify-between items-center modal-footer-bordered">
               <span className="text-xs text-faint">
                 {models ? `${models.length} modeli ogółem · ${filtered.length} po filtrze` : 'Ładowanie listy z OpenRouter…'}
               </span>
@@ -274,8 +266,7 @@ export default function ModelPicker({ apiKey, selectedModel, onSelect, selectedL
                 href="https://openrouter.ai/models"
                 target="_blank"
                 rel="noreferrer"
-                className="text-xs"
-                style={{ color: 'var(--text-muted)' }}
+                className="text-xs text-muted"
               >
                 Szczegóły na openrouter.ai ↗
               </a>
