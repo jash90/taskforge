@@ -57,7 +57,7 @@ const TAB_LABELS: Record<Tab, string> = TABS.reduce((acc, t) => {
 function RouteFallback() {
   return (
     <div className="empty-state" aria-busy="true">
-      <div className="skeleton skeleton-card" style={{ maxWidth: 480, width: '100%' }} />
+      <div className="skeleton skeleton-card max-w-480 w-full" />
     </div>
   );
 }
@@ -72,7 +72,7 @@ function RouteFallback() {
 function KeepAlive({ active, visited, children }: { active: boolean; visited: boolean; children: React.ReactNode }) {
   if (!visited) return null;
   return (
-    <div style={{ display: active ? 'contents' : 'none' }} aria-hidden={active ? undefined : true}>
+    <div className={active ? 'keepalive-active' : 'keepalive-inactive'} aria-hidden={active ? undefined : true}>
       <Suspense fallback={<RouteFallback />}>{children}</Suspense>
     </div>
   );
@@ -340,12 +340,11 @@ export default function App() {
                 <button
                   key={t.id}
                   type="button"
-                  className="list-row"
+                  className="list-row more-menu-row"
                   onClick={() => { setActiveTab(t.id); setMoreOpen(false); }}
-                  style={{ width: '100%', marginBottom: 8 }}
                 >
                   {t.icon}
-                  <span style={{ fontWeight: 600, textAlign: 'left' }}>{t.label}</span>
+                  <span className="font-semibold text-left">{t.label}</span>
                   <span aria-hidden="true">→</span>
                 </button>
               ))}

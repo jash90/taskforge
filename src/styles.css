@@ -2090,6 +2090,14 @@ tr:hover td { background: var(--surface-2); }
    regardless of digit count. */
 .btn-page { min-width: 30px; }
 
+/* KeepAlive wrapper — `display: contents` while active (transparent to
+   layout), `display: none` while inactive (kept in DOM, hidden). */
+.keepalive-active   { display: contents; }
+.keepalive-inactive { display: none; }
+
+/* "More" sheet menu rows: full-width buttons with bottom spacing. */
+.more-menu-row { width: 100%; margin-bottom: 8px; }
+
 /* Inline-status banner (info-colored padded block, used inline within
    content). Smaller than a full card. */
 .info-banner {
