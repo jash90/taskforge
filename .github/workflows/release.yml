@@ -6,7 +6,7 @@ name: Release (Tauri)
 on:
   push:
     branches: [main]
-    tags: ["v*"]
+    tags: ['v*']
   workflow_dispatch:
 
 permissions:
@@ -19,13 +19,13 @@ jobs:
       matrix:
         include:
           - platform: ubuntu-24.04
-            args: ""
-            label: "Linux (x86_64)"
-            rust-target: ""
+            args: ''
+            label: 'Linux (x86_64)'
+            rust-target: ''
           - platform: windows-latest
-            args: ""
-            label: "Windows (x86_64)"
-            rust-target: ""
+            args: ''
+            label: 'Windows (x86_64)'
+            rust-target: ''
 
     runs-on: ${{ matrix.platform }}
     name: Build · ${{ matrix.label }}
@@ -66,6 +66,12 @@ jobs:
 
       - name: Install JS deps
         run: npm ci
+
+      - name: Type-check
+        run: npm run type-check
+
+      - name: Lint
+        run: npm run lint
 
       # Tag push → produce a real Release with installers attached.
       - name: Build Tauri app (release)
