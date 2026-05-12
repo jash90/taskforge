@@ -14,6 +14,7 @@ import {
   FolderTree,
   Sparkles,
   Settings as SettingsIcon,
+  ArrowDownToLine,
 } from 'lucide-react'
 import db from '@shared/services/db'
 import type { Task } from '@shared/types'
@@ -155,6 +156,14 @@ export default function CommandPalette({
         hint: 'g x',
         icon: <Upload size={16} />,
         run: () => onNavigate('export'),
+      },
+      {
+        id: 'nav-download',
+        group: 'Nawigacja',
+        label: 'Pobierz aplikację',
+        hint: 'g d',
+        icon: <ArrowDownToLine size={16} />,
+        run: () => onNavigate('download'),
       },
       {
         id: 'nav-settings',
