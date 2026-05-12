@@ -23,6 +23,7 @@ const UNIT_ALIASES: Record<string, string> = {
 export function detectParameters(text: string): TaskParameter[] {
   const params: TaskParameter[] = [];
   const found = new Set<string>();
+  let serial = 0;
 
   // Pattern: number + optional space + unit
   const patterns = [
@@ -68,7 +69,7 @@ export function detectParameters(text: string): TaskParameter[] {
       const step = isInteger ? 1 : +(max / 20).toFixed(2);
 
       params.push({
-        id: `auto-${match.index}`,
+        id: `auto-${match.index}-${serial++}`,
         name,
         type: isInteger ? 'integer' : 'number',
         value,
@@ -100,7 +101,7 @@ export function detectParameters(text: string): TaskParameter[] {
     const step = isInteger ? 1 : +(max / 25).toFixed(2);
 
     params.push({
-      id: `auto-s-${sMatch.index}`,
+      id: `auto-s-${sMatch.index}-${serial++}`,
       name: `Wartość (${unit})`,
       type: isInteger ? 'integer' : 'number',
       value,
