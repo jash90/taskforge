@@ -15,6 +15,7 @@ import CategoryManager from './components/CategoryManager';
 import Settings from './components/Settings';
 import AITaskGenerator from './components/AITaskGenerator';
 import ThemeToggle from './components/ThemeToggle';
+import FontSizeToggle from './components/FontSizeToggle';
 import Toaster from './components/Toaster';
 import CommandPalette from './components/CommandPalette';
 import { useTheme } from './hooks/useTheme';
@@ -140,13 +141,15 @@ export default function App() {
             <Command size={12} aria-hidden="true" />
             <kbd>K</kbd>
           </button>
+          <FontSizeToggle />
           <ThemeToggle />
           <button
             type="button"
             className="btn btn-primary"
             onClick={goNewTask}
+            aria-label="Nowe zadanie"
           >
-            <Plus size={16} aria-hidden="true" /> Nowe zadanie
+            <Plus size={16} aria-hidden="true" /> <span className="btn-label">Nowe zadanie</span>
           </button>
         </div>
       </header>
