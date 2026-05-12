@@ -1425,7 +1425,13 @@ tr:hover td { background: var(--surface-2); }
     overflow-x: auto;
     padding: var(--space-2);
     gap: 2px;
+    /* Keep horizontal swipe/scroll for the section chips but hide the
+       native scrollbar — on narrow viewports the bar is visual clutter
+       and the touch/wheel scroll affordance is enough. */
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* Old Edge / IE */
   }
+  .editor-rail::-webkit-scrollbar { display: none; } /* Chromium / Safari */
   .rail-item { grid-template-columns: 12px auto; white-space: nowrap; }
 }
 
