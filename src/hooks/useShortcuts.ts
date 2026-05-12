@@ -39,8 +39,12 @@ const parseCombo = (combo: string): ParsedCombo => {
 const matches = (e: KeyboardEvent, parsed: ParsedCombo): boolean => {
   const modPressed = isMac() ? e.metaKey : e.ctrlKey;
   if (parsed.mod !== modPressed) return false;
-  if (parsed.shift !== e.shiftKey) return false;
-  if (parsed.alt !== e.altKey) return false;
+  // Only enforce shift/alt when the combo explicitly opts in. Many character
+  // keys can only be produced WITH shift on common layouts (e.g. "?", "!",
+  // "@") — requiring shift=false on the combo would make those shortcuts
+  // impossible to trigger from a real keyboard.
+  if (parsed.shift && !e.shiftKey) return false;
+  if (parsed.alt && !e.altKey) return false;
   return e.key.toLowerCase() === parsed.key;
 };
 
