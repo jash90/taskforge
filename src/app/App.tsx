@@ -59,6 +59,7 @@ import { useRoute, type Tab } from '@shared/hooks/useRoute'
 import { useShortcuts, useSequenceShortcuts } from '@shared/hooks/useShortcuts'
 import { useTheme } from '@shared/hooks/useTheme'
 import { toast } from '@shared/hooks/useToast'
+import { useUpdater } from '@shared/hooks/useUpdater'
 import type { Task } from '@shared/types'
 
 interface TabDef {
@@ -207,6 +208,7 @@ export default function App() {
   const [paletteOpen, setPaletteOpen] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
   const { cycle: cycleTheme } = useTheme()
+  useUpdater()
 
   const tasksAll = useLiveQuery(() => db.tasks.toArray(), [])
   const testsAll = useLiveQuery(() => db.tests.toArray(), [])

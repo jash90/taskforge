@@ -98,6 +98,53 @@ npm run lint
 npm run build:web
 ```
 
+## Auto-aktualizacje (Tauri Updater)
+
+Aplikacja desktopowa po starcie (z 5-sekundowym opóźnieniem) sprawdza
+endpoint `https://github.com/jash90/taskforge/releases/latest/download/latest.json`
+i — jeśli jest nowsza wersja — pokazuje toast z przyciskiem **Zainstaluj**.
+Pobranie + instalacja + restart dzieje się w aplikacji bez ręcznego ściągania
+instalatora. Działa dla **Windows MSI** i **Linux AppImage**. Portable `.zip`
+oraz `.deb` nie są wspierane przez updater — tam pozostaje ręczne pobranie z
+GitHub Releases.
+
+### Wymagana jednorazowa konfiguracja (pierwszy release)
+
+1. **Wygeneruj klucze updatera lokalnie:**
+
+   ```bash
+   npx tauri signer generate -w ~/.tauri/taskforge.key
+   ```
+
+   - Wpisz mocne hasło (zapisz w menedżerze haseł — bez niego nie podpiszesz aktualizacji).
+   - Powstaną dwa pliki: `~/.tauri/taskforge.key` (prywatny, NIGDY do gita)
+     i `~/.tauri/taskforge.key.pub` (publiczny, można commitować).
+
+2. **Wklej klucz publiczny** z `~/.tauri/taskforge.key.pub` do
+   `src-tauri/tauri.conf.json`, w polu `plugins.updater.pubkey` (zastępując
+   placeholder `REPLACE_WITH_TAURI_SIGNER_PUBKEY`).
+
+3. **Dodaj dwa sekrety do repozytorium GitHub**
+   (Settings → Secrets and variables → Actions):
+
+   - `TAURI_SIGNING_PRIVATE_KEY` — pełna zawartość pliku `~/.tauri/taskforge.key`
+   - `TAURI_SIGNING_PRIVATE_KEY_PASSWORD` — hasło wpisane w kroku 1
+
+4. **Wytagguj release** (`git tag v1.0.4 && git push --tags`). CI:
+   - podpisze MSI / AppImage kluczem prywatnym,
+   - wygeneruje `latest.json` (manifest updatera) i wgra go do release draftu,
+   - po opublikowaniu draftu aplikacje na komputerach użytkowników wykryją update.
+
+### Uwagi
+
+- Klucz publiczny jest częścią binarki — **utrata klucza prywatnego = nowa
+  aplikacja z nowym kluczem + reinstalacja u wszystkich użytkowników**.
+  Trzymaj backup w bezpiecznym miejscu (1Password, vault, itp.).
+- `releases/latest/...` wskazuje tylko **opublikowane** release'y. Draft trzeba
+  ręcznie opublikować, żeby updater go zobaczył.
+- Wersja w `tauri.conf.json` jest porównywana semver z manifestem — niższa
+  lokalna wersja = updater uznaje, że jest aktualizacja.
+
 ## Licencja
 
 MIT

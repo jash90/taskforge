@@ -17,6 +17,7 @@ import { useSettings } from '@shared/hooks/useSettings'
 import { toast } from '@shared/hooks/useToast'
 
 import ModelPicker from '../components/ModelPicker'
+import UpdateCheckCard from '../components/UpdateCheckCard'
 
 const DEFAULT_SYSTEM_PROMPT = `Jesteś nauczycielem fizyki / przedmiotów ścisłych w polskiej szkole. \
 Tworzysz parametryzowane zadania edukacyjne dopasowane do podanej podstawy programowej i kategorii. \
@@ -270,6 +271,8 @@ export default function Settings() {
           </button>
         </div>
       </section>
+
+      <UpdateCheckCard />
 
       {/* Reset wszystkich ustawień */}
       <section className="card">

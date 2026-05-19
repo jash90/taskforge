@@ -104,12 +104,18 @@ jobs:
           echo "Cargo.toml:        $(grep -E '^version' src-tauri/Cargo.toml)"
 
       # Tag push → produce a real Release with installers attached.
+      # Signing env vars are required for the Tauri updater: tauri-action
+      # signs each bundle and writes latest.json (the updater manifest)
+      # only when both TAURI_SIGNING_PRIVATE_KEY and the matching password
+      # are present and `includeUpdaterJson: true` is set.
       - name: Build Tauri app (release)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ github.ref_name }}
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           tagName: ${{ env.TAG_NAME }}
           releaseName: TaskForge ${{ env.TAG_NAME }}
@@ -121,12 +127,16 @@ jobs:
             - **Windows** — `.msi` (x86_64)
             - **Linux** — `.AppImage` lub `.deb` (x86_64)
 
+            Aplikacja sama sprawdzi aktualizacje przy starcie i zaproponuje
+            instalację nowej wersji (Windows MSI, Linux AppImage).
+
             Wersja webowa: https://taskforge-eta-cyan.vercel.app
 
             ---
             Wygenerowano automatycznie przez GitHub Actions.
           releaseDraft: true
           prerelease: false
+          includeUpdaterJson: true
           args: ${{ matrix.args }}
 
       # main push / manual run → just verify the build compiles on every platform.
