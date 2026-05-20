@@ -182,15 +182,15 @@ jobs:
           echo "Secret unwrapped to raw minisign content."
 
           BYTES="$(printf '%s' "$DECODED" | wc -c | tr -d ' ')"
-          # Publish multi-line value via $GITHUB_ENV heredoc — the documented
-          # mechanism that preserves newlines across steps.
-          {
-            echo "TAURI_SIGNING_PRIVATE_KEY<<__TAURI_KEY_EOF__"
-            printf '%s' "$DECODED"
-            echo
-            echo "__TAURI_KEY_EOF__"
-          } >> "$GITHUB_ENV"
-          echo "Published TAURI_SIGNING_PRIVATE_KEY ($BYTES bytes) to GITHUB_ENV with newlines preserved."
+          # `tauri build` (unlike `tauri signer sign`) ALWAYS treats the env
+          # var as base64-encoded and rejects raw minisign content with
+          # "Invalid symbol 32, offset 9" (the first space in `untrusted
+          # comment:`). So after unwrapping the secret to raw content we must
+          # re-encode it exactly once and publish that — single-line, no
+          # whitespace.
+          REENCODED="$(printf '%s' "$DECODED" | base64 | tr -d '\n')"
+          echo "TAURI_SIGNING_PRIVATE_KEY=$REENCODED" >> "$GITHUB_ENV"
+          echo "Published TAURI_SIGNING_PRIVATE_KEY ($BYTES bytes raw → ${#REENCODED} bytes base64) to GITHUB_ENV."
 
       # Tag push → produce a real Release with installers attached.
       # TAURI_SIGNING_PRIVATE_KEY comes from $GITHUB_ENV (set by the previous
