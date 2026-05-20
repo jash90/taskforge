@@ -11,6 +11,11 @@ on:
 
 permissions:
   contents: write
+  # Tauri updater bundling produces `.sig` artifacts; some integrations
+  # require explicit attestations / packages perms in newer GH backends.
+  packages: write
+  attestations: write
+  id-token: write
 
 jobs:
   build-tauri:
@@ -191,6 +196,30 @@ jobs:
           REENCODED="$(printf '%s' "$DECODED" | base64 | tr -d '\n')"
           echo "TAURI_SIGNING_PRIVATE_KEY=$REENCODED" >> "$GITHUB_ENV"
           echo "Published TAURI_SIGNING_PRIVATE_KEY ($BYTES bytes raw → ${#REENCODED} bytes base64) to GITHUB_ENV."
+
+      # Pre-create the draft release with the GH CLI before tauri-action runs.
+      # Bypasses a tauri-action quirk: in some matrix configurations it tries
+      # to POST /repos/.../releases and gets "Resource not accessible by
+      # integration" even with contents:write granted. Once the release
+      # exists, tauri-action's "find existing release by tag" path is used
+      # instead of "create new" and the upload works.
+      - name: Pre-create draft release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.ref_name }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if gh release view "$TAG_NAME" -R "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            echo "Release $TAG_NAME already exists — skipping create."
+            exit 0
+          fi
+          gh release create "$TAG_NAME" -R "$GITHUB_REPOSITORY" \
+            --draft \
+            --title "TaskForge $TAG_NAME" \
+            --notes "Auto-update build. Artifacts uploaded by tauri-action."
+          echo "Created draft release $TAG_NAME."
 
       # Tag push → produce a real Release with installers attached.
       # TAURI_SIGNING_PRIVATE_KEY comes from $GITHUB_ENV (set by the previous
