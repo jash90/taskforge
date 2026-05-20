@@ -145,30 +145,41 @@ jobs:
           FIRST_BYTE_HEX="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | head -c 1 | od -An -tx1 | tr -d ' ')"
           echo "::notice::secret diagnostic — length=$RAW_LEN bytes, newlines=$NL_COUNT, first byte hex=$FIRST_BYTE_HEX"
 
-          # Auto-detect format: raw minisign content OR single-line base64.
-          # `gh secret set < file` MAY actually preserve newlines depending on
-          # the GH backend version, in which case the secret arrives as raw
-          # content already. Accept either form.
-          DECODED=""
-          if printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | head -1 | grep -q '^untrusted comment:'; then
-            echo "Secret appears to be raw minisign content (multi-line preserved)."
-            DECODED="$TAURI_SIGNING_PRIVATE_KEY_B64"
-          else
-            echo "Secret does not start with 'untrusted comment:' — attempting base64 decode."
-            # Strip any whitespace (newlines, spaces) before decoding — GH may
-            # add a trailing newline to the secret value.
-            DECODED="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | tr -d '[:space:]' | base64 -d 2>/dev/null || true)"
-            if [ -z "$DECODED" ]; then
-              echo "::error::Base64 decode of TAURI_SIGNING_PRIVATE_KEY returned empty. Secret length=$RAW_LEN, first byte hex=$FIRST_BYTE_HEX."
-              exit 1
+          # Auto-detect format. `gh secret set` via stdin auto-base64-encodes
+          # its input before sending to the GH API, so a value piped through
+          # `base64 -i FILE | gh secret set` arrives DOUBLE-encoded. Also a
+          # raw file content (via `gh secret set < FILE`) gets one extra b64
+          # layer added. We unwrap up to 2 layers until we hit raw minisign
+          # content starting with `untrusted comment:`.
+          unwrap_to_minisign() {
+            local val="$1"
+            # 0 decodes
+            if printf '%s' "$val" | head -1 | grep -q '^untrusted comment:'; then
+              printf '%s' "$val"
+              return 0
             fi
-            if ! printf '%s' "$DECODED" | head -1 | grep -q '^untrusted comment:'; then
-              FIRST_LINE_DECODED="$(printf '%s' "$DECODED" | head -1 | head -c 40)"
-              echo "::error::Decoded value does not start with 'untrusted comment:'. First line of decoded value (first 40 chars): $FIRST_LINE_DECODED"
-              exit 1
+            # 1 decode
+            local d1
+            d1="$(printf '%s' "$val" | tr -d '[:space:]' | base64 -d 2>/dev/null || true)"
+            if [ -n "$d1" ] && printf '%s' "$d1" | head -1 | grep -q '^untrusted comment:'; then
+              printf '%s' "$d1"
+              return 0
             fi
-            echo "Base64 decode produced raw minisign content."
+            # 2 decodes
+            local d2
+            d2="$(printf '%s' "$d1" | tr -d '[:space:]' | base64 -d 2>/dev/null || true)"
+            if [ -n "$d2" ] && printf '%s' "$d2" | head -1 | grep -q '^untrusted comment:'; then
+              printf '%s' "$d2"
+              return 0
+            fi
+            return 1
+          }
+          DECODED="$(unwrap_to_minisign "$TAURI_SIGNING_PRIVATE_KEY_B64" || true)"
+          if [ -z "$DECODED" ]; then
+            echo "::error::Could not unwrap TAURI_SIGNING_PRIVATE_KEY to a raw minisign key (tried 0, 1, 2 base64 layers). Re-upload the key file content via the GitHub UI or with: gh secret set TAURI_SIGNING_PRIVATE_KEY -R <owner>/<repo> < ~/.tauri/taskforge.key"
+            exit 1
           fi
+          echo "Secret unwrapped to raw minisign content."
 
           BYTES="$(printf '%s' "$DECODED" | wc -c | tr -d ' ')"
           # Publish multi-line value via $GITHUB_ENV heredoc — the documented
