@@ -108,36 +108,51 @@ jobs:
           echo "tauri.conf.json:   $(node -p "require('./src-tauri/tauri.conf.json').version")"
           echo "Cargo.toml:        $(grep -E '^version' src-tauri/Cargo.toml)"
 
-      - name: Validate updater signing secrets
+      # Materialize the b64-encoded TAURI_SIGNING_PRIVATE_KEY secret into a
+      # real file on the runner and expose it via TAURI_SIGNING_PRIVATE_KEY_PATH.
+      # Reason: in @tauri-apps/cli 2.x there's a quirk where the b64-encoded env
+      # var path produces "Missing encoded key in secret key" at decrypt time even
+      # when key+password are valid (confirmed by local repro — same key+password
+      # signs OK via _PATH but fails via _KEY b64). Using _PATH sidesteps that.
+      - name: Materialize updater signing key
         if: startsWith(github.ref, 'refs/tags/v')
         shell: bash
         env:
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_PRIVATE_KEY_B64: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: |
           set -euo pipefail
-          if [ -z "${TAURI_SIGNING_PRIVATE_KEY:-}" ]; then
-            echo "::error::Missing TAURI_SIGNING_PRIVATE_KEY repository secret. Generate it with 'npx tauri signer generate -w ~/.tauri/taskforge.key' and store the private key contents as a GitHub Actions secret."
+          if [ -z "${TAURI_PRIVATE_KEY_B64:-}" ]; then
+            echo "::error::Missing TAURI_SIGNING_PRIVATE_KEY repository secret."
             exit 1
           fi
           if [ -z "${TAURI_SIGNING_PRIVATE_KEY_PASSWORD:-}" ]; then
-            echo "::error::Missing TAURI_SIGNING_PRIVATE_KEY_PASSWORD repository secret. Store the password used for the Tauri updater private key as a GitHub Actions secret."
+            echo "::error::Missing TAURI_SIGNING_PRIVATE_KEY_PASSWORD repository secret."
             exit 1
           fi
-          echo "Updater signing secrets are configured."
+          KEY_PATH="$RUNNER_TEMP/tauri-signing.key"
+          printf '%s' "$TAURI_PRIVATE_KEY_B64" | base64 -d > "$KEY_PATH"
+          chmod 600 "$KEY_PATH"
+          # Don't echo bytes, only sanity-check size — minisign keys are <500 bytes.
+          BYTES="$(wc -c < "$KEY_PATH" | tr -d ' ')"
+          if [ "$BYTES" -lt 200 ] || [ "$BYTES" -gt 1024 ]; then
+            echo "::error::Decoded signing key is $BYTES bytes — expected 200-1024. Secret value is likely not base64-of-the-key-file."
+            exit 1
+          fi
+          echo "TAURI_SIGNING_PRIVATE_KEY_PATH=$KEY_PATH" >> "$GITHUB_ENV"
+          echo "Materialized signing key ($BYTES bytes) at $KEY_PATH"
 
       # Tag push → produce a real Release with installers attached.
-      # Signing env vars are required for the Tauri updater: tauri-action
-      # signs each bundle and writes latest.json (the updater manifest)
-      # only when both TAURI_SIGNING_PRIVATE_KEY and the matching password
-      # are present and `includeUpdaterJson: true` is set.
+      # tauri-action picks up TAURI_SIGNING_PRIVATE_KEY_PATH from $GITHUB_ENV
+      # (set by the previous step) and TAURI_SIGNING_PRIVATE_KEY_PASSWORD from
+      # env: below. With both set and includeUpdaterJson: true, it signs each
+      # bundle and writes latest.json to the release.
       - name: Build Tauri app (release)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ github.ref_name }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           tagName: ${{ env.TAG_NAME }}
