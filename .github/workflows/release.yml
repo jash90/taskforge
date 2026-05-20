@@ -136,13 +136,40 @@ jobs:
             echo "::error::Missing TAURI_SIGNING_PRIVATE_KEY_PASSWORD repository secret."
             exit 1
           fi
-          # Decode the secret. It must be single-line base64 of the .key file.
-          # Decoded content must begin with `untrusted comment:` (raw minisign).
-          DECODED="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | base64 -d 2>/dev/null || true)"
-          if [ -z "$DECODED" ] || ! printf '%s' "$DECODED" | head -1 | grep -q '^untrusted comment:'; then
-            echo "::error::TAURI_SIGNING_PRIVATE_KEY must be single-line base64 of the .key file. Update with: base64 -i ~/.tauri/taskforge.key | tr -d '\\n' | gh secret set TAURI_SIGNING_PRIVATE_KEY -R <owner>/<repo>"
-            exit 1
+
+          # Diagnostic — never echoes the secret itself. Shows length, the
+          # leading-char shape (uppercase/lowercase/digit/other), and whether
+          # newlines or whitespace snuck in via the GH transport.
+          RAW_LEN="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | wc -c | tr -d ' ')"
+          NL_COUNT="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | tr -cd '\n' | wc -c | tr -d ' ')"
+          FIRST_BYTE_HEX="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | head -c 1 | od -An -tx1 | tr -d ' ')"
+          echo "::notice::secret diagnostic — length=$RAW_LEN bytes, newlines=$NL_COUNT, first byte hex=$FIRST_BYTE_HEX"
+
+          # Auto-detect format: raw minisign content OR single-line base64.
+          # `gh secret set < file` MAY actually preserve newlines depending on
+          # the GH backend version, in which case the secret arrives as raw
+          # content already. Accept either form.
+          DECODED=""
+          if printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | head -1 | grep -q '^untrusted comment:'; then
+            echo "Secret appears to be raw minisign content (multi-line preserved)."
+            DECODED="$TAURI_SIGNING_PRIVATE_KEY_B64"
+          else
+            echo "Secret does not start with 'untrusted comment:' — attempting base64 decode."
+            # Strip any whitespace (newlines, spaces) before decoding — GH may
+            # add a trailing newline to the secret value.
+            DECODED="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | tr -d '[:space:]' | base64 -d 2>/dev/null || true)"
+            if [ -z "$DECODED" ]; then
+              echo "::error::Base64 decode of TAURI_SIGNING_PRIVATE_KEY returned empty. Secret length=$RAW_LEN, first byte hex=$FIRST_BYTE_HEX."
+              exit 1
+            fi
+            if ! printf '%s' "$DECODED" | head -1 | grep -q '^untrusted comment:'; then
+              FIRST_LINE_DECODED="$(printf '%s' "$DECODED" | head -1 | head -c 40)"
+              echo "::error::Decoded value does not start with 'untrusted comment:'. First line of decoded value (first 40 chars): $FIRST_LINE_DECODED"
+              exit 1
+            fi
+            echo "Base64 decode produced raw minisign content."
           fi
+
           BYTES="$(printf '%s' "$DECODED" | wc -c | tr -d ' ')"
           # Publish multi-line value via $GITHUB_ENV heredoc — the documented
           # mechanism that preserves newlines across steps.
@@ -152,7 +179,7 @@ jobs:
             echo
             echo "__TAURI_KEY_EOF__"
           } >> "$GITHUB_ENV"
-          echo "Decoded signing key ($BYTES bytes) published to GITHUB_ENV with newlines preserved."
+          echo "Published TAURI_SIGNING_PRIVATE_KEY ($BYTES bytes) to GITHUB_ENV with newlines preserved."
 
       # Tag push → produce a real Release with installers attached.
       # TAURI_SIGNING_PRIVATE_KEY comes from $GITHUB_ENV (set by the previous
