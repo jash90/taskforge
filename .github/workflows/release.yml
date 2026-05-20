@@ -108,15 +108,27 @@ jobs:
           echo "tauri.conf.json:   $(node -p "require('./src-tauri/tauri.conf.json').version")"
           echo "Cargo.toml:        $(grep -E '^version' src-tauri/Cargo.toml)"
 
-      - name: Validate updater signing secrets
+      # GH Actions secret substitution into `env:` mappings drops newlines from
+      # multi-line values — confirmed by repro: a secret stored with newlines
+      # via `gh secret set < file` reaches the runner with newlines stripped,
+      # so a raw minisign .key file (which has a header line + base64 line)
+      # collapses into one line and Tauri's parser rejects it.
+      #
+      # Workaround: store the secret as single-line base64 of the .key file
+      # (no newlines in the secret value, safe transport), then on the runner
+      # decode it and publish the multi-line raw content via $GITHUB_ENV
+      # heredoc — that mechanism preserves newlines, unlike `env:` mapping.
+      # Subsequent steps see TAURI_SIGNING_PRIVATE_KEY with the full multi-line
+      # value, identical to what local `signer sign` consumes.
+      - name: Materialize updater signing key (multi-line env)
         if: startsWith(github.ref, 'refs/tags/v')
         shell: bash
         env:
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_B64: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         run: |
           set -euo pipefail
-          if [ -z "${TAURI_SIGNING_PRIVATE_KEY:-}" ]; then
+          if [ -z "${TAURI_SIGNING_PRIVATE_KEY_B64:-}" ]; then
             echo "::error::Missing TAURI_SIGNING_PRIVATE_KEY repository secret."
             exit 1
           fi
@@ -124,30 +136,35 @@ jobs:
             echo "::error::Missing TAURI_SIGNING_PRIVATE_KEY_PASSWORD repository secret."
             exit 1
           fi
-          # The secret must be the RAW content of the .key file (with the
-          # `untrusted comment:` header line and newlines preserved), NOT a
-          # base64-of-the-file. Local repro showed that base64-encoded env vars
-          # fail decrypt as "Missing encoded key in secret key" even when the
-          # password is correct; raw content works. tauri-action stores the
-          # secret in env as-is, so newlines from GH Secrets are preserved.
-          if ! printf '%s' "$TAURI_SIGNING_PRIVATE_KEY" | head -1 | grep -q '^untrusted comment:'; then
-            echo "::error::TAURI_SIGNING_PRIVATE_KEY must start with 'untrusted comment:'. Store the raw .key file content (with newlines), not base64-of-the-file. Update with: gh secret set TAURI_SIGNING_PRIVATE_KEY -R <owner>/<repo> < ~/.tauri/taskforge.key"
+          # Decode the secret. It must be single-line base64 of the .key file.
+          # Decoded content must begin with `untrusted comment:` (raw minisign).
+          DECODED="$(printf '%s' "$TAURI_SIGNING_PRIVATE_KEY_B64" | base64 -d 2>/dev/null || true)"
+          if [ -z "$DECODED" ] || ! printf '%s' "$DECODED" | head -1 | grep -q '^untrusted comment:'; then
+            echo "::error::TAURI_SIGNING_PRIVATE_KEY must be single-line base64 of the .key file. Update with: base64 -i ~/.tauri/taskforge.key | tr -d '\\n' | gh secret set TAURI_SIGNING_PRIVATE_KEY -R <owner>/<repo>"
             exit 1
           fi
-          echo "Updater signing secrets are configured (raw minisign content detected)."
+          BYTES="$(printf '%s' "$DECODED" | wc -c | tr -d ' ')"
+          # Publish multi-line value via $GITHUB_ENV heredoc — the documented
+          # mechanism that preserves newlines across steps.
+          {
+            echo "TAURI_SIGNING_PRIVATE_KEY<<__TAURI_KEY_EOF__"
+            printf '%s' "$DECODED"
+            echo
+            echo "__TAURI_KEY_EOF__"
+          } >> "$GITHUB_ENV"
+          echo "Decoded signing key ($BYTES bytes) published to GITHUB_ENV with newlines preserved."
 
       # Tag push → produce a real Release with installers attached.
-      # Signing env vars are required for the Tauri updater: tauri-action
-      # signs each bundle and writes latest.json (the updater manifest)
-      # only when both TAURI_SIGNING_PRIVATE_KEY and the matching password
-      # are present and `includeUpdaterJson: true` is set.
+      # TAURI_SIGNING_PRIVATE_KEY comes from $GITHUB_ENV (set by the previous
+      # step with newlines intact); TAURI_SIGNING_PRIVATE_KEY_PASSWORD comes
+      # directly from secrets. With both set and includeUpdaterJson: true,
+      # tauri-action signs each bundle and writes latest.json to the release.
       - name: Build Tauri app (release)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG_NAME: ${{ github.ref_name }}
-          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
           TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
         with:
           tagName: ${{ env.TAG_NAME }}
