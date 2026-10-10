@@ -141,13 +141,17 @@ jobs:
 
       # main push / manual run → just verify the build compiles on every platform.
       # No tagName means tauri-action skips the release-upload step.
+      # The updater signing key is only provided to tag builds, so turn off
+      # updater artifacts here; otherwise `tauri build` aborts with "A public
+      # key has been found, but no private key".
       - name: Build Tauri app (CI verify)
         if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
         uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: ${{ matrix.args }}
+          args: >-
+            ${{ matrix.args }} --config '{"bundle":{"createUpdaterArtifacts":false}}'
 
       # Windows-only: package a portable single-exe build alongside the installer.
       # Tauri produces the raw exe at src-tauri/target/release/<name>.exe — we just
